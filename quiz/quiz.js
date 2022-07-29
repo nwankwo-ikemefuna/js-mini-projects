@@ -51,7 +51,10 @@ const questions = [
 
 // loop through the questions and display in questions element
 questions.forEach((questionObj) => {
+
+  // destructure the properties of the single question object (to avoid repetition)
   const { number, type, mark, question, options = null } = questionObj;
+
   // create a div element to hold each question
   const singleQuestionContainer = document.createElement("div");
   // set a class attribute on the element
@@ -60,7 +63,7 @@ questions.forEach((questionObj) => {
   // write content into the element
   singleQuestionContainer.innerHTML = `${number}. ${question} (${mark} marks)`;
 
-  // create element to hold the options
+  // create a div element to hold the options
   const optionsContainer = document.createElement("div");
   optionsContainer.setAttribute("class", "options-container");
 
@@ -68,11 +71,15 @@ questions.forEach((questionObj) => {
   if (type === "radio" || type === "checkbox") {
     // questionObj.options is an object, so we use the for...in loop here
     for (const option in options) {
+      // call displayOption function to render the option element (radion or checkbox)
       const inputGroupElement = displayOption(questionObj, option);
+      // append the option element to the options container
       optionsContainer.appendChild(inputGroupElement);
     }
   } else if (type === "text") {
+    // call displayOption function to render the text input element
     const inputGroupElement = displayOption(questionObj);
+    // append the text input element to the options container
     optionsContainer.appendChild(inputGroupElement);
   }
 
@@ -84,24 +91,32 @@ questions.forEach((questionObj) => {
 });
 
 function displayOption(questionObj, option = null) {
+  // we destructure here again
   const { type, number, options = null } = questionObj;
-  const inputGroupElement = document.createElement("div");
-  inputGroupElement.setAttribute("class", "input-group");
 
+  // create the option input element
   const inputElement = document.createElement("input");
   inputElement.setAttribute("type", type);
   inputElement.setAttribute("name", `question_option_${number}`);
   inputElement.setAttribute("class", `question-option-${type}`);
 
+  // if question type is radio or checkbox, we set the input's value to the option key. We'll use this to check if the selected answer is correct or not
   if (type === "radio" || type === "checkbox") {
     inputElement.setAttribute("value", option);
   }
 
+  // create a div element to hold the option input element and the option text
+  const inputGroupElement = document.createElement("div");
+  inputGroupElement.setAttribute("class", "input-group");
+
+  // we now append the input element to the input group
   inputGroupElement.appendChild(inputElement);
 
+  // if question type is radio or checkbox, we append the option to the input group. Note that it's not applicable to text question type.
   if (type === "radio" || type === "checkbox") {
     inputGroupElement.append(" ", options[option]);
   }
 
+  // finally, we return the input group element to the caller
   return inputGroupElement;
 }
