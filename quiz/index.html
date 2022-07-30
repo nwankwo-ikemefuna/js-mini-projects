@@ -6,6 +6,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="quiz.css">
   </head>
   <body>
@@ -13,7 +14,7 @@
       <!--Render questions dynamically with JavaScript-->
     </section>
 
-    <section class="feedback-section section" id="feedback">
+    <section class="feedback-section section">
       <table class="feedback-table">
         <thead>
           <tr>
@@ -24,9 +25,15 @@
             <th>Mark</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="feedback-table-body">
           <!--Render feedback dynamically with JavaScript-->
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">Total mark obtained</td>
+            <td id="feedback-total-mark"></td>
+          </tr>
+        </tfoot>
       </table>
     </section>
     <script src="quiz.js"></script>

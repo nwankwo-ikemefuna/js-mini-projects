@@ -27,3 +27,10 @@ table, th, td {
 .feedback-table {
   width: 100%;
 }
+
+.feeback-correct-icon {
+  color: green;
+}
+.feeback-wrong-icon {
+  color: red;
+}
