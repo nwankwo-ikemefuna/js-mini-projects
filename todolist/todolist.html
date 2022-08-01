@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My ToDo List</title>
-    <link rel="stylesheet" href="todolist.css">
-</head>
-<body>
-<div class="list-container">
-    <div class="head">
+    <link rel="stylesheet" href="todolist.css" />
+  </head>
+  <body>
+    <div class="list-container">
+      <div class="head">
         <div class="header">
-            <h1>My To-Do List</h1>
+          <h1>My To-Do List</h1>
         </div>
 
         <form id="todoForm" class="form-area">
-            <input name="todo-input" class="input-text" type="text" id="todo-input" placeholder="... your activity">
-            <button id="add-button" class="input-button" type="button">Add </button>
+          <input
+            name="todo-input"
+            class="input-text"
+            type="text"
+            id="todo-input"
+            placeholder="... your activity"
+          />
+          <button id="add-button" class="input-button" type="button">
+            Add
+          </button>
         </form>
+      </div>
+
+      <div class="listitems" id="list">
+        <!-- from javascript -->
+      </div>
+
+      <div class="clear">
+        <button class="clearbutton" id="clearbutton" type="button" style="display: none;">Clear All</button>
+      </div>
     </div>
 
-        <div class="listitems" id="list">
-            <!-- from javascript -->
-        </div>
-
-        <div class="clear" id="clear">
-            <!-- from javascript -->
-        </div>
-
-</div>
-
-
-
-
-
-    <script src="https://kit.fontawesome.com/e56a5c8654.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/e56a5c8654.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="todolist.js"></script>
-</body>
+  </body>
 </html>

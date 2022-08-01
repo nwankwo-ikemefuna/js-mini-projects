@@ -1,60 +1,104 @@
-let addTodoButton = document.getElementById("add-button")
-let todoList = document.getElementById("list")
-let todoInput = document.getElementById("todo-input")
+const addOrEditTodoButton = document.getElementById("add-button");
+const todoList = document.getElementById("list");
+const todoInput = document.getElementById("todo-input");
+const clearButton = document.getElementById("clearbutton");
 
-addTodoButton.addEventListener("click", function () {
-    let listItem = document.createElement("div")
-    listItem.setAttribute("class", "todo-list")
+let isEditing = false;
+let currentlyEditedListItem = null;
 
-    let actionButtons = document.createElement("div")
-    actionButtons.setAttribute("class", "actionbuttons")
+addOrEditTodoButton.addEventListener("click", () => {
+  const todoItem = todoInput.value;
+  if (todoItem.length === 0) {
+    alert("Please type todo list item");
+    return;
+  }
 
-    let deleteButton = document.createElement("button")
-    deleteButton.setAttribute("class", "deletebutton")
-    deleteButton.type = "button"
-    deleteButton.textContent = "D"
+  if (isEditing) {
+    const listItemNameElement =
+      currentlyEditedListItem.querySelector(".todo-list-name");
+    const editButtonElement =
+      currentlyEditedListItem.querySelector(".editbutton");
+    listItemNameElement.innerText = todoInput.value;
+    editButtonElement.removeAttribute("disabled");
+    addOrEditTodoButton.textContent = "Add";
+    todoInput.value = "";
+    return;
+  }
 
-    let editButton = document.createElement("button")
-    editButton.setAttribute("class", "editbutton")
-    editButton.type = "button"
-    editButton.textContent = "E"
+  const actionButtons = document.createElement("div");
+  actionButtons.setAttribute("class", "actionbuttons");
 
-    let checkButton = document.createElement("button")
-    checkButton.setAttribute("class", "checkbutton")
-    checkButton.type = "button"
-    checkButton.textContent = "C"
+  const deleteButton = document.createElement("button");
+  deleteButton.setAttribute("class", "deletebutton");
+  deleteButton.setAttribute("type", "button");
+  deleteButton.textContent = "D";
 
-    deleteButton.addEventListener("click", function () {
-        todoList.removeChild(listItem)
-    })
-    checkButton.addEventListener("click", function () {
-        listItem.setAttribute("class", "checked")
-    })
-    editButton.addEventListener("click", function () {
-        todoInput.value = listItem.innerText
-        todoList.removeChild(listItem)
+  const editButton = document.createElement("button");
+  editButton.setAttribute("class", "editbutton");
+  deleteButton.setAttribute("type", "button");
+  editButton.textContent = "E";
 
-    })
+  const checkButton = document.createElement("button");
+  checkButton.setAttribute("class", "checkbutton");
+  deleteButton.setAttribute("type", "button");
+  checkButton.textContent = "C";
 
-    listItem.innerText = todoInput.value
-    todoInput.value = ""
-    todoList.appendChild(listItem)
-    listItem.appendChild(actionButtons)
-    actionButtons.appendChild(deleteButton)
-    actionButtons.appendChild(editButton)
-    actionButtons.appendChild(checkButton)
+  const listItemNameElement = document.createElement("span");
+  listItemNameElement.setAttribute("class", "todo-list-name");
+  listItemNameElement.innerText = todoInput.value;
+  todoInput.value = "";
 
-})
+  const listItem = document.createElement("div");
+  listItem.setAttribute("class", "todo-list");
+  listItem.appendChild(listItemNameElement);
+  listItem.appendChild(actionButtons);
+  todoList.appendChild(listItem);
 
-let clear = document.getElementById("clear")
+  actionButtons.appendChild(deleteButton);
+  actionButtons.appendChild(editButton);
+  actionButtons.appendChild(checkButton);
 
-let clearButton = document.createElement("button")
-clearButton.setAttribute("class", "clearbutton")
-clearButton.type = ("button")
-clearButton.textContent = "Clear All"
+  setClearButtonDisplay("block");
 
-clearButton.addEventListener("click", function () {
-    
-})
+  attachTodoListActionEventListener("delete", "deletebutton");
+  attachTodoListActionEventListener("edit", "editbutton");
+  attachTodoListActionEventListener("check", "checkbutton");
+});
 
-clear.appendChild(clearButton)
+clearButton.addEventListener("click", () => {
+  todoList.innerHTML = "";
+  setClearButtonDisplay("none");
+});
+
+function attachTodoListActionEventListener(actionType, actionClassName) {
+  const actionElements = document.getElementsByClassName(actionClassName);
+  Array.from(actionElements).forEach((actionElement) => {
+    actionElement.addEventListener("click", (event) => {
+      const currentElement = event.target;
+      const closestListItem = currentElement.closest(".todo-list");
+      if (actionType === "delete") {
+        closestListItem.remove();
+        const listItemElements = document.getElementsByClassName("todo-list");
+        const totalListItems = Array.from(listItemElements).length;
+        if (totalListItems === 0) {
+          setClearButtonDisplay("none");
+        }
+      } else if (actionType === "edit") {
+        const listItemNameElement =
+          closestListItem.querySelector(".todo-list-name");
+        const listItemName = listItemNameElement.innerText;
+        todoInput.value = listItemName;
+        addOrEditTodoButton.textContent = "Edit";
+        currentElement.setAttribute("disabled", "disabled");
+        isEditing = true;
+        currentlyEditedListItem = closestListItem;
+      } else {
+        closestListItem.classList.add("checked");
+      }
+    });
+  });
+}
+
+function setClearButtonDisplay(display) {
+  clearButton.style.display = display;
+}

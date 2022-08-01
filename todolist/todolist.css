@@ -16,12 +16,15 @@ ul {
     width: 50%;
     height: 700px;
     border-radius: 10px;
-    overflow-y: auto;
     border: 1px solid black;
     margin: 5% auto;
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+.listitems {
+    max-height: 500px;
+    overflow-y: auto;
 }
 .header {
     text-align: center;
@@ -67,7 +70,7 @@ ul {
     margin-top: 20px;
 }
 .todo-list:last-child {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 .todo-list {
     border: 1px solid #8f94fb;
@@ -136,12 +139,10 @@ ul {
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
+    margin-bottom: 20px;
 }
 .clear {
-    position: absolute;
-    top: 52%;
-    margin-right: 20px;
-}
-.list-container, .clear:nth-of-type(3) {
-    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
