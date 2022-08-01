@@ -76,7 +76,7 @@ questions.forEach((questionObj) => {
   if (type === "radio" || type === "checkbox") {
     // questionObj.options is an object, so we use the for...in loop here
     for (const option in options) {
-      // call displayOption function to render the option element (radion or checkbox)
+      // call displayOption function to render the option element (radio or checkbox)
       const inputGroupElement = displayOption(questionObj, option);
       // append the option element to the options container
       optionsContainer.appendChild(inputGroupElement);
