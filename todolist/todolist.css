@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+ul {
+    list-style: none;
+}
+.head {
+    background: linear-gradient(#4e54c8, #8f94fb);
+    padding: 40px 0 10px;
+}
+.list-container {
+    min-width: 500px;
+    width: 50%;
+    height: 700px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.listitems {
+    max-height: 500px;
+    overflow-y: auto;
+}
+.header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+.form-area {
+    margin: 20px 20px 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.input-text {
+    padding: 10px;
+    width: 70%;
+    outline: none;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background: #ddd;
+    font-size: 20px;
+    font-weight: bold;
+}
+.input-text::placeholder {
+    font-style: oblique;
+    font-size: 20px;
+    font-weight: normal;
+    color: #000;
+    opacity: 0.7;
+}
+.input-button {
+    padding: 10px;
+    width: 80px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-style: oblique;
+    font-weight: bold;
+    background: #ddd;
+}
+.todo-list:first-child {
+    margin-top: 20px;
+}
+.todo-list:last-child {
+    margin-bottom: 50px;
+}
+.todo-list {
+    border: 1px solid #8f94fb;
+    border-radius: 5px;
+    background: #ddd;
+    font-size: 20px;
+    line-height: 40px;
+    margin: 20px 30px;
+    text-transform: capitalize;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.actionbuttons {
+    width: 150px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.deletebutton, .checkbutton, .editbutton {
+    padding: 4px 7px;
+    cursor: pointer;
+}
+.deletebutton {
+    background: red;
+    color: #fff;
+    font-weight: bold;
+}
+.editbutton {
+    background: yellow;
+    color: #000;
+    font-weight: bold;
+}
+.checkbutton {
+    background: green;
+    color: #fff;
+    font-weight: bold;
+}
+.checked {
+    text-decoration: line-through;
+    font-style: italic;
+    border: 1px solid #8f94fb;
+    border-radius: 5px;
+    background: #ddd;
+    font-size: 20px;
+    line-height: 40px;
+    margin: 20px 30px;
+    text-transform: capitalize;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.clearbutton:hover {
+    background: #000;
+    color: #fff;
+    transition: .8s;
+}
+.clearbutton {
+    background: #8f94fb;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.clear {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
