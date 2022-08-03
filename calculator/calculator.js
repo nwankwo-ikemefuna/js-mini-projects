@@ -19,7 +19,7 @@ const bottomOperatorValueArr = [".", 0, "%", "/"];
 const actionButtonValueArr = ["C", "Del", "="];
 
 const arithmeticOperatorsArr = [...operatorsValueArr, '/'];
-const nonConsectiveInputsArr = [...arithmeticOperatorsArr, '.'];
+const nonConsecutiveInputsArr = [...arithmeticOperatorsArr, '.'];
 
 createButtons(numberValuesArr, numbersContainer);
 createButtons(operatorsValueArr, rightOperators);
@@ -48,18 +48,18 @@ Array.from(calculatorBtns).forEach((btn) => {
       }
     }
 
-    // prevent consecutive operators (eg ++, +*, etc) and dot
+    // prevent consecutive operators (eg ++, +*, etc) and/or dot
     const lastOperationXter = operationsText.slice(operationsText.length - 1);
-    if (nonConsectiveInputsArr.includes(btnValue) && (arithmeticOperatorsArr.includes(lastOperationXter) || lastOperationXter === '.')) {
+    if (nonConsecutiveInputsArr.includes(btnValue) && (arithmeticOperatorsArr.includes(lastOperationXter) || lastOperationXter === '.')) {
       return;
     }
 
     // prevent more than 1 occurence of dot in an operand
     if (btnValue === '.') {
-      // get the last operand by splitting by operators
+      // get the last operand by splitting along operators
       const operandsArr = operationsText.split(/[-+*\/]/);
       const lastOperand = operandsArr.pop();
-      // it already has dot, we can't put another...
+      // if it already has dot, we can't put another...
       if (lastOperand.indexOf('.') > -1) {
         return;
       }
