@@ -14,9 +14,12 @@ const buttonsRow3Container = document.createElement("div");
 buttonsRow3Container.setAttribute("class", "buttons-row-3");
 
 const numberValuesArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const operatorsValueArr = ["+", "-", "x"];
+const operatorsValueArr = ["+", "-", "*"];
 const bottomOperatorValueArr = [".", 0, "%", "/"];
 const actionButtonValueArr = ["C", "Del", "="];
+
+const arithmeticOperatorsArr = [...operatorsValueArr, '/'];
+const nonConsectiveInputsArr = [...arithmeticOperatorsArr, '.'];
 
 createButtons(numberValuesArr, numbersContainer);
 createButtons(operatorsValueArr, rightOperators);
@@ -29,54 +32,106 @@ calculator.appendChild(buttonsRow3Container);
 buttonsRow1Container.appendChild(numbersContainer);
 buttonsRow1Container.appendChild(rightOperators);
 
-let operationsText = "";
-
-
 const resultDisplay = document.getElementById("resultdisplay");
 const operationsDisplay = document.getElementById("operationsdisplay");
-
 const calculatorBtns = document.getElementsByClassName("calculator-btn");
+
+let operationsText = "";
+
 Array.from(calculatorBtns).forEach((btn) => {
   btn.addEventListener("click", (event) => {
     const btnValue = event.target.value;
-    if (!actionButtonValueArr.includes(btnValue)) {
-      operationsText += btnValue;
-      resultDisplay.textContent = operationsText;
+
+    if (operationsText.length === 0) {
+      if (btnValue === '0') {
+        return;
+      }
+    }
+
+    // prevent consecutive operators (eg ++, +*, etc) and dot
+    const lastOperationXter = operationsText.slice(operationsText.length - 1);
+    if (nonConsectiveInputsArr.includes(btnValue) && (arithmeticOperatorsArr.includes(lastOperationXter) || lastOperationXter === '.')) {
       return;
     }
-    if (btnValue === "Del") {
+
+    // prevent more than 1 occurence of dot in an operand
+    if (btnValue === '.') {
+      // get the last operand by splitting by operators
+      const operandsArr = operationsText.split(/[-+*\/]/);
+      const lastOperand = operandsArr.pop();
+      // it already has dot, we can't put another...
+      if (lastOperand.indexOf('.') > -1) {
+        return;
+      }
+    }
+    
+    if (btnValue === "Del") { // delete button
       if (operationsText.length <= 1) {
         operationsText = "";
         resultDisplay.textContent = "0";
       } else {
-        operationsText = operationsText.substr(0, operationsText.length - 1);
+        operationsText = operationsText.substring(0, operationsText.length - 1);
         resultDisplay.textContent = operationsText;
       }
-      return;
-    }
-    if (btnValue === "C") {
+
+    } else if (btnValue === "C") { // clear button
       operationsText = "";
       resultDisplay.textContent = "0";
       operationsDisplay.textContent = "";
-      return;
-    }
-    if (btnValue === "=") {
+
+    } else if (btnValue === "%") { // percentage button
+      operationsText += btnValue;
+      operationsDisplay.textContent = operationsText;
+      const result = Number(resultDisplay.textContent) / 100;
+      resultDisplay.textContent = formatNumber(result);
+      operationsText = updateOperationsText(result);
+
+    } else if (btnValue === "=") { // equal button
+      
       operationsDisplay.textContent = resultDisplay.textContent;
-      const operationsArr = operationsText.match(/\d+|\D+/g);
+
+      // split the text by digits
+      const operationsArr = operationsText.match(/[^\d()]+|[\d.]+/g);
       console.log(operationsArr);
+
       let result = 0;
-      let finalResult = 0;
+
       operationsArr.forEach((opValue, opIndex) => {
+        const leftOperand = Number(operationsArr[opIndex - 1]);
+        const rightOperand = Number(operationsArr[opIndex + 1]);
         if (opValue === "+") {
-          const leftOperand = Number(operationsArr[opIndex - 1]);
-          const rightOperand = Number(operationsArr[opIndex + 1]);
-          result = leftOperand + rightOperand;
-          finalResult += result;
+          if (result === 0) {
+            result = leftOperand + rightOperand;
+          } else {
+            result += rightOperand;
+          }
+        } else if (opValue === "-") {
+          if (result === 0) {
+            result = leftOperand - rightOperand;
+          } else {
+            result -= rightOperand;
+          }
+        } else if (opValue === "*") {
+          if (result === 0) {
+            result = leftOperand * rightOperand;
+          } else {
+            result *= rightOperand;
+          }
+        } else if (opValue === "/") {
+          if (result === 0) {
+            result = leftOperand / rightOperand;
+          } else {
+            result /= rightOperand;
+          }
         }
       });
-      resultDisplay.textContent = finalResult;
 
-      return;
+      resultDisplay.textContent = formatNumber(result);
+      operationsText = updateOperationsText(result);
+
+    } else { // number buttons
+      operationsText += btnValue;
+      resultDisplay.textContent = operationsText;
     }
   });
 });
@@ -85,39 +140,24 @@ function createButtons(btnGroup, parentContainer) {
   btnGroup.forEach((item) => {
     let customClass = "";
     if (item === "=") {
-      customClass = "btn-2x";
+      customClass = " btn-2x";
     }
     const inputElement = document.createElement("input");
-    inputElement.setAttribute("class", `calculator-btn ${customClass}`);
+    inputElement.setAttribute("class", `calculator-btn${customClass}`);
     inputElement.type = "button";
     inputElement.value = item;
     parentContainer.appendChild(inputElement);
   });
 }
 
-// const numberButton = Array.from(document.getElementsByClassName("calculator-btn"));
+function formatNumber(number, maximumFractionDigits, locale = 'en-US') {
+  return new Intl.NumberFormat(locale, { 
+    minimumFractionDigits: 0, 
+    maximumFractionDigits 
+  }).format(number);
+}
 
-// deleteButton.addEventListener("click", () => {
-//     numbersInput.value = ""
-// })
-
-// const numbersInput = document.querySelector("#calfield");
-// const buttons = document.querySelectorAll("button")
-
-// buttons.forEach((item) => {
-//     item.onclick = () => {
-//         if (item.id === "clear") {
-//             numbersInput.value = "";
-//         } else if (item.id === "delete") {
-//             let inputString = numbersInput.value.toString();
-//             numbersInput.value = inputString.substr(0, inputString.length - 1);
-//         } else if (numbersInput.value != "" && item.id === "equals") {
-//             numbersInput.value = (numbersInput.value);
-//         } else if () {
-
-//         } else {
-//             numbersInput.value = item.id
-//         }
-
-//     }
-// })
+function updateOperationsText(result) {
+  // for subsequent operations, the result becomes our first operand
+  return !isNaN(result) ? result.toString() : "";
+}
