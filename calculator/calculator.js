@@ -16,7 +16,7 @@ buttonsRow3Container.setAttribute("class", "buttons-row-3");
 const numberValuesArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const operatorsValueArr = ["+", "-", "*"];
 const bottomOperatorValueArr = [".", 0, "%", "/"];
-const actionButtonValueArr = ["Test", "C", "Del", "="];
+const actionButtonValueArr = ["C", "Del", "="];
 
 const arithmeticOperatorsArr = [...operatorsValueArr, "/"];
 const nonConsecutiveInputsArr = [...arithmeticOperatorsArr, "."];
@@ -29,8 +29,16 @@ createButtons(actionButtonValueArr, buttonsRow3Container);
 calculator.appendChild(buttonsRow1Container);
 calculator.appendChild(buttonsRow2Container);
 calculator.appendChild(buttonsRow3Container);
+
 buttonsRow1Container.appendChild(numbersContainer);
 buttonsRow1Container.appendChild(rightOperators);
+
+// TODO: for test ... to be removed
+/*const testButtonsArr = ["T1", "T2", "T3", "T4"];
+const buttonsRow4Container = document.createElement("div");
+buttonsRow4Container.setAttribute("class", "buttons-row-2");
+createButtons(testButtonsArr, buttonsRow4Container);
+calculator.appendChild(buttonsRow4Container);*/
 
 const resultDisplay = document.getElementById("resultdisplay");
 const operationsDisplay = document.getElementById("operationsdisplay");
@@ -43,9 +51,11 @@ Array.from(calculatorBtns).forEach((btn) => {
     
     // button value
     const btnValue = event.target.value;
-
+  
     const firstOperationChar = operationsText.slice(0, 1);
     const lastOperationChar = operationsText.slice(-1);
+
+    console.log('operationsText', operationsText);
 
     // if first operand is previous operation result...
     
@@ -55,16 +65,12 @@ Array.from(calculatorBtns).forEach((btn) => {
     // if it starts with minus (in which case the previous operation gave a negative result)...
     // we prepend zero to it (since -x == 0-x)
     if (firstOperationChar === '-') {
-      console.log('operationsText before prepending 0', operationsText);
       operationsText = `0${operationsText}`;
-      console.log('operationsText after prepending 0', operationsText);
     }
 
     // prevent consecutive operators (eg ++, +*, etc) and/or dot character
     if (
-      nonConsecutiveInputsArr.includes(btnValue) &&
-      (arithmeticOperatorsArr.includes(lastOperationChar) ||
-        lastOperationChar === ".")
+      nonConsecutiveInputsArr.includes(btnValue) && nonConsecutiveInputsArr.includes(lastOperationChar)
     ) {
       return;
     }
@@ -76,7 +82,7 @@ Array.from(calculatorBtns).forEach((btn) => {
         return;
       }
       // ... it is accompanied by dot or an operator
-      if (btnValue === "." || arithmeticOperatorsArr.includes(btnValue)) {
+      if (nonConsecutiveInputsArr.includes(btnValue)) {
         operationsText = `0${btnValue}`;
         resultDisplay.textContent = operationsText;
       }
@@ -91,6 +97,7 @@ Array.from(calculatorBtns).forEach((btn) => {
     if (btnValue === ".") {
       // get the last operand by splitting along operators
       const operandsArr = operationsText.split(/[-+*\/]/);
+      console.log('operandsArr', operandsArr);
       const lastOperand = operandsArr.pop();
       // if it already has dot, we can't put another...
       if (lastOperand.indexOf(".") > -1) {
@@ -117,16 +124,20 @@ Array.from(calculatorBtns).forEach((btn) => {
       operationsText += btnValue;
       operationsDisplay.textContent = operationsText;
       const result = Number(resultDisplay.textContent) / 100;
-      resultDisplay.textContent = formatNumber(result);
+      resultDisplay.textContent = formatNumber(result, 6);
       operationsText = updateOperationsText(result);
 
       //TODO: remove (just for testing 'complex' operations)
-    } else if (btnValue === "Test") {
-      // temporary operation
-      //const tempOperation = "8-6/3*7+10";
-      const tempOperation = "8-6/3-5*12+10/4";
+    /*} else if (testButtonsArr.includes(btnValue)) {
+      const testButtonValuesObj = {
+        'T1': '8-6/3*7+10',
+        'T2': '8-6/3-5*12+10/4',
+        'T3': '6/3/2*5-88',
+        'T4': '6*3/2*5*11/19+1-5-14',
+      };
+      const tempOperation = testButtonValuesObj[btnValue];
       operationsText = tempOperation;
-      resultDisplay.textContent = tempOperation;
+      resultDisplay.textContent = tempOperation;*/
     } else if (btnValue === "=") {
       // equal button
 
@@ -139,11 +150,15 @@ Array.from(calculatorBtns).forEach((btn) => {
       console.log("operationsArr before", operationsArr);
 
       // compute division and multiplication results first (in conformity with BODMAS)
-
-      operationsArr = computePartDivMultResult(operationsArr, '/');
+      
+      while (operationsArr.includes('/')) {
+        operationsArr = computePartDivMultResult(operationsArr, '/');
+      }
       console.log("operationsArr after division", operationsArr);
 
-      operationsArr = computePartDivMultResult(operationsArr, '*');
+      while (operationsArr.includes('*')) {
+        operationsArr = computePartDivMultResult(operationsArr, '*');
+      }
       console.log("operationsArr after multiplication", operationsArr);
 
       let finalResult = 0;
@@ -167,11 +182,12 @@ Array.from(calculatorBtns).forEach((btn) => {
           } 
         });
       }
-      resultDisplay.textContent = formatNumber(finalResult);
+
+      resultDisplay.textContent = formatNumber(finalResult, 6);
       operationsText = updateOperationsText(finalResult);
 
     } else {
-      // number buttons
+      // number buttons and dot
       operationsText += btnValue;
       resultDisplay.textContent = operationsText;
     }
@@ -182,7 +198,7 @@ function createButtons(btnGroup, parentContainer) {
   btnGroup.forEach((item) => {
     let customClass = "";
     if (item === "=") {
-      //customClass = " btn-2x";
+      customClass = " btn-2x";
     }
     const inputElement = document.createElement("input");
     inputElement.setAttribute("class", `calculator-btn${customClass}`);
@@ -201,7 +217,7 @@ function formatNumber(number, maximumFractionDigits, locale = "en-US") {
 
 function updateOperationsText(result) {
   // for subsequent operations, the result becomes our first operand
-  return !isNaN(result) ? formatNumber(result) : "";
+  return !isNaN(result) ? formatNumber(result, 6) : "";
 }
 
 function computePartDivMultResult(operationsArr, operator) {

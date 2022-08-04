@@ -36,9 +36,9 @@ body {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 90%;
+    width: 95%;
     overflow-x: hidden;
-    font-size: 35px;
+    font-size: 30px;
 }
 .calculator-btn {
     width: 90px;
