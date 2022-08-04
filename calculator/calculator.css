@@ -5,7 +5,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body {
-    background: darkgray;
+    background: #a9a9a9;
 }
 .cal-container {
     min-width: 500px;
@@ -14,12 +14,11 @@ body {
     border-radius: 10px;
     border: 1px solid black;
     margin: 10% auto;
-    background: cyan;
+    background: #00ffff;
 }
 .display {
     margin: 30px 20px 20px;
     height: 100px;
-    font-size: 50px;
     outline: none;
     border: none;
     background: #000;
@@ -39,6 +38,7 @@ body {
     right: 10px;
     width: 90%;
     overflow-x: hidden;
+    font-size: 35px;
 }
 .calculator-btn {
     width: 90px;
