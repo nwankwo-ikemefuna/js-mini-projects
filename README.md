@@ -1,2 +1,2 @@
 # js-mini-projects
-JavaScript Mini Projects
+A selection of JavaScript Mini Projects for beginners.

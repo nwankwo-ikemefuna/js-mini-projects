@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+body {
+    background: #a9a9a9;
+}
+.cal-container {
+    min-width: 500px;
+    width: 0;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin: 10% auto;
+    background: #00ffff;
+}
+.display {
+    margin: 30px 20px 20px;
+    height: 100px;
+    outline: none;
+    border: none;
+    background: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-align: right;
+    position: relative;
+}
+#operationsdisplay {
+    font-size: 20px;
+    opacity: 0.5;
+}
+#resultdisplay {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 95%;
+    overflow-x: hidden;
+    font-size: 30px;
+}
+.calculator-btn {
+    width: 90px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 20px;
+    background: #000;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+}
+.btn-2x {
+    flex: 1;
+}
+.buttons-row-1 {
+    display: flex;
+    padding: 0 20px;
+}
+.numbers {
+    padding: 10px 0 0;
+    display: flex;
+    flex-basis: 150%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.operators {
+    padding: 10px 0 0;
+    flex-basis: 40%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.buttons-row-2 {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+}
+.buttons-row-3 {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px 20px;
+}
