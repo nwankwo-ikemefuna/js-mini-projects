@@ -208,13 +208,6 @@ function createButtons(btnGroup, parentContainer) {
   });
 }
 
-function formatNumber(number, maximumFractionDigits, locale = "en-US") {
-  return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits,
-  }).format(number);
-}
-
 function updateOperationsText(result) {
   // for subsequent operations, the result becomes our first operand
   return !isNaN(result) ? formatNumber(result, 6) : "";

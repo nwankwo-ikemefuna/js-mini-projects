@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+body {
+    background: #fff;
+}
+.post-card {
+    margin: 20px;
+    border: 1px solid #eee;
+    padding: 10px 20px;
+}
+.post-title:first-letter {
+    text-transform: capitalize;
+}
+
+.post-meta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+.post-author {
+    display: flex;
+    align-items: center;
+}
+.post-author-avatar {
+    font-size: 25px;
+    margin-right: 7px;
+}
+.post-comments-icon {
+    margin-right: 7px;
+}
+.post-content-container {
+    margin-top: 10px;
+}
+.post-content-snippet:first-letter,
+.post-content-full:first-letter {
+    text-transform: capitalize;
+}
+.post-readmore-link,
+.post-readless-link {
+    display: block;
+}
