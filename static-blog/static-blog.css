@@ -5,15 +5,43 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body {
-    background: #a9a9a9;
+    background: #fff;
 }
-.each-blog {
+.post-card {
     margin: 20px;
-    border: 1px solid black;
+    border: 1px solid #eee;
+    padding: 10px 20px;
 }
-.title-container {
-    font-size: 25px;
-    font-weight: bold;
-    text-align: justify;
+.post-title:first-letter {
     text-transform: capitalize;
+}
+
+.post-meta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+.post-author {
+    display: flex;
+    align-items: center;
+}
+.post-author-avatar {
+    font-size: 25px;
+    margin-right: 7px;
+}
+.post-comments-icon {
+    margin-right: 7px;
+}
+.post-content-container {
+    margin-top: 10px;
+}
+.post-content-snippet:first-letter,
+.post-content-full:first-letter {
+    text-transform: capitalize;
+}
+.post-readmore-link,
+.post-readless-link {
+    display: block;
 }

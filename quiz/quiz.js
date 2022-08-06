@@ -265,15 +265,3 @@ function handleQuestionResponseChange(currentElement, questionNumber, questionTy
 function getSingleQuestion(questionNumber) {
   return questions.find(questionObj => questionObj.number === questionNumber);
 }
-
-/**
- * Check if 2 arrays are equal
- * @param {array} array1 - the first array
- * @param {array} array2 - the second array
- * @returns boolean
- */
-function arrayEquals(array1, array2) {
-  return (array1.length == array2.length) && array1.every(function(element, index) {
-    return element === array2[index]; 
-  });
-}
