@@ -33,13 +33,6 @@ calculator.appendChild(buttonsRow3Container);
 buttonsRow1Container.appendChild(numbersContainer);
 buttonsRow1Container.appendChild(rightOperators);
 
-// TODO: for test ... to be removed
-/*const testButtonsArr = ["T1", "T2", "T3", "T4"];
-const buttonsRow4Container = document.createElement("div");
-buttonsRow4Container.setAttribute("class", "buttons-row-2");
-createButtons(testButtonsArr, buttonsRow4Container);
-calculator.appendChild(buttonsRow4Container);*/
-
 const resultDisplay = document.getElementById("resultdisplay");
 const operationsDisplay = document.getElementById("operationsdisplay");
 const calculatorBtns = document.getElementsByClassName("calculator-btn");
@@ -119,25 +112,7 @@ Array.from(calculatorBtns).forEach((btn) => {
       operationsText = "";
       resultDisplay.textContent = "0";
       operationsDisplay.textContent = "";
-    } else if (btnValue === "%") {
-      // percentage button
-      operationsText += btnValue;
-      operationsDisplay.textContent = operationsText;
-      const result = Number(resultDisplay.textContent) / 100;
-      resultDisplay.textContent = formatNumber(result, 6);
-      operationsText = updateOperationsText(result);
-
-      //TODO: remove (just for testing 'complex' operations)
-    /*} else if (testButtonsArr.includes(btnValue)) {
-      const testButtonValuesObj = {
-        'T1': '8-6/3*7+10',
-        'T2': '8-6/3-5*12+10/4',
-        'T3': '6/3/2*5-88',
-        'T4': '6*3/2*5*11/19+1-5-14',
-      };
-      const tempOperation = testButtonValuesObj[btnValue];
-      operationsText = tempOperation;
-      resultDisplay.textContent = tempOperation;*/
+    
     } else if (btnValue === "=") {
       // equal button
 
@@ -149,8 +124,13 @@ Array.from(calculatorBtns).forEach((btn) => {
 
       console.log("operationsArr before", operationsArr);
 
-      // compute division and multiplication results first (in conformity with BODMAS)
-      
+      // compute %, division and multiplication results (in conformity with BODMAS)
+      /*while (operationsArr.includes('%')) {
+        const result = Number(resultDisplay.textContent) / 100;
+        resultDisplay.textContent = formatNumber(result, 6);
+        operationsText = updateOperationsText(result);
+        operationsArr = computePartDivMultResult(operationsArr, '/');
+      }*/
       while (operationsArr.includes('/')) {
         operationsArr = computePartDivMultResult(operationsArr, '/');
       }
