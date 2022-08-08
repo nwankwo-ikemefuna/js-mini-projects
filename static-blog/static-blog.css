@@ -1,47 +1,66 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 body {
-    background: #fff;
+  background: #fff;
 }
 .post-card {
-    margin: 20px;
-    border: 1px solid #eee;
-    padding: 10px 20px;
+  margin: 20px;
+  border: 1px solid #eee;
+  padding: 10px 20px;
 }
 .post-title:first-letter {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .post-meta-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    opacity: 0.7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  opacity: 0.7;
 }
 .post-author {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .post-author-avatar {
-    font-size: 25px;
-    margin-right: 7px;
+  font-size: 25px;
+  margin-right: 7px;
+}
+.post-comments-meta-container {
+  cursor: pointer;
 }
 .post-comments-icon {
-    margin-right: 7px;
+  margin-right: 7px;
+}
+.post-comments-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.post-single-comment {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.post-single-comment:last-child {
+  border-bottom: none;
+}
+.commenter-email {
+  display: block;
+  margin-top: 10px;
 }
 .post-content-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .post-content-snippet:first-letter,
 .post-content-full:first-letter {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 .post-readmore-link,
 .post-readless-link {
-    display: block;
+  display: block;
 }

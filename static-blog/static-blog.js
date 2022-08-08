@@ -1,18 +1,6 @@
-
-window.onload = function () {
-  createModal('sampleModal', 'Sample Modal');
-}
-
-const sampleModalButton = document.getElementById('sampleModalButton');
-sampleModalButton.onclick = function () {
-  const sampleModalContent = createElementWithAttributes('h4', { class: "sample-modal" });
-  sampleModalContent.textContent = `Sample modal body content....Lorem Ipsum`;
-  displayModal('sampleModal', 'sampleModalButton', sampleModalContent);
-}
-
-const blogContainer = document.getElementById("blog");
-
 const fetchPosts = async () => {
+
+  const blogContainer = document.getElementById("blog");
   
   // fetch all users
   const allUsersReqResponse = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -45,13 +33,16 @@ const fetchPosts = async () => {
 
     // comments
     const commentsIcon = createElementWithAttributes('i', { class: "fas fa-comments post-comments-icon" });
-    const commentsContainer = createElementWithAttributes('div', { class: "post-comments-container" });
+    const commentsMetaContainer = createElementWithAttributes('div', { 
+      class: "post-comments-meta-container",
+      id: `post-comments-meta-container-${post.id}`,
+    });
     const postComments = allComments.filter(comment => comment.postId === post.id);
-    commentsContainer.append(commentsIcon, postComments.length);
+    commentsMetaContainer.append(commentsIcon, postComments.length);
 
     // post meta
     const postMetaContainer = createElementWithAttributes('div', { class: "post-meta-container" });
-    postMetaContainer.append(postAuthorContainer, commentsContainer);
+    postMetaContainer.append(postAuthorContainer, commentsMetaContainer);
 
     // post content snippet - first 10 words
     const postContentSnippet = createElementWithAttributes('div', { class: "post-content-snippet" });
@@ -59,7 +50,7 @@ const fetchPosts = async () => {
       class: "post-readmore-link",
       href: '#'
     });
-    readMoreLink.textContent = 'Read more';
+    readMoreLink.innerHTML = '<br /> Read more';
     postContentSnippet.append(post.body.slice(0, 50), '...', readMoreLink);
 
     // post content snippet - first 10 words
@@ -68,7 +59,7 @@ const fetchPosts = async () => {
       class: "post-readless-link",
       href: '#'
     });
-    readLessLink.textContent = 'Read less';
+    readLessLink.innerHTML = '<br /> Read less';
     postContentFull.style.display = 'none';
     postContentFull.append(post.body, readLessLink);
 
@@ -90,6 +81,18 @@ const fetchPosts = async () => {
       postContentSnippet.style.display = 'block';
       postContentFull.style.display = 'none';
     });
+
+    commentsMetaContainer.onclick = function () {
+      const commentsContainer = createElementWithAttributes('div', { class: 'post-comments-container' });
+      postComments.forEach(comment => {
+        const singleCommentContainer = createElementWithAttributes('article', { class: 'post-single-comment' });
+        const commenterEmailContainer = createElementWithAttributes('em', { class: 'commenter-email' });
+        commenterEmailContainer.textContent = `- ${comment.email}`;
+        singleCommentContainer.append(comment.body, commenterEmailContainer);
+        commentsContainer.append(singleCommentContainer);
+      });
+      displayModal(`commentsModal-${post.id}`, `Comments - ${post.title}`, commentsContainer);
+    }
   });
 };
 
