@@ -1,19 +1,21 @@
+const apiUrl = 'https://jsonplaceholder.typicode.com';
+
 const fetchPosts = async () => {
 
   const blogContainer = document.getElementById("blog");
   
   // fetch all users
-  const allUsersReqResponse = await fetch("https://jsonplaceholder.typicode.com/users");
+  const allUsersReqResponse = await fetch(`${apiUrl}/users`);
   const allUsers = await allUsersReqResponse.json();
   console.log('allUsers', allUsers);
 
   // fetch all users
-  const allCommentsReqResponse = await fetch("https://jsonplaceholder.typicode.com/comments");
+  const allCommentsReqResponse = await fetch(`${apiUrl}/comments`);
   const allComments = await allCommentsReqResponse.json();
   console.log('allComments', allComments);
 
   // fetch all posts
-  const postsReqresponse = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const postsReqresponse = await fetch(`${apiUrl}/posts`);
   // get the data as a javascript object (or array)
   const posts = await postsReqresponse.json();
 
