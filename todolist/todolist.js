@@ -52,7 +52,8 @@ addOrEditTodoButton.addEventListener("click", () => {
   listItem.setAttribute("class", "todo-list");
   listItem.appendChild(listItemNameElement);
   listItem.appendChild(actionButtons);
-  todoList.appendChild(listItem);
+
+  todoList.prepend(listItem);
 
   actionButtons.appendChild(deleteButton);
   actionButtons.appendChild(editButton);
