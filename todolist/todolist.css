@@ -46,8 +46,7 @@ ul {
   border: 1px solid #ddd;
   border-radius: 15px;
   background: #ddd;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 14px;
 }
 .input-text::placeholder {
   font-style: oblique;
@@ -77,21 +76,23 @@ ul {
   border: 1px solid #8f94fb;
   border-radius: 5px;
   background: #ddd;
-  font-size: 20px;
-  line-height: 40px;
+  font-size: 14px;
+  line-height: 20px;
   margin: 20px 30px;
   text-transform: capitalize;
-  padding-left: 10px;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.actionbuttons {
-  width: 150px;
-  margin-right: 10px;
+.todo-list.checked {
+  text-decoration: line-through;
+}
+.todo-list-actions {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  column-gap: 5px;
 }
 .deletebutton,
 .checkbutton,
@@ -114,21 +115,6 @@ ul {
   color: #fff;
   font-weight: bold;
 }
-.checked {
-  text-decoration: line-through;
-  font-style: italic;
-  border: 1px solid #8f94fb;
-  border-radius: 5px;
-  background: #ddd;
-  font-size: 20px;
-  line-height: 40px;
-  margin: 20px 30px;
-  text-transform: capitalize;
-  padding-left: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .clearbutton:hover {
   background: #000;
   color: #fff;
@@ -142,7 +128,7 @@ ul {
   font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 .clear {
   display: flex;

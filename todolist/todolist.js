@@ -1,3 +1,17 @@
+const apiUrl = "https://jsonplaceholder.typicode.com";
+
+const fetchTodos = async () => {
+  const allTodosReqResponse = await fetch(`${apiUrl}/todos`);
+  const allTodos = await allTodosReqResponse.json();
+  console.log("allTodos", allTodos);
+
+  allTodos.forEach((todo) => {
+    createAndDisplayTodoListRow(todo.title, todo.completed);
+  });
+};
+
+fetchTodos();
+
 const addOrEditTodoButton = document.getElementById("add-button");
 const todoList = document.getElementById("list");
 const todoInput = document.getElementById("todo-input");
@@ -18,15 +32,25 @@ addOrEditTodoButton.addEventListener("click", () => {
       currentlyEditedListItem.querySelector(".todo-list-name");
     const editButtonElement =
       currentlyEditedListItem.querySelector(".editbutton");
-    listItemNameElement.innerText = todoInput.value;
+    listItemNameElement.innerText = todoItem;
     editButtonElement.removeAttribute("disabled");
     addOrEditTodoButton.textContent = "Add";
     todoInput.value = "";
     return;
   }
 
+  createAndDisplayTodoListRow(todoItem);
+  todoInput.value = "";
+});
+
+clearButton.addEventListener("click", () => {
+  todoList.innerHTML = "";
+  setClearButtonDisplay("none");
+});
+
+function createAndDisplayTodoListRow(todoListItem, isCompleted = false) {
   const actionButtons = document.createElement("div");
-  actionButtons.setAttribute("class", "actionbuttons");
+  actionButtons.setAttribute("class", "todo-list-actions");
 
   const deleteButton = document.createElement("button");
   deleteButton.setAttribute("class", "deletebutton");
@@ -45,31 +69,27 @@ addOrEditTodoButton.addEventListener("click", () => {
 
   const listItemNameElement = document.createElement("span");
   listItemNameElement.setAttribute("class", "todo-list-name");
-  listItemNameElement.innerText = todoInput.value;
-  todoInput.value = "";
+  listItemNameElement.innerText = todoListItem;
 
+  let todoListItemClass = 'todo-list';
+  if (isCompleted) {
+    todoListItemClass += ' checked';
+  }
   const listItem = document.createElement("div");
-  listItem.setAttribute("class", "todo-list");
+  listItem.setAttribute("class", todoListItemClass);
   listItem.appendChild(listItemNameElement);
   listItem.appendChild(actionButtons);
 
   todoList.prepend(listItem);
 
-  actionButtons.appendChild(deleteButton);
-  actionButtons.appendChild(editButton);
-  actionButtons.appendChild(checkButton);
+  actionButtons.append(deleteButton, editButton, checkButton);
 
   setClearButtonDisplay("block");
 
   attachTodoListActionEventListener("delete", "deletebutton");
   attachTodoListActionEventListener("edit", "editbutton");
   attachTodoListActionEventListener("check", "checkbutton");
-});
-
-clearButton.addEventListener("click", () => {
-  todoList.innerHTML = "";
-  setClearButtonDisplay("none");
-});
+}
 
 function attachTodoListActionEventListener(actionType, actionClassName) {
   const actionElements = document.getElementsByClassName(actionClassName);
