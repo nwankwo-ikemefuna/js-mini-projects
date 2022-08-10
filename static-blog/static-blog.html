@@ -5,17 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Static Blog</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
     <link rel="stylesheet" href="../helpers/css/modal.css" />
     <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="testing.css" />
     <link rel="stylesheet" href="static-blog.css" />
   </head>
   <body>
+    <div class="container">
+      <button id="add-new-post-button" class="btn btn-info btn-lg">
+        add post
+      </button>
+    </div>
+
+    <section class="create-new-blog" id="new-post-container">
+      <form class="new-blog-form" id="post-form">
+        <div class="form-title-container">
+          <span class="form-title">Blog Title</span>
+          <input
+            class="input-blog-title"
+            name="blog-title"
+            type="text"
+            id="new-blog-title"
+            maxlength="100"
+          />
+        </div>
+        <div class="user-id-container">
+          <span class="form-user-id">Author</span>
+          <select id="post-author" class="post-author">
+            <option value="">Select</option>
+          </select>
+        </div>
+        <div class="body-container">
+          <span class="form-body-title">Blog Body</span>
+          <textarea class="input-blog-body" id="new-post-body"></textarea>
+        </div>
+        <div class="footer-container">
+          <button
+            class="submit-button"
+            id="submit-new-post-button">
+            Submit post
+          </button>
+        </div>
+      </form>
+    </section>
+
     <div id="blog">
       <!--Render blog posts dynamically -->
     </div>
+    
     <script src="../helpers/js/modal.js"></script>
     <script src="../helpers/js/dom.js"></script>
+    <script src="static-blog-form.js"></script>
     <script src="static-blog.js"></script>
   </body>
 </html>
