@@ -1,11 +1,9 @@
 a.disabled {
   pointer-events: none;
 }
-
 button:not(:disabled):not(.disabled) {
   cursor: pointer;
 }
-
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -75,4 +73,30 @@ button:not(:disabled):not(.disabled) {
   font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.3rem;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group .form-control {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
