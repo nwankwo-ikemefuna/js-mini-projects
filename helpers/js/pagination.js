@@ -1,28 +1,16 @@
-function paginate(paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1) {
+function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1) {
   const numberOfItems = itemsArr.length;
   const numberOfPages = Math.ceil(numberOfItems / perPage);
   if (numberOfItems < 2) {
     return;
   }
 
-  const paginationContainer = document.getElementById(paginationLinksContainerId);
-  // add pagination class to the container
-  paginationContainer.classList.add('pagination');
-
-  // empty the container so we can display new links 
-  paginationContainer.innerHTML = "";
+  // create the pagination links container and empty it so we can display updated links 
+  const paginationLinksContainer = createElementWithAttributes('div', { class: 'pagination-links' });
+  paginationLinksContainer.innerHTML = "";
 
   const numLinkStartIndex = currentPage > maxNumLinks ? currentPage - maxNumLinks : 0;
   const numLinkEndIndex = numLinkStartIndex + maxNumLinks;
-
-  // previous page link
-  const previousPageLink = createElementWithAttributes('a', { 
-    href: '#',
-    class: `pagination-link${currentPage === (numLinkStartIndex + 1) ? ' disabled' : ''}`,
-    'data-page': currentPage === (numLinkStartIndex + 1) ? currentPage : currentPage - 1,
-  });
-  previousPageLink.innerHTML = '&laquo;';
-  paginationContainer.appendChild(previousPageLink);
 
   for (let page = numLinkStartIndex; page < numLinkEndIndex; page++) {
     const pageNum = page + 1;
@@ -32,22 +20,32 @@ function paginate(paginationLinksContainerId, paginatedItemsContainerId, itemsAr
       'data-page': pageNum,
     });
     pageLink.textContent = pageNum;
-    paginationContainer.appendChild(pageLink);
+    paginationLinksContainer.appendChild(pageLink);
 
-    onPaginationLinkClick(pageLink, paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks, pageNum);
+    onPaginationLinkClick(pageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, pageNum);
   }
 
+  // previous page link
+  const previousPageNum = currentPage === (numLinkStartIndex + 1) ? currentPage : currentPage - 1;
+  const previousPageLink = createElementWithAttributes('a', { 
+    href: '#',
+    class: `pagination-link${currentPage === (numLinkStartIndex + 1) ? ' disabled' : ''}`,
+    'data-page': previousPageNum,
+  });
+  previousPageLink.innerHTML = '&laquo;';
+  paginationLinksContainer.prepend(previousPageLink);
+  onPaginationLinkClick(previousPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, previousPageNum);
+
   // next page link
+  const nextPageNum = currentPage === numberOfPages ? currentPage : currentPage + 1;
   const nextPageLink = createElementWithAttributes('a', { 
     href: '#',
     class: `pagination-link${currentPage === numberOfPages ? ' disabled' : ''}`,
-    'data-page': currentPage === numberOfPages ? currentPage : currentPage + 1,
+    'data-page': nextPageNum,
   });
   nextPageLink.innerHTML = '&raquo;';
-  paginationContainer.appendChild(nextPageLink);
-
-  onPaginationLinkClick(previousPageLink, paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks);
-  onPaginationLinkClick(nextPageLink, paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks);
+  paginationLinksContainer.appendChild(nextPageLink);
+  onPaginationLinkClick(nextPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, nextPageNum);
 
   // handle the pagination 
   const start = (currentPage - 1) * perPage;
@@ -55,18 +53,22 @@ function paginate(paginationLinksContainerId, paginatedItemsContainerId, itemsAr
   const paginatedItems = itemsArr.slice(start, end);
 
   // render the paginated items into its container
-  const paginatedItemsContainer = document.getElementById(paginatedItemsContainerId);
-  paginatedItemsContainer.innerHTML = "";
+  const paginatedItemsContainer = createElementWithAttributes('div', { class: 'pagination-items' });
   Array.from(paginatedItems).forEach(item => {
     paginatedItemsContainer.append(item);
   });
+
+  // append the pagination links container
+  const itemsContainer = document.getElementById(itemsContainerId);
+  itemsContainer.innerHTML = "";
+  itemsContainer.append(paginatedItemsContainer, paginationLinksContainer);
 }
 
-function onPaginationLinkClick(linkElement, paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks, page = null) {
+function onPaginationLinkClick(linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page) {
   linkElement.onclick = event => {
     if (!page) {
-      page = event.target.dataset.page;
+      page = +event.target.dataset.page;
     }
-    return paginate(paginationLinksContainerId, paginatedItemsContainerId, itemsArr, perPage, maxNumLinks, +page);
+    return paginate(itemsContainerId, itemsArr, perPage, maxNumLinks, page);
   }
 }

@@ -68,8 +68,8 @@ const fetchPosts = async () => {
     postContentContainer.append(postContentSnippet, postContentFull);
 
     // post card container
-    const postCard = createElementWithAttributes('div', { class: "post-card" });
-    postCard.append(postTitle, postMetaContainer, postContentContainer);
+    const postCardContainer = createElementWithAttributes('div', { class: "post-card" });
+    postCardContainer.append(postTitle, postMetaContainer, postContentContainer);
 
     readMoreLink.addEventListener('click', () => {
       postContentSnippet.style.display = 'none';
@@ -81,23 +81,32 @@ const fetchPosts = async () => {
     });
 
     commentsMetaContainer.onclick = function () {
-      const commentsContainer = createElementWithAttributes('div', { class: 'post-comments-container' });
+      const commentsContainerId = `post-comments-container-${post.id}`;
+      const commentsContainer = createElementWithAttributes('div', { 
+        class: 'post-comments-container',
+        id: commentsContainerId,
+      });
+      const commentsCardsArr = [];
       postComments.forEach(comment => {
         const singleCommentContainer = createElementWithAttributes('article', { class: 'post-single-comment' });
         const commenterEmailContainer = createElementWithAttributes('em', { class: 'commenter-email' });
         commenterEmailContainer.textContent = `- ${comment.email}`;
         singleCommentContainer.append(comment.body, commenterEmailContainer);
-        commentsContainer.append(singleCommentContainer);
+        commentsCardsArr.push(singleCommentContainer);
       });
+      // show the comments modal
       displayModal(`commentsModal-${post.id}`, `Comments - ${post.title}`, commentsContainer);
+      // paginate the comments
+      paginate(commentsContainerId, commentsCardsArr, 2);
+
     }
 
     // append card to blog container 
-    postsCardsArr.push(postCard);
+    postsCardsArr.push(postCardContainer);
   });
 
-  // pagination
-  paginate('postsPaginationLinks', 'blogPosts', postsCardsArr, 5);
+  // paginate posts
+  paginate('blogPosts', postsCardsArr, 5);
 };
 
 fetchPosts();
