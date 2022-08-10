@@ -25,15 +25,7 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
     numLinkEnd = numberOfPages;
   }
 
-  console.log('numberOfPages', numberOfPages);
-  console.log('currentPage', currentPage);
-  console.log('numLinkStart', numLinkStart);
-  console.log('numLinkEnd', numLinkEnd);
-
   for (let pageNum = numLinkStart; pageNum <= numLinkEnd; pageNum++) {
-    /*if (pageNum > maxNumLinks) {
-      break;
-    }*/
     const pageLink = createElementWithAttributes('a', { 
       href: '#',
       class: `pagination-link${currentPage === pageNum ? ' active' : ''}`,
