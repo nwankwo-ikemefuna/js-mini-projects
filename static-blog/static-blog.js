@@ -1,21 +1,16 @@
-const apiUrl = 'https://jsonplaceholder.typicode.com';
-
 const fetchPosts = async () => {
   
   // fetch all users
-  const allUsersReqResponse = await fetch(`${apiUrl}/users`);
-  const allUsers = await allUsersReqResponse.json();
-  //console.log('allUsers', allUsers);
+  const allUsers = await makeHttpRequest('users');
+  console.log('allUsers', allUsers);
 
-  // fetch all users
-  const allCommentsReqResponse = await fetch(`${apiUrl}/comments`);
-  const allComments = await allCommentsReqResponse.json();
-  //console.log('allComments', allComments);
+  // fetch all comments
+  const allComments = await makeHttpRequest('comments');
+  console.log('allComments', allComments);
 
   // fetch all posts
-  const postsReqresponse = await fetch(`${apiUrl}/posts`);
-  const posts = await postsReqresponse.json();
-  //console.log('posts', posts);
+  const posts = await makeHttpRequest('posts');
+  console.log('posts', posts);
 
   const postsCardsArr = [];
   posts.forEach(post => {
