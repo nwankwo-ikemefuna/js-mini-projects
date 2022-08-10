@@ -97,8 +97,7 @@ const fetchPosts = async () => {
       // show the comments modal
       displayModal(`commentsModal-${post.id}`, `Comments - ${post.title}`, commentsContainer);
       // paginate the comments
-      paginate(commentsContainerId, commentsCardsArr, 2);
-
+      paginate(commentsContainerId, commentsCardsArr, 3);
     }
 
     // append card to blog container 
@@ -106,7 +105,7 @@ const fetchPosts = async () => {
   });
 
   // paginate posts
-  paginate('blogPosts', postsCardsArr, 5);
+  paginate('blogPosts', postsCardsArr, 10);
 };
 
 fetchPosts();

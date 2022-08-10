@@ -1,7 +1,13 @@
-function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1) {
+const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1) => {
+  
+  const itemsContainer = document.getElementById(itemsContainerId);
+  itemsContainer.innerHTML = "";
+  
   const numberOfItems = itemsArr.length;
   const numberOfPages = Math.ceil(numberOfItems / perPage);
-  if (numberOfItems < 2) {
+
+  if (numberOfItems <= perPage || numberOfItems <= maxNumLinks) {
+    renderPaginatedItems(itemsContainer, itemsArr);
     return;
   }
 
@@ -9,11 +15,25 @@ function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   const paginationLinksContainer = createElementWithAttributes('div', { class: 'pagination-links' });
   paginationLinksContainer.innerHTML = "";
 
-  const numLinkStartIndex = currentPage > maxNumLinks ? currentPage - maxNumLinks : 0;
-  const numLinkEndIndex = numLinkStartIndex + maxNumLinks;
+  let numLinkStart = currentPage === 1 ? 1 : currentPage - 1;
+  if (currentPage >= numberOfPages && numberOfPages >= maxNumLinks) {
+    numLinkStart -= 1;
+  }
 
-  for (let page = numLinkStartIndex; page < numLinkEndIndex; page++) {
-    const pageNum = page + 1;
+  let numLinkEnd = numLinkStart + maxNumLinks - 1;
+  if (currentPage <= numberOfPages && numberOfPages <= maxNumLinks) {
+    numLinkEnd = numberOfPages;
+  }
+
+  console.log('numberOfPages', numberOfPages);
+  console.log('currentPage', currentPage);
+  console.log('numLinkStart', numLinkStart);
+  console.log('numLinkEnd', numLinkEnd);
+
+  for (let pageNum = numLinkStart; pageNum <= numLinkEnd; pageNum++) {
+    /*if (pageNum > maxNumLinks) {
+      break;
+    }*/
     const pageLink = createElementWithAttributes('a', { 
       href: '#',
       class: `pagination-link${currentPage === pageNum ? ' active' : ''}`,
@@ -26,11 +46,12 @@ function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   }
 
   // previous page link
-  const previousPageNum = currentPage === (numLinkStartIndex + 1) ? currentPage : currentPage - 1;
+  const previousPageNum = currentPage === numLinkStart ? currentPage : currentPage - 1;
   const previousPageLink = createElementWithAttributes('a', { 
     href: '#',
-    class: `pagination-link${currentPage === (numLinkStartIndex + 1) ? ' disabled' : ''}`,
+    class: `pagination-link${currentPage === numLinkStart ? ' disabled' : ''}`,
     'data-page': previousPageNum,
+    title: 'Previous'
   });
   previousPageLink.innerHTML = '&laquo;';
   paginationLinksContainer.prepend(previousPageLink);
@@ -42,6 +63,7 @@ function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
     href: '#',
     class: `pagination-link${currentPage === numberOfPages ? ' disabled' : ''}`,
     'data-page': nextPageNum,
+    title: 'Next'
   });
   nextPageLink.innerHTML = '&raquo;';
   paginationLinksContainer.appendChild(nextPageLink);
@@ -54,21 +76,28 @@ function paginate(itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
 
   // render the paginated items into its container
   const paginatedItemsContainer = createElementWithAttributes('div', { class: 'pagination-items' });
-  Array.from(paginatedItems).forEach(item => {
-    paginatedItemsContainer.append(item);
-  });
+  renderPaginatedItems(paginatedItemsContainer, paginatedItems);
 
-  // append the pagination links container
-  const itemsContainer = document.getElementById(itemsContainerId);
-  itemsContainer.innerHTML = "";
+  // append the pagination links container to the items container
   itemsContainer.append(paginatedItemsContainer, paginationLinksContainer);
 }
 
-function onPaginationLinkClick(linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page) {
+const onPaginationLinkClick = (linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page) => {
   linkElement.onclick = event => {
     if (!page) {
       page = +event.target.dataset.page;
     }
+    const numberOfPages = Math.ceil(itemsArr.length / perPage);
+    if (page < 1 || page > numberOfPages) {
+      // not likely but just in case
+      return;
+    }
     return paginate(itemsContainerId, itemsArr, perPage, maxNumLinks, page);
   }
+}
+
+const renderPaginatedItems = (itemsContainer, itemsArr) => {
+  Array.from(itemsArr).forEach(item => {
+    itemsContainer.append(item);
+  });
 }
