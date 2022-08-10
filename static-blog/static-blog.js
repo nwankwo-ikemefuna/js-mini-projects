@@ -1,29 +1,28 @@
 const apiUrl = 'https://jsonplaceholder.typicode.com';
 
 const fetchPosts = async () => {
-
-  const blogContainer = document.getElementById("blog");
   
   // fetch all users
   const allUsersReqResponse = await fetch(`${apiUrl}/users`);
   const allUsers = await allUsersReqResponse.json();
-  console.log('allUsers', allUsers);
+  //console.log('allUsers', allUsers);
 
   // fetch all users
   const allCommentsReqResponse = await fetch(`${apiUrl}/comments`);
   const allComments = await allCommentsReqResponse.json();
-  console.log('allComments', allComments);
+  //console.log('allComments', allComments);
 
   // fetch all posts
   const postsReqresponse = await fetch(`${apiUrl}/posts`);
-  // get the data as a javascript object (or array)
   const posts = await postsReqresponse.json();
+  //console.log('posts', posts);
 
-  posts.forEach((post) => {
+  const postsCardsArr = [];
+  posts.forEach(post => {
     
     // title
     const postTitle = createElementWithAttributes('h3', { class: "post-title" });
-    postTitle.textContent = post.title;
+    postTitle.textContent = `${post.id} ${post.title}`;
 
     // author
     const avatarIcon = createElementWithAttributes('i', { class: "fas fa-user-circle post-author-avatar" });
@@ -72,14 +71,11 @@ const fetchPosts = async () => {
     const postCard = createElementWithAttributes('div', { class: "post-card" });
     postCard.append(postTitle, postMetaContainer, postContentContainer);
 
-    // append card to blog container
-    blogContainer.appendChild(postCard);
-
-    readMoreLink.addEventListener('click', _ => {
+    readMoreLink.addEventListener('click', () => {
       postContentSnippet.style.display = 'none';
       postContentFull.style.display = 'block';
     });
-    readLessLink.addEventListener('click', _ => {
+    readLessLink.addEventListener('click', () => {
       postContentSnippet.style.display = 'block';
       postContentFull.style.display = 'none';
     });
@@ -95,7 +91,13 @@ const fetchPosts = async () => {
       });
       displayModal(`commentsModal-${post.id}`, `Comments - ${post.title}`, commentsContainer);
     }
+
+    // append card to blog container 
+    postsCardsArr.push(postCard);
   });
+
+  // pagination
+  paginate('postsPaginationLinks', 'blogPosts', postsCardsArr, 5);
 };
 
 fetchPosts();
