@@ -5,7 +5,7 @@ const fetchTodos = async () => {
   const allTodos = await allTodosReqResponse.json();
   console.log("allTodos", allTodos);
 
-  allTodos.forEach((todo) => {
+  allTodos.forEach(todo => {
     createAndDisplayTodoListRow(todo.title, todo.completed);
   });
 };
@@ -13,7 +13,7 @@ const fetchTodos = async () => {
 fetchTodos();
 
 const addOrEditTodoButton = document.getElementById("add-button");
-const todoList = document.getElementById("list");
+const todoListContainer = document.getElementById("list");
 const todoInput = document.getElementById("todo-input");
 const clearButton = document.getElementById("clearbutton");
 
@@ -44,14 +44,11 @@ addOrEditTodoButton.addEventListener("click", () => {
 });
 
 clearButton.addEventListener("click", () => {
-  todoList.innerHTML = "";
+  todoListContainer.innerHTML = "";
   setClearButtonDisplay("none");
 });
 
 function createAndDisplayTodoListRow(todoListItem, isCompleted = false) {
-  const actionButtons = document.createElement("div");
-  actionButtons.setAttribute("class", "todo-list-actions");
-
   const deleteButton = document.createElement("button");
   deleteButton.setAttribute("class", "deletebutton");
   deleteButton.setAttribute("type", "button");
@@ -67,6 +64,10 @@ function createAndDisplayTodoListRow(todoListItem, isCompleted = false) {
   deleteButton.setAttribute("type", "button");
   checkButton.textContent = "C";
 
+  const actionButtons = document.createElement("div");
+  actionButtons.setAttribute("class", "todo-list-actions");
+  actionButtons.append(deleteButton, editButton, checkButton);
+
   const listItemNameElement = document.createElement("span");
   listItemNameElement.setAttribute("class", "todo-list-name");
   listItemNameElement.innerText = todoListItem;
@@ -75,14 +76,12 @@ function createAndDisplayTodoListRow(todoListItem, isCompleted = false) {
   if (isCompleted) {
     todoListItemClass += ' checked';
   }
-  const listItem = document.createElement("div");
-  listItem.setAttribute("class", todoListItemClass);
-  listItem.appendChild(listItemNameElement);
-  listItem.appendChild(actionButtons);
+  const listItemContainer = document.createElement("div");
+  listItemContainer.setAttribute("class", todoListItemClass);
+  listItemContainer.appendChild(listItemNameElement);
+  listItemContainer.appendChild(actionButtons);
 
-  todoList.prepend(listItem);
-
-  actionButtons.append(deleteButton, editButton, checkButton);
+  todoListContainer.prepend(listItemContainer);
 
   setClearButtonDisplay("block");
 
