@@ -254,3 +254,4 @@ const createAndDisplaySinglePostCard = (
   };
   return postCardContainer;
 };
+
