@@ -218,7 +218,23 @@ const createAndDisplaySinglePostCard = (
   commentsMetaContainer.onclick = function () {
     newPostCommentForm.style.display = "block";
 
-    const commentsContainerId = `post-comments-container-${post.id}`;
+    
+    // show the comments modal
+    displayModal(
+      `commentsModal-${post.id}`,
+      `Comments - ${post.title}`,
+      commentsContainer,
+      null,
+      false
+    );
+    // paginate the comments
+    paginate(commentsContainerId, commentsCardsArr, 3);
+  };
+  return postCardContainer;
+};
+
+function createAndDisplaySingleComment() {
+  const commentsContainerId = `post-comments-container-${post.id}`;
     const commentsContainer = createElementWithAttributes("div", {
       class: "post-comments-container",
       id: commentsContainerId,
@@ -241,17 +257,4 @@ const createAndDisplaySinglePostCard = (
       );
       commentsCardsArr.push(singleCommentContainer);
     });
-    // show the comments modal
-    displayModal(
-      `commentsModal-${post.id}`,
-      `Comments - ${post.title}`,
-      commentsContainer,
-      null,
-      false
-    );
-    // paginate the comments
-    paginate(commentsContainerId, commentsCardsArr, 3);
-  };
-  return postCardContainer;
-};
-
+}
