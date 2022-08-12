@@ -1,45 +1,46 @@
-const newPostButton = document.getElementById('new-post-button');
-const newPostFormContainer = document.getElementById('new-post-container');
-const postAuthorSelect = document.getElementById('input-post-author');
-const submitPostButton = document.getElementById('submit-post-button');
-const closePostFormButton = document.getElementById('close-post-form-button');
+const newPostButton = document.getElementById("new-post-button");
+const newPostFormContainer = document.getElementById("new-post-container");
+const postAuthorSelect = document.getElementById("input-post-author");
+const submitPostButton = document.getElementById("submit-post-button");
+const closePostFormButton = document.getElementById("close-post-form-button");
 
 const postsCardsArr = [];
 let lastCustomPostId = 100;
 
 // show new post form
 newPostButton.onclick = () => {
-  newPostFormContainer.style.display = 'block';
-  newPostButton.style.display = 'none';
-}
+  newPostFormContainer.style.display = "block";
+  newPostButton.style.display = "none";
+};
 
 // close post form
 closePostFormButton.onclick = () => {
-  newPostFormContainer.style.display = 'none';
-  newPostButton.style.display = 'block';
-}
+  newPostFormContainer.style.display = "none";
+  newPostButton.style.display = "block";
+};
 
 // post submission
 submitPostButton.onclick = () => {
-  const postTitleInput = document.getElementById('input-post-title');
-  const postAuthorInput = document.getElementById('input-post-author');
-  const postBodyInput = document.getElementById('input-post-body');
+  const postTitleInput = document.getElementById("input-post-title");
+  const postAuthorInput = document.getElementById("input-post-author");
+  const postBodyInput = document.getElementById("input-post-body");
 
   if (!postTitleInput.value || !postAuthorInput.value || !postBodyInput.value) {
-    alert('Please fill all fields');
+    alert("Please fill all fields");
     return;
   }
 
   lastCustomPostId++;
-  
+
   const postObj = {
     id: lastCustomPostId,
     title: postTitleInput.value,
     userId: postAuthorInput.value,
-    body: postBodyInput.value
+    body: postBodyInput.value,
   };
 
-  const postAuthor = postAuthorInput.options[postAuthorInput.selectedIndex].text;
+  const postAuthor =
+    postAuthorInput.options[postAuthorInput.selectedIndex].text;
 
   const postCardContainer = createAndDisplaySinglePostCard(postObj, postAuthor);
   postsCardsArr.unshift(postCardContainer);
@@ -51,9 +52,9 @@ submitPostButton.onclick = () => {
   postAuthorInput.value = "";
   postBodyInput.value = "";
 
-  newPostFormContainer.style.display = 'none';
-  newPostButton.style.display = 'block';
-}
+  newPostFormContainer.style.display = "none";
+  newPostButton.style.display = "block";
+};
 
 const fetchPosts = async () => {
   // fetch all users
@@ -61,7 +62,9 @@ const fetchPosts = async () => {
   //console.log("allUsers", allUsers);
 
   allUsers.forEach((user) => {
-    const authorOption = createElementWithAttributes('option', { value: user.id });
+    const authorOption = createElementWithAttributes("option", {
+      value: user.id,
+    });
     authorOption.textContent = user.name;
     postAuthorSelect.appendChild(authorOption);
   });
@@ -81,7 +84,11 @@ const fetchPosts = async () => {
     const postComments = allComments.filter(
       (comment) => comment.postId === postObj.id
     );
-    const postCardContainer = createAndDisplaySinglePostCard(postObj, postAuthor, postComments);
+    const postCardContainer = createAndDisplaySinglePostCard(
+      postObj,
+      postAuthor,
+      postComments
+    );
 
     postsCardsArr.push(postCardContainer);
   });
@@ -92,7 +99,11 @@ const fetchPosts = async () => {
 
 fetchPosts();
 
-const createAndDisplaySinglePostCard = (post, postAuthor, postComments = []) => {
+const createAndDisplaySinglePostCard = (
+  post,
+  postAuthor,
+  postComments = []
+) => {
   // title
   const postTitle = createElementWithAttributes("h3", { class: "post-title" });
   postTitle.textContent = `${post.id} ${post.title}`;
@@ -169,13 +180,52 @@ const createAndDisplaySinglePostCard = (post, postAuthor, postComments = []) => 
     postContentFull.style.display = "none";
   });
 
+  const newPostCommentForm = document.getElementById("new-post-comment");
+  const inputCommenterEmail = document.getElementById("commenter-email");
+  const inputPostComment = document.getElementById("input-post-comment");
+  const submitCommentFormButton = document.getElementById(
+    "submit-comment-button"
+  );
+  const clearCommentFormButton = document.getElementById(
+    "clear-comment-form-button"
+  );
+
+  clearCommentFormButton.addEventListener("click", () => {
+    inputCommenterEmail.value = "";
+    inputPostComment.value = "";
+    return;
+  });
+
+  let lastCustomCommentId = 500;
+
+  submitCommentFormButton.addEventListener("click", () => {
+    if (!inputCommenterEmail.value || !inputPostComment.value) {
+      alert("Please fill the form");
+      return;
+    }
+
+    lastCustomCommentId++;
+
+    const commentObj = {
+      id: lastCustomCommentId,
+      body: inputPostComment.value,
+      email: inputCommenterEmail.value,
+    };
+
+    
+  });
+
   commentsMetaContainer.onclick = function () {
+    newPostCommentForm.style.display = "block";
+
     const commentsContainerId = `post-comments-container-${post.id}`;
     const commentsContainer = createElementWithAttributes("div", {
       class: "post-comments-container",
       id: commentsContainerId,
     });
     const commentsCardsArr = [];
+
+  
     postComments.forEach((comment) => {
       const singleCommentContainer = createElementWithAttributes("article", {
         class: "post-single-comment",
@@ -184,18 +234,23 @@ const createAndDisplaySinglePostCard = (post, postAuthor, postComments = []) => 
         class: "commenter-email",
       });
       commenterEmailContainer.textContent = `- ${comment.email}`;
-      singleCommentContainer.append(comment.body, commenterEmailContainer);
+      singleCommentContainer.append(
+        comment.body,
+        commenterEmailContainer,
+        newPostCommentForm
+      );
       commentsCardsArr.push(singleCommentContainer);
     });
     // show the comments modal
     displayModal(
       `commentsModal-${post.id}`,
       `Comments - ${post.title}`,
-      commentsContainer
+      commentsContainer,
+      null,
+      false
     );
     // paginate the comments
     paginate(commentsContainerId, commentsCardsArr, 3);
   };
-
   return postCardContainer;
 };

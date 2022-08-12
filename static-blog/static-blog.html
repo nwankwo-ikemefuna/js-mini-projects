@@ -16,12 +16,14 @@
   </head>
   <body>
     <div class="container-fixed">
-      
-      <div class="new-post-button-container section" id="new-post-button-container">
+      <div
+        class="new-post-button-container section"
+        id="new-post-button-container"
+      >
         <button id="new-post-button" class="btn btn-info">Add Post</button>
       </div>
 
-      <section id="new-post-container" class="section" style="display: none;">
+      <section id="new-post-container" class="section" style="display: none">
         <form class="new-post-form" id="post-form">
           <div class="form-group">
             <label>Title</label>
@@ -40,7 +42,11 @@
           </div>
           <div class="form-group">
             <label>Body</label>
-            <textarea class="form-control" id="input-post-body" rows="5"></textarea>
+            <textarea
+              class="form-control"
+              id="input-post-body"
+              rows="5"
+            ></textarea>
           </div>
           <div class="form-group post-form-buttons">
             <button class="btn btn-primary" id="submit-post-button">
@@ -52,10 +58,33 @@
           </div>
         </form>
       </section>
-
+       
       <div id="blogPosts">
-        <!--Render blog posts dynamically -->
+        <!-- Render blog posts dynamically  -->
       </div>
+
+      <section class="comment-form" id="new-post-comment" style="display: none;">
+        <form id="comment-form">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" id="commenter-email" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Comment</label>
+            <textarea class="form-control" id="input-post-comment" rows="5">
+            </textarea>
+          </div>
+          <div class="form-group post-form-buttons">
+            <button class="btn btn-primary" id="submit-comment-button">
+              Submit comment
+            </button>
+            <button class="btn btn-secondary" id="clear-comment-form-button">
+              Clear
+            </button>
+          </div>
+        </form>
+      </section>
+
     </div>
 
     <script src="../helpers/js/modal.js"></script>

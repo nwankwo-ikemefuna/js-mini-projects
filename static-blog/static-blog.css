@@ -20,9 +20,6 @@ body {
   display: flex;
   justify-content: end;
 }
-#add-new-post-button {
-  /*float:*/
-}
 #new-post-container {
   padding: 10px;
   margin-bottom: 30px;
@@ -92,4 +89,7 @@ body {
 .post-readmore-link,
 .post-readless-link {
   display: block;
+}
+.comment-form {
+  margin-top: 20px;
 }
