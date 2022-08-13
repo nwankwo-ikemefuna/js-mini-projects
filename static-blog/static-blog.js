@@ -1,45 +1,54 @@
-const newPostButton = document.getElementById('new-post-button');
-const newPostFormContainer = document.getElementById('new-post-container');
-const postAuthorSelect = document.getElementById('input-post-author');
-const submitPostButton = document.getElementById('submit-post-button');
-const closePostFormButton = document.getElementById('close-post-form-button');
-
-const postsCardsArr = [];
-let lastCustomPostId = 100;
+const newPostButton = document.getElementById("new-post-button");
+const newPostFormContainer = document.getElementById("new-post-container");
+const postAuthorSelect = document.getElementById("input-post-author");
+const submitPostButton = document.getElementById("submit-post-button");
+const closePostFormButton = document.getElementById("close-post-form-button");
 
 // show new post form
 newPostButton.onclick = () => {
-  newPostFormContainer.style.display = 'block';
-  newPostButton.style.display = 'none';
-}
+  newPostFormContainer.style.display = "block";
+  newPostButton.style.display = "none";
+};
 
 // close post form
 closePostFormButton.onclick = () => {
-  newPostFormContainer.style.display = 'none';
-  newPostButton.style.display = 'block';
-}
+  newPostFormContainer.style.display = "none";
+  newPostButton.style.display = "block";
+};
+
+
+const postsCardsArr = [];
+let lastCustomPostId = 0;
+
+const customPostsInLocalStorage = localStorage.getItem('CUSTOM_POSTS');
+const customPostsInLocalStorageArr = JSON.parse(customPostsInLocalStorage) || [];
+console.log('customPostsInLocalStorageArr', customPostsInLocalStorageArr);
 
 // post submission
 submitPostButton.onclick = () => {
-  const postTitleInput = document.getElementById('input-post-title');
-  const postAuthorInput = document.getElementById('input-post-author');
-  const postBodyInput = document.getElementById('input-post-body');
+  const postTitleInput = document.getElementById("input-post-title");
+  const postAuthorInput = document.getElementById("input-post-author");
+  const postBodyInput = document.getElementById("input-post-body");
 
   if (!postTitleInput.value || !postAuthorInput.value || !postBodyInput.value) {
-    alert('Please fill all fields');
+    alert("Please fill all fields");
     return;
   }
 
   lastCustomPostId++;
-  
+
   const postObj = {
     id: lastCustomPostId,
     title: postTitleInput.value,
     userId: postAuthorInput.value,
-    body: postBodyInput.value
+    body: postBodyInput.value,
   };
 
-  const postAuthor = postAuthorInput.options[postAuthorInput.selectedIndex].text;
+  customPostsInLocalStorageArr.push(postObj);
+  localStorage.setItem('CUSTOM_POSTS', JSON.stringify(customPostsInLocalStorageArr));
+
+  const postAuthor =
+    postAuthorInput.options[postAuthorInput.selectedIndex].text;
 
   const postCardContainer = createAndDisplaySinglePostCard(postObj, postAuthor);
   postsCardsArr.unshift(postCardContainer);
@@ -51,9 +60,9 @@ submitPostButton.onclick = () => {
   postAuthorInput.value = "";
   postBodyInput.value = "";
 
-  newPostFormContainer.style.display = 'none';
-  newPostButton.style.display = 'block';
-}
+  newPostFormContainer.style.display = "none";
+  newPostButton.style.display = "block";
+};
 
 const fetchPosts = async () => {
   // fetch all users
@@ -61,7 +70,9 @@ const fetchPosts = async () => {
   //console.log("allUsers", allUsers);
 
   allUsers.forEach((user) => {
-    const authorOption = createElementWithAttributes('option', { value: user.id });
+    const authorOption = createElementWithAttributes("option", {
+      value: user.id,
+    });
     authorOption.textContent = user.name;
     postAuthorSelect.appendChild(authorOption);
   });
@@ -71,17 +82,28 @@ const fetchPosts = async () => {
   //console.log("allComments", allComments);
 
   // fetch all posts
-  const posts = await makeHttpRequest("posts");
-  //console.log("posts", posts);
+  const externalPostsArr = await makeHttpRequest("posts");
+  //console.log("externalPostsArr", externalPostsArr);
 
-  posts.sort((post1, post2) => post2.id - post1.id);
+  // add custom posts in local storage to posts coming from external endpoint 
+  const allPostsArr = [...externalPostsArr, ...customPostsInLocalStorageArr];
 
-  posts.forEach((postObj) => {
-    const postAuthor = allUsers.find((user) => user.id === postObj.userId).name;
+  // sort posts by id in descending order
+  allPostsArr.sort((post1, post2) => post2.id - post1.id);
+
+  lastCustomPostId = allPostsArr[0].id || 0;
+  console.log('lastCustomPostId', lastCustomPostId);
+
+  allPostsArr.forEach((postObj) => {
+    const postAuthor = allUsers.find((user) => user.id === +postObj.userId).name;
     const postComments = allComments.filter(
       (comment) => comment.postId === postObj.id
     );
-    const postCardContainer = createAndDisplaySinglePostCard(postObj, postAuthor, postComments);
+    const postCardContainer = createAndDisplaySinglePostCard(
+      postObj,
+      postAuthor,
+      postComments
+    );
 
     postsCardsArr.push(postCardContainer);
   });
@@ -92,7 +114,11 @@ const fetchPosts = async () => {
 
 fetchPosts();
 
-const createAndDisplaySinglePostCard = (post, postAuthor, postComments = []) => {
+const createAndDisplaySinglePostCard = (
+  post,
+  postAuthor,
+  postComments = []
+) => {
   // title
   const postTitle = createElementWithAttributes("h3", { class: "post-title" });
   postTitle.textContent = `${post.id} ${post.title}`;
@@ -169,33 +195,133 @@ const createAndDisplaySinglePostCard = (post, postAuthor, postComments = []) => 
     postContentFull.style.display = "none";
   });
 
+  // comments
+  const commentsCardsArr = [];
   commentsMetaContainer.onclick = function () {
-    const commentsContainerId = `post-comments-container-${post.id}`;
-    const commentsContainer = createElementWithAttributes("div", {
-      class: "post-comments-container",
-      id: commentsContainerId,
-    });
-    const commentsCardsArr = [];
-    postComments.forEach((comment) => {
-      const singleCommentContainer = createElementWithAttributes("article", {
-        class: "post-single-comment",
-      });
-      const commenterEmailContainer = createElementWithAttributes("em", {
-        class: "commenter-email",
-      });
-      commenterEmailContainer.textContent = `- ${comment.email}`;
-      singleCommentContainer.append(comment.body, commenterEmailContainer);
-      commentsCardsArr.push(singleCommentContainer);
-    });
-    // show the comments modal
-    displayModal(
-      `commentsModal-${post.id}`,
-      `Comments - ${post.title}`,
-      commentsContainer
-    );
-    // paginate the comments
-    paginate(commentsContainerId, commentsCardsArr, 3);
+    onclickShowPostComments(post, postComments, commentsCardsArr);
   };
 
   return postCardContainer;
 };
+
+const onclickShowPostComments = (post, postComments, commentsCardsArr) => {
+  const commentFormContainer = createCommentForm();
+
+  postComments.forEach((comment) => {
+    const singleCommentContainer = createAndDisplaySingleComment(comment);
+    commentsCardsArr.push(singleCommentContainer);
+  });
+
+  const commentsListContainerId = `post-comments-list-container-${post.id}`;
+  const commentsListContainer = createElementWithAttributes("div", {
+    class: "post-comments-list-container",
+    id: commentsListContainerId,
+  });
+
+  const commentsContainer = createElementWithAttributes("div", {
+    class: "post-comments-container",
+  });
+  commentsContainer.append(commentFormContainer, commentsListContainer);
+
+  // show the comments modal
+  displayModal(
+    `commentsModal-${post.id}`,
+    `Comments - ${post.title}`,
+    commentsContainer,
+    null,
+    false
+  );
+
+  const inputCommentEmail = document.getElementById("input-comment-email");
+  const inputCommentBody = document.getElementById("input-comment-body");
+
+  const submitCommentFormButton = document.getElementById(
+    "submit-comment-button"
+  );
+  const clearCommentFormButton = document.getElementById(
+    "clear-comment-form-button"
+  );
+
+  submitCommentFormButton.addEventListener("click", () => {
+    if (!inputCommentEmail.value || !inputCommentBody.value) {
+      alert("Please fill the form");
+      return;
+    }
+    const commentObj = {
+      email: inputCommentEmail.value,
+      body: inputCommentBody.value,
+    };
+    const singleCommentContainer = createAndDisplaySingleComment(commentObj);
+    commentsCardsArr.unshift(singleCommentContainer);
+
+    inputCommentEmail.value = "";
+    inputCommentBody.value = "";
+
+    // paginate the comments
+    paginate(commentsListContainerId, commentsCardsArr, 3);
+  });
+
+  clearCommentFormButton.addEventListener("click", () => {
+    inputCommentEmail.value = "";
+    inputCommentBody.value = "";
+  });
+
+  // paginate the comments
+  paginate(commentsListContainerId, commentsCardsArr, 3);
+};
+
+const createCommentForm = () => {
+  const commenterEmailFormGroup = renderFormGroup("Email", "email", {
+    id: "input-comment-email",
+  });
+  const commentFormGroup = renderFormGroup("Comment", "textarea", {
+    id: "input-comment-body",
+    rows: 3,
+  });
+
+  const commentFormSubmitButton = createElementWithAttributes("button", {
+    class: "btn btn-primary",
+    id: "submit-comment-button",
+  });
+  commentFormSubmitButton.textContent = "Submit";
+  const commentFormClearButton = createElementWithAttributes("button", {
+    class: "btn btn-secondary",
+    id: "clear-comment-form-button",
+  });
+  commentFormClearButton.textContent = "Clear";
+  const commentFormButtonsContainer = createElementWithAttributes("div", {
+    class: "form-group post-form-buttons",
+  });
+  commentFormButtonsContainer.append(
+    commentFormSubmitButton,
+    commentFormClearButton
+  );
+
+  const commentForm = createElementWithAttributes("form");
+  commentForm.append(
+    commenterEmailFormGroup,
+    commentFormGroup,
+    commentFormButtonsContainer
+  );
+
+  const commentFormContainer = createElementWithAttributes("section", {
+    class: "comment-form-container",
+  });
+  commentFormContainer.appendChild(commentForm);
+
+  return commentFormContainer;
+};
+
+function createAndDisplaySingleComment(comment) {
+  const commenterEmailContainer = createElementWithAttributes("em", {
+    class: "commenter-email",
+  });
+  commenterEmailContainer.textContent = `- ${comment.email}`;
+
+  const singleCommentContainer = createElementWithAttributes("article", {
+    class: "post-single-comment",
+  });
+  singleCommentContainer.append(comment.body, commenterEmailContainer);
+
+  return singleCommentContainer;
+}
