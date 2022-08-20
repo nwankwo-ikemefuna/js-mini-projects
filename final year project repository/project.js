@@ -67,81 +67,36 @@ projectForm.addEventListener("submit", (event) => {
   const feedbackRow = createElementWithAttributes("tr", { class: "feedback-body" });
 
 
-  const tdId = createElementWithAttributes("td", { id: "feedback-field-id" });
+  const tdId = createElementWithAttributes("td");
   tdId.textContent = studentSelect.value;
 
-  const tdTitle = createElementWithAttributes("td", { id: "feedback-field-title" });
+  const tdTitle = createElementWithAttributes("td");
   tdTitle.textContent = projectTitleInput.value;
 
-  const tdStudent = createElementWithAttributes("td", { id: "feedback-field-student" });
+  const tdStudent = createElementWithAttributes("td");
   tdStudent.textContent = selectedStudent;
 
-  const tdDepartment = createElementWithAttributes("td", { id: "feedback-field-department" });
+  const tdDepartment = createElementWithAttributes("td");
   tdDepartment.textContent = selectedDepartment;
 
-  const tdSupervisor = createElementWithAttributes("td", { id: "feedback-field-supervisor" });
+  const tdSupervisor = createElementWithAttributes("td");
   tdSupervisor.textContent = selectedSupervisor;
 
-  const tdDateOfSubmission = createElementWithAttributes("td", { id: "feedback-field-date" });
+  const tdDateOfSubmission = createElementWithAttributes("td");
   tdDateOfSubmission.textContent = projectDateofSubmission.value;
 
-  const tdAction = createElementWithAttributes("td", { id: "feedback-field-action" });
+  const tdAction = createElementWithAttributes("td");
 
   feedbackTableBody.appendChild(feedbackRow);
   feedbackRow.append(tdId, tdTitle, tdStudent, tdDepartment, tdSupervisor, tdDateOfSubmission, tdAction)
 
-
-
-
-
-
-
-
+  departmentSelect.value = "";
+  studentSelect.value = "";
+  supervisorSelect.value = "";
+  projectTitleInput.value = "";
+  projectContentInput.value = "";
+  projectDateofSubmission.value = "";
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function createDepartments() {
   localStorage.setItem(
