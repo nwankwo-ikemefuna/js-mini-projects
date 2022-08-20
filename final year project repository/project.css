@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  padding: 10px;
+}
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+label {
+  font-weight: bold;
+  font-size: 20px;
+}
+.form-wrapper {
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 5% auto;
+  max-width: 700px;
+  height: auto;
+  min-width: 300px;
+  padding: 30px;
+}
+.button-custom {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 100px 0;
+}
+.table-wrapper {
+  width: 100%;
+  min-width: 300px;
+  background: #eee;
+}
+.feedback-table {
+  width: 100%;
+}
+.feedback-body {
+  text-align: center;
+}

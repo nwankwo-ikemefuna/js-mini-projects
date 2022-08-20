@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Final Year Project</title>
+    <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="project.css" />
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h1>Final Year Project Repository</h1>
+
+      <form id="project-form">
+        <div class="form-group">
+          <label>Department</label>
+          <select id="department-select" class="form-control">
+            <option value="">select</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Student</label>
+          <select id="student-select" class="form-control">
+            <option value="">select</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Supervisor</label>
+          <select id="supervior-select" class="form-control">
+            <option value="">select</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Project Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="input-project-title"
+            maxlength="100"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Content</label>
+          <textarea
+            class="form-control"
+            id="input-project-content"
+            rows="10"
+            style="resize: none"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Date of Submission</label>
+          <input type="date" class="form-control" id="input-project-date" />
+        </div>
+
+        <div class="form-group button-custom">
+          <button class="btn btn-secondary btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-wrapper">
+      <section class="feedback-section section">
+        <table class="feedback-table" id="feedback-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Student</th>
+              <th>Department</th>
+              <th>Supervisor</th>
+              <th>Date of Submission</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="feedback-table-body">
+            <!--Render feedback dynamically with JavaScript-->
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <script src="../helpers/js/dom.js"></script>
+    <script src="../helpers/js/http.js"></script>
+    <script src="projectdata.js"></script>
+    <script src="project.js"></script>
+  </body>
+</html>

@@ -47,8 +47,7 @@ submitPostButton.onclick = () => {
   customPostsInLocalStorageArr.push(postObj);
   localStorage.setItem('CUSTOM_POSTS', JSON.stringify(customPostsInLocalStorageArr));
 
-  const postAuthor =
-    postAuthorInput.options[postAuthorInput.selectedIndex].text;
+  const postAuthor = postAuthorInput.options[postAuthorInput.selectedIndex].text;
 
   const postCardContainer = createAndDisplaySinglePostCard(postObj, postAuthor);
   postsCardsArr.unshift(postCardContainer);
