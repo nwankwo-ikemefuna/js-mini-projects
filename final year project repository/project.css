@@ -35,13 +35,35 @@ label {
   margin: 30px 100px 0;
 }
 .table-wrapper {
-  width: 100%;
-  min-width: 300px;
-  background: #eee;
+  background: #eeeeee;
+  width: 80%;
+  min-width: 100px;
+  margin: auto;
 }
 .feedback-table {
   width: 100%;
+  font-size: 20px;
 }
 .feedback-body {
   text-align: center;
+  font-size: 20px;
+  font-style: normal;
+}
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+i {
+  cursor: pointer;
+}
+.project-container {
+  display: flex;
+  flex-direction: column;
+  background: #ddd;
+  margin: 5% auto;
+  max-width: 700px;
+  height: 1000px;
+  min-width: 300px;
+  padding: 30px;
 }

@@ -6,6 +6,7 @@ const projectTitleInput = document.getElementById("input-project-title");
 const projectContentInput = document.getElementById("input-project-content");
 const projectDateofSubmission = document.getElementById("input-project-date");
 const feedbackTableBody = document.getElementById("feedback-table-body");
+const viewProjectContainer = document.getElementById("project-container");
 
 const studentsArr = getStudents();
 const departmentsArr = getDepartments();
@@ -51,21 +52,31 @@ const fetchPosts = async () => {
 
 fetchPosts();
 
-
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  if (!supervisorSelect.value || !departmentSelect.value || !studentSelect.value || !projectTitleInput.value || !projectContentInput.value || !projectDateofSubmission.value) {
+  if (
+    !supervisorSelect.value ||
+    !departmentSelect.value ||
+    !studentSelect.value ||
+    !projectTitleInput.value ||
+    !projectContentInput.value ||
+    !projectDateofSubmission.value
+  ) {
     alert("Please fill all fields");
     return;
   }
 
-  const selectedStudent = studentSelect.options[studentSelect.selectedIndex].text;
-  const selectedDepartment = departmentSelect.options[departmentSelect.selectedIndex].text;
-  const selectedSupervisor = supervisorSelect.options[supervisorSelect.selectedIndex].text;
+  const selectedStudent =
+    studentSelect.options[studentSelect.selectedIndex].text;
+  const selectedDepartment =
+    departmentSelect.options[departmentSelect.selectedIndex].text;
+  const selectedSupervisor =
+    supervisorSelect.options[supervisorSelect.selectedIndex].text;
 
-  const feedbackRow = createElementWithAttributes("tr", { class: "feedback-body" });
-
+  const feedbackRow = createElementWithAttributes("tr", {
+    class: "feedback-body",
+  });
 
   const tdId = createElementWithAttributes("td");
   tdId.textContent = studentSelect.value;
@@ -87,8 +98,34 @@ projectForm.addEventListener("submit", (event) => {
 
   const tdAction = createElementWithAttributes("td");
 
-  feedbackTableBody.appendChild(feedbackRow);
-  feedbackRow.append(tdId, tdTitle, tdStudent, tdDepartment, tdSupervisor, tdDateOfSubmission, tdAction)
+  const buttonWrapper = createElementWithAttributes("div", {
+    class: "button-wrapper",
+  });
+  const viewButton = createElementWithAttributes("i", {
+    class: "fas fa-eye",
+  });
+  const editButton = createElementWithAttributes("i", {
+    class: "fas fa-pen-to-square",
+  });
+  const deleteButton = createElementWithAttributes("i", {
+    class: "fas fa-trash",
+  });
+
+  tdAction.appendChild(buttonWrapper);
+  buttonWrapper.append(viewButton, editButton, deleteButton);
+  feedbackTableBody.prepend(feedbackRow);
+  feedbackRow.append(
+    tdId,
+    tdTitle,
+    tdStudent,
+    tdDepartment,
+    tdSupervisor,
+    tdDateOfSubmission,
+    tdAction
+  );
+
+  addEventListenersToActionIcons("delete", "fas fa-trash")
+  addEventListenersToActionIcons("view", "fas fa-eye")
 
   departmentSelect.value = "";
   studentSelect.value = "";
@@ -96,7 +133,61 @@ projectForm.addEventListener("submit", (event) => {
   projectTitleInput.value = "";
   projectContentInput.value = "";
   projectDateofSubmission.value = "";
-})
+
+});
+
+
+function addEventListenersToActionIcons(actionType, actionClassName) {
+  const actionButtons = document.getElementsByClassName(actionClassName);
+  Array.from(actionButtons).forEach((actionButton) => {
+    actionButton.addEventListener("click", (event) => {
+      const currentButton = event.target;
+      const closestTableRow = currentButton.closest(".feedback-body");
+      if (actionType === "delete") {
+        closestTableRow.remove();
+      } else if (actionType === "view") {
+        const viewProjectPage = "http://127.0.0.1:5502/final%20year%20project%20repository/viewproject.html";
+        const projectWindow = window.open(viewProjectPage, "_blank");
+
+        const displayTitle = createElementWithAttributes("div", { class: "display-title" })
+        const displayProject = createElementWithAttributes("div", { class: "display-project"} );
+        
+        displayTitle.textContent = projectTitleInput.value;
+        displayProject.textContent = projectContentInput.value;
+        viewProjectContainer.append(displayTitle, displayProject);
+        projectWindow.document.body.append(displayTitle, displayProject);
+      }
+    })
+  })
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function createDepartments() {
   localStorage.setItem(
