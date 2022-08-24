@@ -6,10 +6,13 @@ const projectTitleInput = document.getElementById("input-project-title");
 const projectContentInput = document.getElementById("input-project-content");
 const projectDateofSubmission = document.getElementById("input-project-date");
 const feedbackTableBody = document.getElementById("feedback-table-body");
-const viewProjectContainer = document.getElementById("project-container");
 
 const studentsArr = getStudents();
 const departmentsArr = getDepartments();
+
+const storedProjectInLocalStorage = localStorage.getItem("PROJECT FEEDBACKS");
+const storedProjectInLocalStorageArr = JSON.parse(storedProjectInLocalStorage) || [];
+console.log("storedProjectInLocalStorageArr", storedProjectInLocalStorageArr)
 
 departmentsArr.forEach((department) => {
   const departmentOptions = createElementWithAttributes("option", {
@@ -74,27 +77,40 @@ projectForm.addEventListener("submit", (event) => {
   const selectedSupervisor =
     supervisorSelect.options[supervisorSelect.selectedIndex].text;
 
+  const projectObj = {
+    id: studentSelect.value,
+    student: selectedStudent,
+    department: selectedDepartment,
+    supervior: selectedSupervisor,
+    title: projectTitleInput.value,
+    content: projectContentInput.value,
+    dateOfSubmission: projectDateofSubmission.value
+  }
+
+  storedProjectInLocalStorageArr.push(projectObj);
+  localStorage.setItem("PROJECT FEEDBACKS", JSON.stringify(storedProjectInLocalStorageArr))
+
   const feedbackRow = createElementWithAttributes("tr", {
     class: "feedback-body",
   });
 
   const tdId = createElementWithAttributes("td");
-  tdId.textContent = studentSelect.value;
+  tdId.textContent = projectObj.id;
 
   const tdTitle = createElementWithAttributes("td");
-  tdTitle.textContent = projectTitleInput.value;
+  tdTitle.textContent = projectObj.title;
 
   const tdStudent = createElementWithAttributes("td");
-  tdStudent.textContent = selectedStudent;
+  tdStudent.textContent = projectObj.student;
 
   const tdDepartment = createElementWithAttributes("td");
-  tdDepartment.textContent = selectedDepartment;
+  tdDepartment.textContent = projectObj.department;
 
   const tdSupervisor = createElementWithAttributes("td");
-  tdSupervisor.textContent = selectedSupervisor;
+  tdSupervisor.textContent = projectObj.supervior;
 
   const tdDateOfSubmission = createElementWithAttributes("td");
-  tdDateOfSubmission.textContent = projectDateofSubmission.value;
+  tdDateOfSubmission.textContent = projectObj.dateOfSubmission;
 
   const tdAction = createElementWithAttributes("td");
 
@@ -134,6 +150,8 @@ projectForm.addEventListener("submit", (event) => {
   projectContentInput.value = "";
   projectDateofSubmission.value = "";
 
+  paginate(feedbackTableBody, feedbackRow, 5);
+
 });
 
 
@@ -146,16 +164,14 @@ function addEventListenersToActionIcons(actionType, actionClassName) {
       if (actionType === "delete") {
         closestTableRow.remove();
       } else if (actionType === "view") {
-        const viewProjectPage = "http://127.0.0.1:5502/final%20year%20project%20repository/viewproject.html";
-        const projectWindow = window.open(viewProjectPage, "_blank");
-
-        const displayTitle = createElementWithAttributes("div", { class: "display-title" })
-        const displayProject = createElementWithAttributes("div", { class: "display-project"} );
-        
-        displayTitle.textContent = projectTitleInput.value;
-        displayProject.textContent = projectContentInput.value;
-        viewProjectContainer.append(displayTitle, displayProject);
-        projectWindow.document.body.append(displayTitle, displayProject);
+        const currentTitleInput = projectTitleInput.value;
+        displayModal(
+          `project-content-modal-${studentSelect.value}`,
+          `Title - ${currentTitleInput}`,
+          projectContentInput.textContent,
+          null,
+          false
+        );
       }
     })
   })
