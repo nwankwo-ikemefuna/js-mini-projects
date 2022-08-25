@@ -101,9 +101,9 @@ projectForm.addEventListener("submit", (event) => {
   projectTitleInput.value = "";
   projectContentInput.value = "";
   projectDateofSubmission.value = "";
-
-  paginate("feedback-table-body", storedProjectInLocalStorageArr);
 });
+
+  paginate("feedback-table-body", storedProjectInLocalStorage);
 
 storedProjectInLocalStorageArr.forEach((project) => {
   const feedbackRow = createElementWithAttributes("tr", {
