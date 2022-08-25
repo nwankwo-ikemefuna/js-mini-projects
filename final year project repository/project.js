@@ -11,8 +11,9 @@ const studentsArr = getStudents();
 const departmentsArr = getDepartments();
 
 const storedProjectInLocalStorage = localStorage.getItem("PROJECT FEEDBACKS");
-const storedProjectInLocalStorageArr = JSON.parse(storedProjectInLocalStorage) || [];
-console.log("storedProjectInLocalStorageArr", storedProjectInLocalStorageArr)
+const storedProjectInLocalStorageArr =
+  JSON.parse(storedProjectInLocalStorage) || [];
+console.log("storedProjectInLocalStorageArr", storedProjectInLocalStorageArr);
 
 departmentsArr.forEach((department) => {
   const departmentOptions = createElementWithAttributes("option", {
@@ -55,6 +56,7 @@ const fetchPosts = async () => {
 
 fetchPosts();
 
+const postCardArr = [];
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -84,33 +86,46 @@ projectForm.addEventListener("submit", (event) => {
     supervior: selectedSupervisor,
     title: projectTitleInput.value,
     content: projectContentInput.value,
-    dateOfSubmission: projectDateofSubmission.value
-  }
+    dateOfSubmission: projectDateofSubmission.value,
+  };
 
   storedProjectInLocalStorageArr.push(projectObj);
-  localStorage.setItem("PROJECT FEEDBACKS", JSON.stringify(storedProjectInLocalStorageArr))
+  localStorage.setItem(
+    "PROJECT FEEDBACKS",
+    JSON.stringify(storedProjectInLocalStorageArr)
+  );
 
+  departmentSelect.value = "";
+  studentSelect.value = "";
+  supervisorSelect.value = "";
+  projectTitleInput.value = "";
+  projectContentInput.value = "";
+  projectDateofSubmission.value = "";
+
+  paginate("feedback-table-body", storedProjectInLocalStorageArr);
+});
+
+storedProjectInLocalStorageArr.forEach((project) => {
   const feedbackRow = createElementWithAttributes("tr", {
     class: "feedback-body",
   });
-
   const tdId = createElementWithAttributes("td");
-  tdId.textContent = projectObj.id;
+  tdId.textContent = project.id;
 
   const tdTitle = createElementWithAttributes("td");
-  tdTitle.textContent = projectObj.title;
+  tdTitle.textContent = project.title;
 
   const tdStudent = createElementWithAttributes("td");
-  tdStudent.textContent = projectObj.student;
+  tdStudent.textContent = project.student;
 
   const tdDepartment = createElementWithAttributes("td");
-  tdDepartment.textContent = projectObj.department;
+  tdDepartment.textContent = project.department;
 
   const tdSupervisor = createElementWithAttributes("td");
-  tdSupervisor.textContent = projectObj.supervior;
+  tdSupervisor.textContent = project.supervior;
 
   const tdDateOfSubmission = createElementWithAttributes("td");
-  tdDateOfSubmission.textContent = projectObj.dateOfSubmission;
+  tdDateOfSubmission.textContent = project.dateOfSubmission;
 
   const tdAction = createElementWithAttributes("td");
 
@@ -140,19 +155,33 @@ projectForm.addEventListener("submit", (event) => {
     tdAction
   );
 
-  addEventListenersToActionIcons("delete", "fas fa-trash")
-  addEventListenersToActionIcons("view", "fas fa-eye")
-
-  departmentSelect.value = "";
-  studentSelect.value = "";
-  supervisorSelect.value = "";
-  projectTitleInput.value = "";
-  projectContentInput.value = "";
-  projectDateofSubmission.value = "";
-
-  paginate(feedbackTableBody, feedbackRow, 5);
+  addEventListenersToActionIcons("delete", "fas fa-trash");
+  addEventListenersToActionIcons("view", "fas fa-eye");
 
 });
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function addEventListenersToActionIcons(actionType, actionClassName) {
@@ -164,46 +193,17 @@ function addEventListenersToActionIcons(actionType, actionClassName) {
       if (actionType === "delete") {
         closestTableRow.remove();
       } else if (actionType === "view") {
-        const currentTitleInput = projectTitleInput.value;
         displayModal(
-          `project-content-modal-${studentSelect.value}`,
-          `Title - ${currentTitleInput}`,
-          projectContentInput.textContent,
+          `project-content-modal-${studentSelect.id}`,
+          `Title - ${projectTitleInput.value}`,
+          projectContentInput.innerText,
           null,
           false
         );
       }
-    })
-  })
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
+  });
+}
 
 function createDepartments() {
   localStorage.setItem(
