@@ -76,6 +76,7 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
 
 const onPaginationLinkClick = (linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page) => {
   linkElement.onclick = event => {
+    event.preventDefault();
     if (!page) {
       page = +event.target.dataset.page;
     }

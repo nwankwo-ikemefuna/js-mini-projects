@@ -1,7 +1,7 @@
 const newPostButton = document.getElementById("new-post-button");
 const newPostFormContainer = document.getElementById("new-post-container");
 const postAuthorSelect = document.getElementById("input-post-author");
-const submitPostButton = document.getElementById("submit-post-button");
+const postForm = document.getElementById("post-form");
 const closePostFormButton = document.getElementById("close-post-form-button");
 
 // show new post form
@@ -16,7 +16,6 @@ closePostFormButton.onclick = () => {
   newPostButton.style.display = "block";
 };
 
-
 const postsCardsArr = [];
 let lastCustomPostId = 0;
 
@@ -25,7 +24,8 @@ const customPostsInLocalStorageArr = JSON.parse(customPostsInLocalStorage) || []
 console.log('customPostsInLocalStorageArr', customPostsInLocalStorageArr);
 
 // post submission
-submitPostButton.onclick = () => {
+postForm.onsubmit = (event) => {
+  event.preventDefault();
   const postTitleInput = document.getElementById("input-post-title");
   const postAuthorInput = document.getElementById("input-post-author");
   const postBodyInput = document.getElementById("input-post-body");
