@@ -104,8 +104,7 @@ function attachTodoListActionEventListener(actionType, actionClassName) {
           setClearButtonDisplay("none");
         }
       } else if (actionType === "edit") {
-        const listItemNameElement =
-          closestListItem.querySelector(".todo-list-name");
+        const listItemNameElement = closestListItem.querySelector(".todo-list-name");
         const listItemName = listItemNameElement.innerText;
         todoInput.value = listItemName;
         addOrEditTodoButton.textContent = "Edit";

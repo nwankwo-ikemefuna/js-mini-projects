@@ -1,4 +1,3 @@
-
 function createElementWithAttributes(type, attributesObj = null) {
   const element = document.createElement(type);
   if (attributesObj) {
@@ -14,22 +13,22 @@ function renderFormGroup(label, type, extra = null) {
   labelElement.textContent = label;
 
   let inputElement = null;
-  if (type === 'select') {
+  if (type === "select") {
     inputElement = createElementWithAttributes("select", {
-      ...extra
+      ...extra,
     });
-  } else if (type === 'textarea') {
+  } else if (type === "textarea") {
     inputElement = createElementWithAttributes("textarea", {
-      ...extra
+      ...extra,
     });
   } else {
-      inputElement = createElementWithAttributes("input", {
+    inputElement = createElementWithAttributes("input", {
       ...extra,
-      type
+      type,
     });
   }
 
-  inputElement.classList.add('form-control');
+  inputElement.classList.add("form-control");
 
   const formGroup = createElementWithAttributes("div", {
     class: "form-group",
@@ -38,4 +37,22 @@ function renderFormGroup(label, type, extra = null) {
   formGroup.append(labelElement, inputElement);
 
   return formGroup;
+}
+
+function appendEmptySelectOption(optionText = "Select") {
+  const emptyOptionElement = createElementWithAttributes("option", {
+    value: "",
+  });
+  emptyOptionElement.textContent = optionText;
+  return emptyOptionElement;
+}
+
+function createSelectOptions(itemsArr, selectElement, valueKey, textKey) {
+  itemsArr.forEach((item) => {
+    const optionElement = createElementWithAttributes("option", {
+      value: item[valueKey],
+    });
+    optionElement.textContent = item[textKey];
+    selectElement.appendChild(optionElement);
+  });
 }

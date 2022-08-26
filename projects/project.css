@@ -1,0 +1,49 @@
+.page-navigation-buttons {
+  display: flex;
+  justify-content: end;
+  column-gap: 10px;
+}
+.page-navigation-buttons a {
+  text-decoration: none;
+}
+
+.form-wrapper {
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 5% auto;
+  max-width: 700px;
+  height: auto;
+  min-width: 300px;
+  padding: 30px;
+}
+.button-custom {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 100px 0;
+}
+.table-wrapper {
+  background: #eeeeee;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+}
+.project-actions i {
+  cursor: pointer;
+}
+.project-container {
+  display: flex;
+  flex-direction: column;
+  background: #ddd;
+  margin: 5% auto;
+  max-width: 700px;
+  height: 1000px;
+  min-width: 300px;
+  padding: 30px;
+}

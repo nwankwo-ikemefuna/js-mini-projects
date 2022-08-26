@@ -1,4 +1,4 @@
-const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1) => {
+const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentPage = 1, onPaginateCallback = null) => {
   
   const itemsContainer = document.getElementById(itemsContainerId);
   itemsContainer.innerHTML = "";
@@ -6,13 +6,20 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   const numberOfItems = itemsArr.length;
   const numberOfPages = Math.ceil(numberOfItems / perPage);
 
-  if (numberOfItems <= perPage || numberOfItems <= maxNumLinks) {
+  if (numberOfItems <= perPage) {
     renderPaginatedItems(itemsContainer, itemsArr);
+    // execute callback function 
+    handleOnPaginationCallback(onPaginateCallback);
     return;
   }
 
   // create the pagination links container and empty it so we can display updated links 
-  const paginationLinksContainer = createElementWithAttributes('div', { class: 'pagination-links' });
+  const paginationLinksContainerId = `${itemsContainerId}-pagination-links`;
+  const paginationLinksContainer = document.getElementById(paginationLinksContainerId);
+  if (!paginationLinksContainer) {
+    alert(`Pagination config error: no element with id ${paginationLinksContainerId} was found`);
+  }
+  paginationLinksContainer.setAttribute('class', 'pagination-links');
   paginationLinksContainer.innerHTML = "";
 
   let numLinkStart = currentPage === 1 ? 1 : currentPage - 1;
@@ -34,7 +41,7 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
     pageLink.textContent = pageNum;
     paginationLinksContainer.appendChild(pageLink);
 
-    onPaginationLinkClick(pageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, pageNum);
+    onPaginationLinkClick(pageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, pageNum, onPaginateCallback);
   }
 
   // previous page link
@@ -47,7 +54,7 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   });
   previousPageLink.innerHTML = '&laquo;';
   paginationLinksContainer.prepend(previousPageLink);
-  onPaginationLinkClick(previousPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, previousPageNum);
+  onPaginationLinkClick(previousPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, previousPageNum, onPaginateCallback);
 
   // next page link
   const nextPageNum = currentPage === numberOfPages ? currentPage : currentPage + 1;
@@ -59,7 +66,7 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   });
   nextPageLink.innerHTML = '&raquo;';
   paginationLinksContainer.appendChild(nextPageLink);
-  onPaginationLinkClick(nextPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, nextPageNum);
+  onPaginationLinkClick(nextPageLink, itemsContainerId, itemsArr, perPage, maxNumLinks, nextPageNum, onPaginateCallback);
 
   // handle the pagination 
   const start = (currentPage - 1) * perPage;
@@ -67,14 +74,13 @@ const paginate = (itemsContainerId, itemsArr, perPage, maxNumLinks = 3, currentP
   const paginatedItems = itemsArr.slice(start, end);
 
   // render the paginated items into its container
-  const paginatedItemsContainer = createElementWithAttributes('div', { class: 'pagination-items' });
-  renderPaginatedItems(paginatedItemsContainer, paginatedItems);
+  renderPaginatedItems(itemsContainer, paginatedItems);
 
-  // append the pagination links container to the items container
-  itemsContainer.append(paginatedItemsContainer, paginationLinksContainer);
+  // execute callback function 
+  handleOnPaginationCallback(onPaginateCallback);
 }
 
-const onPaginationLinkClick = (linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page) => {
+const onPaginationLinkClick = (linkElement, itemsContainerId, itemsArr, perPage, maxNumLinks, page, onPaginateCallback) => {
   linkElement.onclick = event => {
     event.preventDefault();
     if (!page) {
@@ -85,12 +91,19 @@ const onPaginationLinkClick = (linkElement, itemsContainerId, itemsArr, perPage,
       // not likely but just in case
       return;
     }
-    return paginate(itemsContainerId, itemsArr, perPage, maxNumLinks, page);
+    return paginate(itemsContainerId, itemsArr, perPage, maxNumLinks, page, onPaginateCallback);
   }
 }
 
-const renderPaginatedItems = (itemsContainer, itemsArr) => {
+function handleOnPaginationCallback(onPaginateCallback) {
+  // execute callback function 
+  if (onPaginateCallback && typeof onPaginateCallback === 'function') {
+    onPaginateCallback();
+  }
+}
+
+const renderPaginatedItems = (containerElem, itemsArr) => {
   Array.from(itemsArr).forEach(item => {
-    itemsContainer.append(item);
+    containerElem.append(item);
   });
 }
