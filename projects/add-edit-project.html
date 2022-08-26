@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add - Final Year Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="project.css" />
+  </head>
+  <body>
+
+    <div class="container-fixed">
+      <div class="section page-navigation-buttons" id="page-navigation-buttons">
+        <a class="btn btn-info" id="add-project-nav-btn" href="add-edit-project.html" style="display: none;">Add Project</a>
+        <a class="btn btn-info" href="list-projects.html">List Projects</a>
+      </div>
+
+      <div class="form-wrapper">
+        <h1 id="add-edit-title">Add Project</h1>
+
+        <form id="project-form">
+          <div class="form-group">
+            <label>Department</label>
+            <select id="department-select" class="form-control">
+              <option value="">Select</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Student</label>
+            <select id="student-select" class="form-control">
+              <option value="">Select</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Supervisor</label>
+            <select id="supervior-select" class="form-control">
+              <option value="">Select</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Project Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="input-project-title"
+              maxlength="100"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Content</label>
+            <textarea
+              class="form-control"
+              id="input-project-content"
+              rows="10"
+              style="resize: none"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Date of Submission</label>
+            <input type="date" class="form-control" id="input-project-date" />
+          </div>
+
+          <div class="form-group button-custom">
+            <button class="btn btn-secondary btn-lg" id="submit-button">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../helpers/js/http.js"></script>
+    <script src="../helpers/js/dom.js"></script>
+    <script src="projectdata.js"></script>
+    <script src="project-common.js"></script>
+    <script src="add-edit-project.js"></script>
+  </body>
+</html>

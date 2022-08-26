@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List - Final Year Projects</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../helpers/css/modal.css" />
+    <link rel="stylesheet" href="../helpers/css/pagination.css" />
+    <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="project.css" />
+  </head>
+  <body>
+    <div class="container-fixed">
+
+      <div class="section page-navigation-buttons">
+        <a class="btn btn-info" href="add-edit-project.html">Add Project</a>
+      </div>
+
+      <section class="section">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th class="min-w-150">Title</th>
+                <th class="min-w-150">Student</th>
+                <th class="min-w-150">Department</th>
+                <th class="min-w-150">Supervisor</th>
+                <th class="min-w-100">Date of Submission</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody">
+              <!--Render feedback dynamically with JavaScript-->
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div id="projectsTableBody-pagination-links"></div>
+    </div>
+
+    <script src="../helpers/js/http.js"></script>
+    <script src="../helpers/js/dom.js"></script>
+    <script src="../helpers/js/modal.js"></script>
+    <script src="../helpers/js/pagination.js"></script>
+    <script src="projectdata.js"></script>
+    <script src="project-common.js"></script>
+    <script src="list-projects.js"></script>
+  </body>
+</html>

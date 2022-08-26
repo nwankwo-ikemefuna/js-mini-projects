@@ -216,11 +216,14 @@ const onclickShowPostComments = (post, postComments, commentsCardsArr) => {
     class: "post-comments-list-container",
     id: commentsListContainerId,
   });
+  const commentsPaginationLinksContainer = createElementWithAttributes("div", {
+    id: `${commentsListContainerId}-pagination-links`,
+  });
 
   const commentsContainer = createElementWithAttributes("div", {
     class: "post-comments-container",
   });
-  commentsContainer.append(commentFormContainer, commentsListContainer);
+  commentsContainer.append(commentFormContainer, commentsListContainer, commentsPaginationLinksContainer);
 
   // show the comments modal
   displayModal(
