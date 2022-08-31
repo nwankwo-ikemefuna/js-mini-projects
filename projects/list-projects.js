@@ -66,30 +66,3 @@ function projectActionsEventListeners() {
   addEventListenersToActionIcons("delete", "delete-project");
 }
 
-function addEventListenersToActionIcons(actionType, actionClassName) {
-  const actionButtons = document.getElementsByClassName(actionClassName);
-  Array.from(actionButtons).forEach((actionButton) => {
-    actionButton.addEventListener("click", (event) => {
-      const projectId = +event.target.dataset.projectid;
-      const projectObj = getProjectById(projectId);
-      const projectsArr = getProjects();
-      if (actionType === "delete") {
-        if (confirm('Sure to delete?')) {
-          const updatedProjects = projectsArr.filter(project => project.id !== projectId);
-          localStorage.setItem(projectsStorageKey, JSON.stringify(updatedProjects));
-          displayProjectsInTable();
-        }
-      } else if (actionType === "view") {
-        displayModal(
-          `project-content-modal-${projectId}`,
-          `Title - ${projectObj.title}`,
-          projectObj.content,
-          null,
-          false
-        );
-      } else if (actionType === "edit") {
-        window.location.href = `add-edit-project.html?id=${projectId}&isEdit=1`;
-      }
-    });
-  });
-}

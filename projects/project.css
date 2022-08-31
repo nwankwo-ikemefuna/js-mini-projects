@@ -47,3 +47,23 @@
   min-width: 300px;
   padding: 30px;
 }
+.project-display {
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  height: 500px;
+  margin: 10% 0;
+  overflow-y: auto;
+}
+.project-display-title,
+.project-display-content {
+  border: 1px solid #ddd;
+  margin: 20px 20px 0;
+  font-size: 20px;
+  overflow-y: auto;
+}
+.project-display-title {
+  font-weight: bolder;
+  font-size: 25px;
+}
