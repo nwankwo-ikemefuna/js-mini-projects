@@ -1,31 +1,29 @@
 const queryParams = getURLParams();
-console.log("queryParams", queryParams);
-
-const isView = !queryParams.isView;
-console.log("isView", isView);
 
 let currentlyViewedProjectId = 0;
 
-if (isView) {
-  currentlyViewedProjectId = +queryParams.id;
+currentlyViewedProjectId = +queryParams.id;
 
-  const viewedProject = getProjectById(currentlyViewedProjectId);
+const viewedProject = getProjectById(currentlyViewedProjectId);
 
-  const displayProjectContainer = document.getElementById(
-    "view-project-container"
-  );
+const studentName = getStudentById(viewedProject.studentId);
 
-  const displayTitleHolder = createElementWithAttributes("div", {
-    class: "project-display-title",
-  });
-  const displayContentHolder = createElementWithAttributes("div", {
-    class: "project-display-content",
-  });
+const studentDepartment = getDepartmentById(viewedProject.departmentId);
 
-  displayTitleHolder.textContent = `Title - ${viewedProject.title}`;
-  displayContentHolder.textContent = viewedProject.content;
+const studentSupervisor = getSupervisorById(viewedProject.superviorId);
 
-  displayProjectContainer.append(displayTitleHolder, displayContentHolder);
+const displayProjectContainer = document.getElementById("view-project-container");
 
-  console.log("displayProjectContainer", displayProjectContainer);
-}
+const displayStudentHolder = document.getElementById("display-student-holder");
+const displayDepartmentHolder = document.getElementById("display-depatment-holder");
+const displaySupervisorHolder = document.getElementById("display-supervisor-holder");
+const displayTitleHolder = document.getElementById("display-title-holder");
+const displayContentHolder = document.getElementById("display-content-holder");
+const displayDateOfSubmissionHolder = document.getElementById("display-date-of-submission-holder");
+
+displayStudentHolder.innerHTML = `<b>Name:</b> ${studentName.name}`
+displayDepartmentHolder.innerHTML = `<b>Department:</b> ${studentDepartment.name}`
+displaySupervisorHolder.innerHTML = `<b>Supervisor:</b> ${studentSupervisor.name}`
+displayTitleHolder.innerHTML = `<b>Title:</b> ${viewedProject.title}`;
+displayContentHolder.innerHTML = `<b>Content:</b> ${viewedProject.content}`;
+displayDateOfSubmissionHolder.innerHTML = `<b>Submitted on:</b> ${viewedProject.dateOfSubmission}`;

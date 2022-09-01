@@ -61,14 +61,6 @@ function addEventListenersToActionIcons(actionType, actionClassName) {
         }
       } else if (actionType === "view") {
         window.location.href = `display-projects.html?id=${projectId}`;
-
-        // displayModal(
-        //   `project-content-modal-${projectId}`,
-        //   `Title - ${projectObj.title}`,
-        //   projectObj.content,
-        //   null,
-        //   false
-        // );
       } else if (actionType === "edit") {
         window.location.href = `add-edit-project.html?id=${projectId}&isEdit=1`;
       }
