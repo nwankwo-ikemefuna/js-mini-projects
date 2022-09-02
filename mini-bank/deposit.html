@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transactions</title>
+    <title>Deposit</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -15,59 +15,51 @@
   <body>
     <div class="container-fixed">
       <section class="header-component">
-        <div class="navigations">
-          <div class="nav-buttons">
-            <ul>
-              <a href="transactions.html" class="active"
-                ><li>Transactions</li></a
-              >
-              <a href="deposits.html"><li>Deposit</li></a>
-              <a href="withdraw.html"><li>Withdraw</li></a>
-            </ul>
-          </div>
-
-          <a href="user-profile.html">
-            <div class="user-nav">
-              <div class="user-icon"><i class="fas fa-circle-user"></i></div>
-              <div id="user-name" class="user-name">Username</div>
-            </div>
-          </a>
-        </div>
-
         <div class="balance-wrapper">
           Bal: &nbsp
           <div class="user-balance" id="user-balance">0.00</div>
         </div>
+
+        <div class="navigations">
+          <div class="nav-buttons">
+            <ul>
+                <a href="transaction.html"
+                ><li>Transactions</li></a
+              >
+              <a href="deposit.html" class="active"><li>Deposit</li></a>
+              <a href="withdraw.html"><li>Withdraw</li></a>
+            </ul>
+            </ul>
+          </div>
+
+          <a href="account-profile.html" class="user-profile-link">
+            <div class="user-nav">
+              <div class="user-icon"><i class="fas fa-circle-user"></i></div>
+              <div id="user-name" class="user-name">Username</div>
+            </div>
+           </a>
+        </div>
       </section>
 
       <div class="page-desc-holder">
-        <h1 class="page-desc">Transactions</h1>
+        <h1 class="page-desc">Deposit</h1>
       </div>
 
       <div class="header-component">
-        <table>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Tranx Ref</th>
-              <th>Type</th>
-              <th>Amount</th>
-              <th>Bal Before</th>
-              <th>Bal After</th>
-            </tr>
-          </thead>
-          <tbody id="transaction-table-body">
-            <td align="center" colspan="6">
-              <em>No transactions have been made!</em>
-            </td>
-            <!--Render feedback dynamically with JavaScript-->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="create-account" id="create-new-account">
-        <button id="create-button" class="btn-dark btn-lg create-button">Create Account</button>
+        <form id="deposit-form">
+          <div class="form-group">
+            <label>Amount to deposit</label>
+            <input type="number" class="form-control" id="amount-to-deposit" />
+          </div>
+          <div class="form-group">
+            <label>Pin</label>
+            <input type="password" class="form-control" id="user-pin" />
+          </div>
+          <button id="deposit-button" class="btn-success btn-lg">Submit</button>
+        </form>
       </div>
     </div>
+
+    <script src="mini-bank.js"></script>
   </body>
 </html>

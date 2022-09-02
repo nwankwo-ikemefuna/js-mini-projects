@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deposit</title>
+    <title>User Profile</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -15,53 +15,54 @@
   <body>
     <div class="container-fixed">
       <section class="header-component">
+        <div class="balance-wrapper">
+          Bal: &nbsp
+          <div class="user-balance" id="user-balance">0.00</div>
+        </div>
         <div class="navigations">
           <div class="nav-buttons">
             <ul>
-                <a href="transactions.html"
+                <a href="transaction.html"
                 ><li>Transactions</li></a
               >
-              <a href="deposits.html" class="active"><li>Deposit</li></a>
+              <a href="deposit.html"><li>Deposit</li></a>
               <a href="withdraw.html"><li>Withdraw</li></a>
             </ul>
             </ul>
           </div>
 
-          <a href="user-profile.html">
+          <a href="account-profile.html" class="user-profile-link">
             <div class="user-nav">
               <div class="user-icon"><i class="fas fa-circle-user"></i></div>
               <div id="user-name" class="user-name">Username</div>
             </div>
-           </a>
-        </div>
-
-        <div class="balance-wrapper">
-          Bal: &nbsp
-          <div class="user-balance" id="user-balance">0.00</div>
+          </a>
         </div>
       </section>
 
       <div class="page-desc-holder">
-        <h1 class="page-desc">Deposit</h1>
+        <h1 class="page-desc">My Profile</h1>
       </div>
 
       <div class="header-component">
-        <form id="deposit-form">
+        <form id="profile-form">
           <div class="form-group">
-            <label>Amount to deposit</label>
-            <input type="number" class="form-control" id="amount-to-deposit" />
+            <label>Account Name</label>
+            <input type="text" class="form-control" id="user-account-name" disabled/>
+          </div>
+          <div class="form-group">
+            <label>Account Number</label>
+            <input type="number" class="form-control" id="user-account-number" disabled/>
           </div>
           <div class="form-group">
             <label>Pin</label>
-            <input type="password" class="form-control" id="user-pin" />
+            <input type="password" class="form-control" id="user-account-pin" disabled/>
           </div>
-          <button id="deposit-button" class="btn-success btn-lg">Submit</button>
+          <button id="edit-profile-button" class="btn-success btn-lg">Edit</button>
         </form>
       </div>
-
-      <div class="create-account" id="create-new-account">
-        <button id="create-button" class="btn-dark btn-lg create-button">Create Account</button>
-      </div>
     </div>
+
+    <script src="mini-bank.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Withdraw</title>
+    <title>Transactions</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -19,15 +19,15 @@
           Bal: &nbsp
           <div class="user-balance" id="user-balance">0.00</div>
         </div>
+
         <div class="navigations">
           <div class="nav-buttons">
             <ul>
-                <a href="transaction.html"
+              <a href="transaction.html" class="active"
                 ><li>Transactions</li></a
               >
               <a href="deposit.html"><li>Deposit</li></a>
-              <a href="withdraw.html" class="active"><li>Withdraw</li></a>
-            </ul>
+              <a href="withdraw.html"><li>Withdraw</li></a>
             </ul>
           </div>
 
@@ -38,27 +38,31 @@
             </div>
           </a>
         </div>
-
       </section>
 
       <div class="page-desc-holder">
-        <h1 class="page-desc">Withdraw</h1>
+        <h1 class="page-desc">Transactions</h1>
       </div>
 
       <div class="header-component">
-        <form id="deposit-form">
-          <div class="form-group">
-            <label>Amount to withdraw</label>
-            <input type="number" class="form-control" id="amount-to-withdraw" />
-          </div>
-          <div class="form-group">
-            <label>Pin</label>
-            <input type="password" class="form-control" id="user-pin" />
-          </div>
-          <button id="withdraw-button" class="btn-success btn-lg">
-            Submit
-          </button>
-        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Tranx Ref</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Bal Before</th>
+              <th>Bal After</th>
+            </tr>
+          </thead>
+          <tbody id="transaction-table-body">
+            <td align="center" colspan="6">
+              <em>No transactions have been made!</em>
+            </td>
+            <!--Render feedback dynamically with JavaScript-->
+          </tbody>
+        </table>
       </div>
     </div>
 

@@ -1,16 +1,17 @@
 const queryParams = getURLParams();
 
-let currentlyViewedProjectId = 0;
-
-currentlyViewedProjectId = +queryParams.id;
+const currentlyViewedProjectId = +queryParams.id;
 
 const viewedProject = getProjectById(currentlyViewedProjectId);
 
-const studentName = getStudentById(viewedProject.studentId);
+const studentNameObj = getStudentById(viewedProject.studentId);
+const studentName = studentNameObj.name;
 
-const studentDepartment = getDepartmentById(viewedProject.departmentId);
+const studentDepartmentObj = getDepartmentById(viewedProject.departmentId);
+const studentDepartment = studentDepartmentObj.name;
 
-const studentSupervisor = getSupervisorById(viewedProject.superviorId);
+const studentSupervisorObj = getSupervisorById(viewedProject.superviorId);
+const studentSupervisor = studentSupervisorObj.name;
 
 const displayProjectContainer = document.getElementById(
   "view-project-container"
@@ -29,9 +30,9 @@ const displayDateOfSubmissionHolder = document.getElementById(
   "display-date-of-submission-holder"
 );
 
-displayStudentHolder.innerHTML = `<b>Name:</b> ${studentName.name}`;
-displayDepartmentHolder.innerHTML = `<b>Department:</b> ${studentDepartment.name}`;
-displaySupervisorHolder.innerHTML = `<b>Supervisor:</b> ${studentSupervisor.name}`;
+displayStudentHolder.innerHTML = `<b>Name:</b> ${studentName}`;
+displayDepartmentHolder.innerHTML = `<b>Department:</b> ${studentDepartment}`;
+displaySupervisorHolder.innerHTML = `<b>Supervisor:</b> ${studentSupervisor}`;
 displayTitleHolder.innerHTML = `<b>Title:</b> ${viewedProject.title}`;
 displayContentHolder.innerHTML = `<b>Content:</b> ${viewedProject.content}`;
 displayDateOfSubmissionHolder.innerHTML = `<b>Submitted on:</b> ${viewedProject.dateOfSubmission}`;

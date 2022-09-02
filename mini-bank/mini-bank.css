@@ -8,23 +8,29 @@
 .page-desc {
   font-size: 40px;
 }
-.create-container {
+.landing-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   margin: 15% auto;
 }
-.create-button {
+.create-confrim-buttons {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.create-button, .confrim-button {
   font-size: 25px;
   border-radius: 10px;
+  text-decoration: none;
 }
-.create-button:hover {
+.create-button:hover, .confrim-button:hover {
   background: #aaa;
   color: #000;
   transition: 0.8s;
 }
-/*Transaction page*/
+/*Transaction, deposit, withdraw and user-profile page*/
 .header-component {
   background: #eee;
   display: flex;
@@ -32,6 +38,7 @@
   padding: 20px;
   font-size: 20px;
   font-weight: bold;
+  width: auto;
 }
 .navigations {
   display: flex;
@@ -65,7 +72,7 @@
 .balance-wrapper {
   display: flex;
   justify-content: end;
-  margin: 10px 0 0;
+  margin: 0 0 10px;
 }
 .nav-buttons ul a:hover,
 .user-name:hover,
@@ -89,4 +96,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   justify-content: center;
   margin-top: 5%;
+}
+.user-profile-link {
+  text-decoration: none;
 }
