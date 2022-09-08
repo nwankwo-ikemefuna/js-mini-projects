@@ -27,3 +27,15 @@ const smartJoin = (arr, separator = ', ', lastSeparator = 'and') => {
   const lastItem = arr.pop();
   return `${arr.join(separator)} ${lastSeparator} ${lastItem}`;
 }
+
+const getDateString = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+
+  const dateString = `${year}${month}${day}${hour}${minute}${second}`
+  return dateString;
+}

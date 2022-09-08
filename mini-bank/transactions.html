@@ -10,20 +10,21 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
     <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="../helpers/css/pagination.css">
     <link rel="stylesheet" href="mini-bank.css" />
   </head>
   <body>
     <div class="container-fixed">
       <section class="header-component">
         <div class="balance-wrapper">
-          Bal: &nbsp
-          <div class="user-balance" id="user-balance">0.00</div>
+          Bal: #&nbsp
+          <div class="account-balance" id="current-account-balance">0.00</div>
         </div>
 
         <div class="navigations">
           <div class="nav-buttons">
             <ul>
-              <a href="transaction.html" class="active"
+              <a href="transactions.html" class="active"
                 ><li>Transactions</li></a
               >
               <a href="deposit.html"><li>Deposit</li></a>
@@ -31,10 +32,10 @@
             </ul>
           </div>
 
-          <a href="account-profile.html" class="user-profile-link">
-            <div class="user-nav">
-              <div class="user-icon"><i class="fas fa-circle-user"></i></div>
-              <div id="user-name" class="user-name">Username</div>
+          <a href="account-profile.html" class="account-profile-link">
+            <div class="account-nav">
+              <div class="account-icon"><i class="fas fa-circle-user"></i></div>
+              <div id="header-account-name" class="account-name">AccountName</div>
             </div>
           </a>
         </div>
@@ -56,16 +57,21 @@
               <th>Bal After</th>
             </tr>
           </thead>
-          <tbody id="transaction-table-body">
-            <td align="center" colspan="6">
-              <em>No transactions have been made!</em>
+          <tbody class="transaction-table-body" id="transaction-table-body">
+            <td align="center" colspan="6" id="transaction-default">
+              <em>No transaction have been made!</em>
             </td>
             <!--Render feedback dynamically with JavaScript-->
           </tbody>
         </table>
       </div>
+      <div id="transaction-table-body-pagination-links"></div>
     </div>
 
-    <script src="mini-bank.js"></script>
+    <script src="../helpers/js/utils.js"></script>
+    <script src="../helpers/js/pagination.js"></script>
+    <script src="../helpers/js/dom.js"></script>
+    <script src="account-common.js"></script>
+    <script src="transactions.js"></script>
   </body>
 </html>

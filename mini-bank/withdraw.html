@@ -16,13 +16,13 @@
     <div class="container-fixed">
       <section class="header-component">
         <div class="balance-wrapper">
-          Bal: &nbsp
-          <div class="user-balance" id="user-balance">0.00</div>
+          Bal: #&nbsp
+          <div class="account-balance" id="current-account-balance">0.00</div>
         </div>
         <div class="navigations">
           <div class="nav-buttons">
             <ul>
-                <a href="transaction.html"
+                <a href="transactions.html"
                 ><li>Transactions</li></a
               >
               <a href="deposit.html"><li>Deposit</li></a>
@@ -31,10 +31,10 @@
             </ul>
           </div>
 
-          <a href="account-profile.html" class="user-profile-link">
-            <div class="user-nav">
-              <div class="user-icon"><i class="fas fa-circle-user"></i></div>
-              <div id="user-name" class="user-name">Username</div>
+          <a href="account-profile.html" class="account-profile-link">
+            <div class="account-nav">
+              <div class="account-icon"><i class="fas fa-circle-user"></i></div>
+              <div id="header-account-name" class="account-name">AccountName</div>
             </div>
           </a>
         </div>
@@ -53,15 +53,17 @@
           </div>
           <div class="form-group">
             <label>Pin</label>
-            <input type="password" class="form-control" id="user-pin" />
+            <input type="password" maxlength="4" class="form-control" id="withdrawal-account-pin" />
           </div>
-          <button id="withdraw-button" class="btn-success btn-lg">
+          <button id="submit-withdraw-button" class="btn-success btn-lg">
             Submit
           </button>
         </form>
       </div>
     </div>
 
-    <script src="mini-bank.js"></script>
+    <script src="../helpers/js/utils.js"></script>
+    <script src="account-common.js"></script>
+    <script src="withdrawal.js"></script>
   </body>
 </html>
