@@ -30,7 +30,7 @@ const storageKey = 'samplePost';
 const storageData = {
   title: 'Sample post 1',
   body: 'lorem ipsum dolor sit emeka',
-  accountId: 3
+  userId: 3
 };
 //localStorage.setItem(storageKey, JSON.stringify(storageData));
 

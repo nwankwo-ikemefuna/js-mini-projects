@@ -61,13 +61,13 @@ function displayModal(modalId, headerTitle, bodyContent, footerContent = null, c
   //display the modal
   modal.style.display = "block";
 
-  // When the account clicks close, close the modal
+  // When the user clicks close, close the modal
   const modalCloseTrigger = modal.querySelector('.close');
   modalCloseTrigger.onclick = function() {
     closeModal(modal);
   }
   
-  // When the account clicks anywhere outside of the modal, close it
+  // When the user clicks anywhere outside of the modal, close it
   if (closeOnClickOutside) {
     window.onclick = function(event) {
       if (event.target == modal) {

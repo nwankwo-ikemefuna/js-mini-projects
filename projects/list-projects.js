@@ -1,4 +1,3 @@
-
 function displayProjectsInTable() {
   const projectsArr = getProjects();
   const paginatedProjectRowsArr = [];
@@ -10,13 +9,13 @@ function displayProjectsInTable() {
     tdTitle.textContent = project.title;
 
     const tdStudent = createElementWithAttributes("td");
-    tdStudent.textContent = getStudentById(project.studentId, 'name');
+    tdStudent.textContent = getStudentById(project.studentId, "name");
 
     const tdDepartment = createElementWithAttributes("td");
-    tdDepartment.textContent = getDepartmentById(project.departmentId, 'name');
+    tdDepartment.textContent = getDepartmentById(project.departmentId, "name");
 
     const tdSupervisor = createElementWithAttributes("td");
-    tdSupervisor.textContent = getSupervisorById(project.superviorId, 'name');
+    tdSupervisor.textContent = getSupervisorById(project.superviorId, "name");
 
     const tdDateOfSubmission = createElementWithAttributes("td");
     tdDateOfSubmission.textContent = project.dateOfSubmission;
@@ -28,15 +27,15 @@ function displayProjectsInTable() {
     });
     const viewButton = createElementWithAttributes("i", {
       class: "fas fa-eye view-project",
-      'data-projectid': project.id,
+      "data-projectid": project.id,
     });
     const editButton = createElementWithAttributes("i", {
       class: "fas fa-pen-to-square edit-project",
-      'data-projectid': project.id,
+      "data-projectid": project.id,
     });
     const deleteButton = createElementWithAttributes("i", {
       class: "fas fa-trash delete-project",
-      'data-projectid': project.id,
+      "data-projectid": project.id,
     });
 
     tdAction.appendChild(buttonWrapper);
@@ -56,7 +55,14 @@ function displayProjectsInTable() {
     );
     paginatedProjectRowsArr.push(projectRow);
   });
-  paginate('projectsTableBody', paginatedProjectRowsArr, 4, 3, 1, projectActionsEventListeners);
+  paginate(
+    "projectsTableBody",
+    paginatedProjectRowsArr,
+    4,
+    3,
+    1,
+    projectActionsEventListeners
+  );
 }
 displayProjectsInTable();
 
@@ -65,4 +71,3 @@ function projectActionsEventListeners() {
   addEventListenersToActionIcons("edit", "edit-project");
   addEventListenersToActionIcons("delete", "delete-project");
 }
-
