@@ -58,11 +58,11 @@
             <label>Old Pin</label>
             <input type="password" maxlength="4" class="form-control" id="old-account-pin-input" />
           </div>
-          <div class="form-group">
+          <div id="account-pin-input-container" class="form-group"  style="display: none;">
             <label id="new-pin-desc">Pin</label>
             <input type="password" maxlength="4" class="form-control" id="account-pin-input" disabled/>
           </div>
-          <div class="form-group">
+          <div id="confirm-account-pin-input-container" class="form-group"  style="display: none;">
             <label id="confirm-new-pin-desc">Confirm Pin</label>
             <input type="password" maxlength="4" class="form-control" id="confirm-account-pin-input" disabled/>
           </div>
@@ -74,6 +74,7 @@
           </div> 
           <div id="confirm-edit-button-container">
             <button id="confirm-edit-profile-button" class="btn-warning btn-lg">Confirm Edit</button>
+            <button id="cancel-edit-profile-button" class="btn-danger btn-sm">Cancel</button>
           </div>
         </form>
       </div>

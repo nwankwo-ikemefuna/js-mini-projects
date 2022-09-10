@@ -6,7 +6,15 @@ const confirmNewPinDesc = document.getElementById("confirm-new-pin-desc");
 
 const accountNameInput = document.getElementById("account-name-input");
 const accountNumberInput = document.getElementById("account-number-input");
+
+const accountPinInputContainer = document.getElementById(
+  "account-pin-input-container"
+);
 const accountPinInput = document.getElementById("account-pin-input");
+
+const confirmAccountPinInputContainer = document.getElementById(
+  "confirm-account-pin-input-container"
+);
 const accountPinConfirmInput = document.getElementById(
   "confirm-account-pin-input"
 );
@@ -24,7 +32,7 @@ const createProfileButton = document.getElementById("create-profile-button");
 const editButtonContainer = document.getElementById("edit-button-container");
 const editProfileButton = document.getElementById("edit-profile-button");
 
-const confirmEditProfileContainer = document.getElementById(
+const confirmEditButtonContainer = document.getElementById(
   "confirm-edit-button-container"
 );
 const confirmEditProfileButton = document.getElementById(
@@ -38,8 +46,10 @@ getCurrentBalance();
 if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
   headerComponent.style.display = "none";
   profilePageDesc.textContent = "Create account";
+  accountPinInputContainer.style.display = "block";
+  confirmAccountPinInputContainer.style.display = "block";
   editButtonContainer.style.display = "none";
-  confirmEditProfileContainer.style.display = "none";
+  confirmEditButtonContainer.style.display = "none";
   accountNumberInput.value = randomaccountNumber;
 
   accountNameInput.disabled = false;
@@ -55,7 +65,7 @@ if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
     ) {
       alert("Please fill all empty fields");
       return;
-    } else if (accountPinInput.value !== accountPinConfirmInput.value) {
+    } else if (accountPinConfirmInput.value !== accountPinInput.value) {
       alert("PIN and confirm PIN do not match.");
       accountPinInput.value = "";
       accountPinConfirmInput.value = "";
@@ -71,8 +81,8 @@ if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
     window.location.href = "transactions.html";
   });
 } else {
-  displayAccountInfo()
-};
+  displayAccountInfo();
+}
 
 editProfileButton.addEventListener("click", (event) => {
   event.preventDefault();
@@ -83,7 +93,9 @@ editProfileButton.addEventListener("click", (event) => {
   confirmNewPinDesc.textContent = "Confirm New Pin";
   editButtonContainer.style.display = "none";
   createButtonContainer.style.display = "none";
-  confirmEditProfileContainer.style.display = "block";
+  accountPinInputContainer.style.display = "block";
+  confirmAccountPinInputContainer.style.display = "block";
+  confirmEditButtonContainer.style.display = "block";
   oldAccountPinInputContainer.style.display = "block";
 
   accountNameInput.disabled = false;
@@ -94,17 +106,23 @@ editProfileButton.addEventListener("click", (event) => {
 confirmEditProfileButton.addEventListener("click", (event) => {
   event.preventDefault();
 
-  if (oldAccountPinInput.value !== accountPinDataInLocalStorage) {
+  if (!oldAccountPinInput.value) {
+    alert("Input old account PIN.");
+    return;
+  } else if (oldAccountPinInput.value !== accountPinDataInLocalStorage) {
     alert("Incorrect old PIN!");
     oldAccountPinInput.value = "";
-    return
-  } else if (
-    !accountPinInput.value ||
-    !accountPinConfirmInput.value ||
-    !oldAccountPinInput.value
-  ) {
-    alert("Please fill all fields");
-    return
+    accountPinInput.value = "";
+    accountPinConfirmInput.value = "";
+    return;
+  } else if (!accountPinInput.value) {
+    localStorage.setItem(accountNameKey, accountNameInput.value);
+    localStorage.setItem(accountPinKey, oldAccountPinInput.value);
+  } else if (accountPinConfirmInput.value !== accountPinInput.value) {
+    alert("PIN and confirm PIN do not match.");
+    accountPinInput.value = "";
+    accountPinConfirmInput.value = "";
+    return;
   } else {
     localStorage.setItem(accountNameKey, accountNameInput.value);
     localStorage.setItem(accountNumberKey, accountNumberInput.value);
@@ -121,5 +139,5 @@ function displayAccountInfo() {
   profilePageDesc.textContent = "My Profile";
   editButtonContainer.style.display = "block";
   createButtonContainer.style.display = "none";
-  confirmEditProfileContainer.style.display = "none";
+  confirmEditButtonContainer.style.display = "none";
 }
