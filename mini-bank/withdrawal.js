@@ -16,7 +16,7 @@ submitWithdrawButton.addEventListener("click", (e) => {
     alert("Please input amount to withdraw");
     return;
   } else if (userPinInput.value !== accountPinDataInLocalStorage) {
-    alert("Please input your correct pin");
+    alert("Incorrect PIN!");
     userPinInput.value = "";
     return;
   } else if (amountToWithdrawInput.value > 1000000) {

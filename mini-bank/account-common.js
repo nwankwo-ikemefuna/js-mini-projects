@@ -30,7 +30,7 @@ function getCurrentBalance() {
     userTransactionsInLocalStorageArr[
       userTransactionsInLocalStorageArr.length - 1
     ];
-  const displayActualBalance = getCurrentAccountBalance.balanceAfter;
+  const displayActualBalance = getCurrentAccountBalance?.balanceAfter || 0;
 
   currentAccountBalance.textContent = displayActualBalance;
 }

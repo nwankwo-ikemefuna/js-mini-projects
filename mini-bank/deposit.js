@@ -10,20 +10,20 @@ const submitDepositButton = document.getElementById('submit-deposit-button');
 const timeStamp = new Date();
 const trnxnRef = `TR${getDateString()}`;
 
-console.log('timeStamp', timeStamp.toLocaleString())
-
-
 submitDepositButton.addEventListener('click', (e) => {
   e.preventDefault();
   if (!amountToDepositInput.value) {
     alert('Please input amount to deposit');
     return
   } else if (userPinInput.value !== accountPinDataInLocalStorage) {
-    alert('Please input your correct pin');
+    alert('Incorrect PIN!');
     userPinInput.value = '';
     return
   } else if (amountToDepositInput.value > 1000000) {
     alert('Sorry, you are not allowed to deposit more than 1,000,000');
+    return;
+  } else if (+amountToDepositInput.value + +currentAccountBalance.textContent > 10000000) {
+    alert('Balance cannot excede 10 million naira!');
     return;
   } else {
     const tranxObj = {

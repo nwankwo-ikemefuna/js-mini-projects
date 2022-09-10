@@ -102,5 +102,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .transaction-table-body {
   text-align: center;
+  font-weight: normal;
   text-transform: capitalize;
 }
