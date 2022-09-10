@@ -15,6 +15,12 @@ createNewAccountButton.addEventListener('click', () => {
   if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
       window.location.href = 'account-profile.html'
   } else {
-    alert('You have an account already, Login.')
+    //alert('You have an account already, Login.');
+    const transactionsBtn = createElementWithAttributes('a', { 
+      href: 'transactions.html',
+      class: 'btn btn-primary btn-sm',
+    });
+    transactionsBtn.textContent = 'View my transactions';
+    displayModal('mb-alerts', 'Account Info', 'You have an account already, Login.', transactionsBtn);
   }
 })
