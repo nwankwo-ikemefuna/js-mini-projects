@@ -19,7 +19,9 @@ const userTransactionsInLocalStorage = localStorage.getItem(
 const userTransactionsInLocalStorageArr =
   JSON.parse(userTransactionsInLocalStorage) || [];
 
-accountNameOnHeader.textContent = accountNameDataInLocalStorage;
+if (accountNameOnHeader) {
+  accountNameOnHeader.textContent = accountNameDataInLocalStorage;
+}
 
 function getCurrentBalance() {
   const currentAccountBalance = document.getElementById(
