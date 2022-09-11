@@ -2,13 +2,21 @@ getCurrentBalance();
 
 const transactionInfoDefault = document.getElementById('transaction-default');
 
+if (!userAccountInfoInLocalStorage) {
+  window.location.href = "account-profile.html";
+}
+
+if (!currentLoggedInAccountInLocalStorage) {
+  window.location.href = "landing.html";
+}
+
 if(userTransactionsInLocalStorageArr) {
     transactionInfoDefault.style.display = 'none';
 } else {
     transactionInfoDefault.style.display = 'block'
 }
 
-const trnxnArr = getTransactionFromLocalStorage();
+const trnxnArr = userTransactions();
 const paginatedTrnxnRowArr = [];
 
 trnxnArr.forEach((trnxn) => {

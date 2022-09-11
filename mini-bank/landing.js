@@ -1,26 +1,22 @@
 const createNewAccountButton = document.getElementById(
   "create-new-account-button"
 );
+const landingPageDesc = document.getElementById('page-desc');
 
-if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
+if (!userAccountInfoInLocalStorage) {
   const answer = confirm(
     "You do not have an account. Do you wish to create an account?"
   );
   if (answer) {
     window.location.href = 'account-profile.html'
   }
-};
+} else {
+  landingPageDesc.innerHTML = ''
+  createNewAccountButton.style.display = 'none'
+}
 
 createNewAccountButton.addEventListener('click', () => {
-  if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
+  if (!userAccountInfoInLocalStorage) {
       window.location.href = 'account-profile.html'
-  } else {
-    //alert('You have an account already, Login.');
-    const transactionsBtn = createElementWithAttributes('a', { 
-      href: 'transactions.html',
-      class: 'btn btn-primary btn-sm',
-    });
-    transactionsBtn.textContent = 'View my transactions';
-    displayModal('mb-alerts', 'Account Info', 'You have an account already, Login.', transactionsBtn);
   }
 })

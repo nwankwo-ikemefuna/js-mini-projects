@@ -1,4 +1,6 @@
-const currentAccountBalance = document.getElementById('current-account-balance')
+const currentAccountBalance = document.getElementById(
+  "current-account-balance"
+);
 
 const amountToWithdrawInput = document.getElementById("amount-to-withdraw");
 const userPinInput = document.getElementById("withdrawal-account-pin");
@@ -8,14 +10,23 @@ const submitWithdrawButton = document.getElementById("submit-withdraw-button");
 const timeStamp = new Date();
 const trnxnRef = `TR${getDateString()}`;
 
-getCurrentBalance()
+if (!userAccountInfoInLocalStorage) {
+  window.location.href = "account-profile.html";
+}
+
+if (!currentLoggedInAccountInLocalStorage) {
+  window.location.href = "landing.html";
+}
 
 submitWithdrawButton.addEventListener("click", (e) => {
   e.preventDefault();
+
+  const accountDetails = getProfileInfo();
+
   if (!amountToWithdrawInput.value) {
     alert("Please input amount to withdraw");
     return;
-  } else if (userPinInput.value !== accountPinDataInLocalStorage) {
+  } else if (userPinInput.value !== accountDetails.accountPin) {
     alert("Incorrect PIN!");
     userPinInput.value = "";
     return;
@@ -38,18 +49,13 @@ submitWithdrawButton.addEventListener("click", (e) => {
         +currentAccountBalance.textContent - +amountToWithdrawInput.value,
     };
 
-    userTransactionsInLocalStorageArr.push(tranxObj);
-    localStorage.setItem(
-      accountTransactionsKey,
-      JSON.stringify(userTransactionsInLocalStorageArr)
-    );
-    console.log(
-      "userTransactionsInLocalStorageArr",
-      userTransactionsInLocalStorageArr
-    );
+    userAccountInfoInLocalStorageArr.push(tranxObj);
+    setDataInLocalStorage();
     currentAccountBalance.textContent = tranxObj.balanceAfter;
     amountToWithdrawInput.value = "";
     userPinInput.value = "";
   }
-  window.location.href = 'transactions.html'
+  window.location.href = "transactions.html";
 });
+
+getCurrentBalance();

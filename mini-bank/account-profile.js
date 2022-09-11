@@ -39,11 +39,13 @@ const confirmEditProfileButton = document.getElementById(
   "confirm-edit-profile-button"
 );
 
+const logOutButton = document.getElementById("log-out-button");
+
 const randomaccountNumber = Math.random().toString().slice(2, 12);
 
 getCurrentBalance();
 
-if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
+if (!userAccountInfoInLocalStorage) {
   headerComponent.style.display = "none";
   profilePageDesc.textContent = "Create account";
   accountPinInputContainer.style.display = "block";
@@ -72,11 +74,18 @@ if (!accountNameDataInLocalStorage || !accountPinDataInLocalStorage) {
       return;
     } else if (isNaN(accountPinInput.value)) {
       alert("PIN can only contain numbers.");
+      accountPinInput.value = "";
+      accountPinConfirmInput.value = "";
       return;
     } else {
-      localStorage.setItem(accountNameKey, accountNameInput.value);
-      localStorage.setItem(accountNumberKey, accountNumberInput.value);
-      localStorage.setItem(accountPinKey, accountPinInput.value);
+      const userAccountInfoObj = {
+        accountName: accountNameInput.value,
+        accountNumber: accountNumberInput.value,
+        accountPin: accountPinInput.value,
+      };
+      userAccountInfoInLocalStorageArr.push(userAccountInfoObj);
+      setDataInLocalStorage();
+      localStorage.setItem(currentAccountLoggedIn, accountNumberInput.value);
     }
     window.location.href = "transactions.html";
   });
@@ -106,38 +115,91 @@ editProfileButton.addEventListener("click", (event) => {
 confirmEditProfileButton.addEventListener("click", (event) => {
   event.preventDefault();
 
+  const accountDetails = getProfileInfo();
+
   if (!oldAccountPinInput.value) {
     alert("Input old account PIN.");
     return;
-  } else if (oldAccountPinInput.value !== accountPinDataInLocalStorage) {
+  } else if (oldAccountPinInput.value !== accountDetails.accountPin) {
     alert("Incorrect old PIN!");
     oldAccountPinInput.value = "";
     accountPinInput.value = "";
     accountPinConfirmInput.value = "";
     return;
   } else if (!accountPinInput.value) {
-    localStorage.setItem(accountNameKey, accountNameInput.value);
-    localStorage.setItem(accountPinKey, oldAccountPinInput.value);
+    dataIndexes(oldAccountPinInput.value);
+    setDataInLocalStorage();
   } else if (accountPinConfirmInput.value !== accountPinInput.value) {
     alert("PIN and confirm PIN do not match.");
     accountPinInput.value = "";
     accountPinConfirmInput.value = "";
     return;
   } else {
-    localStorage.setItem(accountNameKey, accountNameInput.value);
-    localStorage.setItem(accountNumberKey, accountNumberInput.value);
-    localStorage.setItem(accountPinKey, accountPinInput.value);
+    dataIndexes(accountPinInput.value);
+    setDataInLocalStorage();
   }
   window.location.href = "account-profile.html";
 });
 
+logOutButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const confirmBtnsContainer = createElementWithAttributes("div", {
+    class: "confirm-btns-container",
+  });
+  const confirmBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  confirmBtn.textContent = "Yes";
+  const cancelBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  cancelBtn.textContent = "No";
+  confirmBtnsContainer.append(confirmBtn, cancelBtn);
+  displayModal(
+    "log-out-alert",
+    "Account Info",
+    "Log out of your account?",
+    confirmBtnsContainer
+  );
+
+  confirmBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.removeItem(currentAccountLoggedIn);
+    window.location.href = "landing.html";
+  });
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.location.href = "account-profile.html";
+  });
+});
+
 function displayAccountInfo() {
-  accountNameInput.value = accountNameDataInLocalStorage;
-  accountNumberInput.value = accountNumberDataInLocalStorage;
+  const profileInfo = getProfileInfo();
+
+  accountNameInput.value = profileInfo.accountName;
+  accountNumberInput.value = profileInfo.accountNumber;
 
   headerComponent.style.display = "block";
   profilePageDesc.textContent = "My Profile";
   editButtonContainer.style.display = "block";
   createButtonContainer.style.display = "none";
   confirmEditButtonContainer.style.display = "none";
+}
+
+function dataIndexes(oldOrNew) {
+  const nameIndex = userAccountInfoInLocalStorageArr.findIndex(
+    (item) => item.accountName
+  );
+  userAccountInfoInLocalStorageArr[nameIndex].accountName =
+    accountNameInput.value;
+  const numberIndex = userAccountInfoInLocalStorageArr.findIndex(
+    (item) => item.accountNumber
+  );
+  userAccountInfoInLocalStorageArr[numberIndex].accountNumber =
+    accountNumberInput.value;
+  const pinIndex = userAccountInfoInLocalStorageArr.findIndex(
+    (item) => item.accountPin
+  );
+  userAccountInfoInLocalStorageArr[pinIndex].accountPin = oldOrNew;
 }

@@ -1,17 +1,12 @@
 const accountNameOnHeader = document.getElementById("header-account-name");
 
-// let trxnType =
+const accountTransactionsKey = "MB TRANSACTIONS";
+const userAccountInfoKey = "MB_USER_ACCOUNT_INFO";
+const currentAccountLoggedIn = "MB_CURRENTLY_LOGGED";
 
-const accountNameKey = "MB_ACCOUNT_NAME";
-const accountNumberKey = "MB_ACCOUNT_NUMBER";
-const accountPinKey = "MB_ACCOUNT_PIN";
-const accountTransactionsKey = "TRANSACTIONS";
-
-const accountNameDataInLocalStorage = localStorage.getItem(accountNameKey);
-
-const accountNumberDataInLocalStorage = localStorage.getItem(accountNumberKey);
-
-const accountPinDataInLocalStorage = localStorage.getItem(accountPinKey);
+const currentLoggedInAccountInLocalStorage = localStorage.getItem(
+  currentAccountLoggedIn
+);
 
 const userTransactionsInLocalStorage = localStorage.getItem(
   accountTransactionsKey
@@ -19,8 +14,12 @@ const userTransactionsInLocalStorage = localStorage.getItem(
 const userTransactionsInLocalStorageArr =
   JSON.parse(userTransactionsInLocalStorage) || [];
 
+const userAccountInfoInLocalStorage = localStorage.getItem(userAccountInfoKey);
+const userAccountInfoInLocalStorageArr =
+  JSON.parse(userAccountInfoInLocalStorage) || [];
+
 if (accountNameOnHeader) {
-  accountNameOnHeader.textContent = accountNameDataInLocalStorage;
+  accountNameOnHeader.textContent = getProfileInfo().accountName;
 }
 
 function getCurrentBalance() {
@@ -29,14 +28,44 @@ function getCurrentBalance() {
   );
 
   const getCurrentAccountBalance =
-    userTransactionsInLocalStorageArr[
-      userTransactionsInLocalStorageArr.length - 1
+  userAccountInfoInLocalStorageArr[
+    userAccountInfoInLocalStorageArr.length - 1
     ];
   const displayActualBalance = getCurrentAccountBalance?.balanceAfter || 0;
 
   currentAccountBalance.textContent = displayActualBalance;
 }
 
-function getTransactionFromLocalStorage() {
-  return userTransactionsInLocalStorageArr;
+// function getAccountInfosFromLocalStorage() {
+//   return userAccountInfoInLocalStorageArr;
+// }
+
+function getProfileInfo() {
+  if (userAccountInfoInLocalStorageArr) {
+    const data = userAccountInfoInLocalStorageArr.find(
+      (account) =>
+        account.accountNumber === currentLoggedInAccountInLocalStorage
+    );
+    return data;
+  }
+}
+
+function setDataInLocalStorage() {
+  localStorage.setItem(
+    userAccountInfoKey,
+    JSON.stringify(userAccountInfoInLocalStorageArr)
+  );
+}
+
+
+// function userProfile() {
+//   const userAccountProfile = userAccountInfoInLocalStorageArr.shift()
+//   return userAccountProfile;
+// }
+
+// console.log(userProfile())
+
+function userTransactions() {
+  userAccountInfoInLocalStorageArr.shift();
+  return userAccountInfoInLocalStorageArr;
 }

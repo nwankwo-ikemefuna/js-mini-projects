@@ -15,20 +15,27 @@
   align-items: center;
   margin: 15% auto 0;
 }
-.create-confrim-buttons {
- display: flex;
- justify-content: center;
- align-items: center;
-}
-.create-button, .confrim-button {
+.create-login-button {
   font-size: 25px;
   border-radius: 10px;
   text-decoration: none;
 }
-.create-button:hover, .confrim-button:hover {
+.create-login-button:hover {
   background: #aaa;
   color: #000;
   transition: 0.8s;
+}
+.log-out-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+.confirm-btns-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
 }
 /*Transaction, deposit, withdraw and account-profile page*/
 .header-component {
