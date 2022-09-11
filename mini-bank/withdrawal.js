@@ -7,9 +7,6 @@ const userPinInput = document.getElementById("withdrawal-account-pin");
 
 const submitWithdrawButton = document.getElementById("submit-withdraw-button");
 
-const timeStamp = new Date();
-const trnxnRef = `TR${getDateString()}`;
-
 if (!userAccountInfoInLocalStorage) {
   window.location.href = "account-profile.html";
 }
@@ -21,7 +18,7 @@ if (!currentLoggedInAccountInLocalStorage) {
 submitWithdrawButton.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const accountDetails = getProfileInfo();
+  const accountDetails = getUserAccountDetails();
 
   if (!amountToWithdrawInput.value) {
     alert("Please input amount to withdraw");
@@ -39,6 +36,8 @@ submitWithdrawButton.addEventListener("click", (e) => {
   } else if (+currentAccountBalance.textContent <= 100) {
     alert("Sorry, your balance cannot go below #100");
   } else {
+    const timeStamp = new Date();
+    const trnxnRef = `TR${getDateString()}`;
     const tranxObj = {
       timeStamp: timeStamp.toLocaleString(),
       trnxnRef: trnxnRef,
@@ -49,8 +48,17 @@ submitWithdrawButton.addEventListener("click", (e) => {
         +currentAccountBalance.textContent - +amountToWithdrawInput.value,
     };
 
-    userAccountInfoInLocalStorageArr.push(tranxObj);
-    setDataInLocalStorage();
+    const loggedInUserObj = getUserAccountDetails();
+    loggedInUserObj.transactions.push(tranxObj);
+    const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
+      (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
+    );
+    userAccountInfoInLocalStorageArr[loggedInUserIndex] = loggedInUserObj;
+    localStorage.setItem(
+      userAccountInfoKey,
+      JSON.stringify(userAccountInfoInLocalStorageArr)
+    );
+
     currentAccountBalance.textContent = tranxObj.balanceAfter;
     amountToWithdrawInput.value = "";
     userPinInput.value = "";

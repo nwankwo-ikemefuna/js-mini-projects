@@ -19,7 +19,7 @@ const userAccountInfoInLocalStorageArr =
   JSON.parse(userAccountInfoInLocalStorage) || [];
 
 if (accountNameOnHeader) {
-  accountNameOnHeader.textContent = getProfileInfo().accountName;
+  accountNameOnHeader.textContent = getUserAccountDetails().accountName;
 }
 
 function getCurrentBalance() {
@@ -40,32 +40,19 @@ function getCurrentBalance() {
 //   return userAccountInfoInLocalStorageArr;
 // }
 
-function getProfileInfo() {
+function getUserAccountDetails(accountNum = currentLoggedInAccountInLocalStorage) {
   if (userAccountInfoInLocalStorageArr) {
     const data = userAccountInfoInLocalStorageArr.find(
       (account) =>
-        account.accountNumber === currentLoggedInAccountInLocalStorage
+        account.accountNumber === accountNum
     );
     return data;
   }
 }
 
-function setDataInLocalStorage() {
+function setUserAccountDataInLocalStorage() {
   localStorage.setItem(
     userAccountInfoKey,
     JSON.stringify(userAccountInfoInLocalStorageArr)
   );
-}
-
-
-// function userProfile() {
-//   const userAccountProfile = userAccountInfoInLocalStorageArr.shift()
-//   return userAccountProfile;
-// }
-
-// console.log(userProfile())
-
-function userTransactions() {
-  userAccountInfoInLocalStorageArr.shift();
-  return userAccountInfoInLocalStorageArr;
 }

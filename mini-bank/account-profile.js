@@ -45,7 +45,7 @@ const randomaccountNumber = Math.random().toString().slice(2, 12);
 
 getCurrentBalance();
 
-if (!userAccountInfoInLocalStorage) {
+if (!currentLoggedInAccountInLocalStorage) {
   headerComponent.style.display = "none";
   profilePageDesc.textContent = "Create account";
   accountPinInputContainer.style.display = "block";
@@ -82,9 +82,10 @@ if (!userAccountInfoInLocalStorage) {
         accountName: accountNameInput.value,
         accountNumber: accountNumberInput.value,
         accountPin: accountPinInput.value,
+        transactions: [],
       };
       userAccountInfoInLocalStorageArr.push(userAccountInfoObj);
-      setDataInLocalStorage();
+      setUserAccountDataInLocalStorage();
       localStorage.setItem(currentAccountLoggedIn, accountNumberInput.value);
     }
     window.location.href = "transactions.html";
@@ -115,7 +116,7 @@ editProfileButton.addEventListener("click", (event) => {
 confirmEditProfileButton.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const accountDetails = getProfileInfo();
+  const accountDetails = getUserAccountDetails();
 
   if (!oldAccountPinInput.value) {
     alert("Input old account PIN.");
@@ -128,7 +129,7 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else if (!accountPinInput.value) {
     dataIndexes(oldAccountPinInput.value);
-    setDataInLocalStorage();
+    setUserAccountDataInLocalStorage();
   } else if (accountPinConfirmInput.value !== accountPinInput.value) {
     alert("PIN and confirm PIN do not match.");
     accountPinInput.value = "";
@@ -136,7 +137,7 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else {
     dataIndexes(accountPinInput.value);
-    setDataInLocalStorage();
+    setUserAccountDataInLocalStorage();
   }
   window.location.href = "account-profile.html";
 });
@@ -175,7 +176,7 @@ logOutButton.addEventListener("click", (event) => {
 });
 
 function displayAccountInfo() {
-  const profileInfo = getProfileInfo();
+  const profileInfo = getUserAccountDetails();
 
   accountNameInput.value = profileInfo.accountName;
   accountNumberInput.value = profileInfo.accountNumber;

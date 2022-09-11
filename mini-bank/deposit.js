@@ -4,11 +4,7 @@ const currentAccountBalance = document.getElementById(
 
 const amountToDepositInput = document.getElementById("amount-to-deposit");
 const userPinInput = document.getElementById("deposit-account-pin");
-
 const submitDepositButton = document.getElementById("submit-deposit-button");
-
-const timeStamp = new Date();
-const trnxnRef = `TR${getDateString()}`;
 
 if (!userAccountInfoInLocalStorage) {
   window.location.href = "account-profile.html";
@@ -21,8 +17,8 @@ if (!currentLoggedInAccountInLocalStorage) {
 submitDepositButton.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const accountDetails = getProfileInfo();
-  console.log('PIN', accountDetails.accountPin)
+  const accountDetails = getUserAccountDetails();
+  console.log("PIN", accountDetails.accountPin);
 
   if (!amountToDepositInput.value) {
     alert("Please input amount to deposit");
@@ -41,6 +37,8 @@ submitDepositButton.addEventListener("click", (e) => {
     alert("Balance cannot excede 10 million naira!");
     return;
   } else {
+    const timeStamp = new Date();
+    const trnxnRef = `TR${getDateString()}`;
     const tranxObj = {
       timeStamp: timeStamp.toLocaleString(),
       trnxnRef: trnxnRef,
@@ -51,12 +49,22 @@ submitDepositButton.addEventListener("click", (e) => {
         +currentAccountBalance.textContent + +amountToDepositInput.value,
     };
 
-    userAccountInfoInLocalStorageArr.push(tranxObj);
-    setDataInLocalStorage();
+    const loggedInUserObj = getUserAccountDetails();
+    loggedInUserObj.transactions.push(tranxObj);
+    const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
+      (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
+    );
+    userAccountInfoInLocalStorageArr[loggedInUserIndex] = loggedInUserObj;
+    localStorage.setItem(
+      userAccountInfoKey,
+      JSON.stringify(userAccountInfoInLocalStorageArr)
+    );
+
     currentAccountBalance.textContent = tranxObj.balanceAfter;
     amountToDepositInput.value = "";
     userPinInput.value = "";
   }
   window.location.href = "transactions.html";
 });
+
 getCurrentBalance();

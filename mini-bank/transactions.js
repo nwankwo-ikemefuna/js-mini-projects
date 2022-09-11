@@ -16,10 +16,10 @@ if(userTransactionsInLocalStorageArr) {
     transactionInfoDefault.style.display = 'block'
 }
 
-const trnxnArr = userTransactions();
+const trnxnArr = getUserAccountDetails();
 const paginatedTrnxnRowArr = [];
 
-trnxnArr.forEach((trnxn) => {
+trnxnArr.transactions.forEach((trnxn) => {
   const tdTimestamp = createElementWithAttributes("td");
   tdTimestamp.textContent = trnxn.timeStamp;
 
