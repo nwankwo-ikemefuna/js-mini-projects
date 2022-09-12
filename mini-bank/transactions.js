@@ -56,7 +56,6 @@ clearTrnxnsButton.addEventListener("click", (event) => {
   const onClearTrnxnsConfirm = () => {
     loggedInUserObj.transactions = [];
     updateUserData (loggedInUserObj)
-
     window.location.href = "transactions.html";
   };
 

@@ -9,7 +9,7 @@ const currentLoggedInAccountInLocalStorage = localStorage.getItem(
 );
 
 const userAccountsInLocalStorage = localStorage.getItem(userAccountInfoKey);
-const userAccountInfoInLocalStorageArr =
+const userAccountsInLocalStorageArr =
   JSON.parse(userAccountsInLocalStorage) || [];
 
 if (currentLoggedInAccountInLocalStorage) {
@@ -50,25 +50,25 @@ function getCurrentBalance() {
 function getUserAccountDetails(
   accountNum = currentLoggedInAccountInLocalStorage
 ) {
-  if (userAccountInfoInLocalStorageArr) {
-    const data = userAccountInfoInLocalStorageArr.find(
+  if (userAccountsInLocalStorageArr) {
+    const data = userAccountsInLocalStorageArr.find(
       (account) => account.accountNumber === accountNum
     );
     return data;
   }
 }
 
-function setUserAccountDataInLocalStorage(userAccount) {
-  localStorage.setItem(userAccountInfoKey, JSON.stringify(userAccount));
+function setUserAccountsDataInLocalStorage(userAccounts) {
+  localStorage.setItem(userAccountInfoKey, JSON.stringify(userAccounts));
 }
 
 function updateUserData(updateData) {
-  const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
+  const loggedInUserIndex = userAccountsInLocalStorageArr.findIndex(
     (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
   );
-  userAccountInfoInLocalStorageArr[loggedInUserIndex] = updateData;
+  userAccountsInLocalStorageArr[loggedInUserIndex] = updateData;
   localStorage.setItem(
     userAccountInfoKey,
-    JSON.stringify(userAccountInfoInLocalStorageArr)
+    JSON.stringify(userAccountsInLocalStorageArr)
   );
 }

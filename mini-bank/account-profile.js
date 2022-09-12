@@ -39,10 +39,10 @@ const confirmEditProfileButton = document.getElementById(
   "confirm-edit-profile-button"
 );
 const createPageDescHolder = document.getElementById("create-page-desc-holder");
-const deleteAccountButtonContainer = document.getElementById(
-  "delete-account-button-container"
+const closeAccountButtonContainer = document.getElementById(
+  "close-account-button-container"
 );
-const deleteAccountButton = document.getElementById("delete-account-button");
+const closeAccountButton = document.getElementById("close-account-button");
 
 const randomaccountNumber = Math.random().toString().slice(2, 12);
 
@@ -53,7 +53,7 @@ if (!currentLoggedInAccountInLocalStorage) {
   confirmAccountPinInputContainer.style.display = "block";
   editButtonContainer.style.display = "none";
   confirmEditButtonContainer.style.display = "none";
-  deleteAccountButtonContainer.style.display = "none";
+  closeAccountButtonContainer.style.display = "none";
   accountNumberInput.value = randomaccountNumber;
 
   accountNameInput.disabled = false;
@@ -86,8 +86,8 @@ if (!currentLoggedInAccountInLocalStorage) {
         accountPin: accountPinInput.value,
         transactions: [],
       };
-      userAccountInfoInLocalStorageArr.push(userAccountInfoObj);
-      setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
+      userAccountsInLocalStorageArr.push(userAccountInfoObj);
+      setUserAccountsDataInLocalStorage(userAccountsInLocalStorageArr);
       localStorage.setItem(currentAccountLoggedInKey, accountNumberInput.value);
     }
     window.location.href = "transactions.html";
@@ -131,7 +131,7 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else if (!accountPinInput.value) {
     dataIndexes(oldAccountPinInput.value);
-    setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
+    setUserAccountsDataInLocalStorage(userAccountsInLocalStorageArr);
   } else if (accountPinConfirmInput.value !== accountPinInput.value) {
     alert("PIN and confirm PIN do not match.");
     accountPinInput.value = "";
@@ -139,22 +139,20 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else {
     dataIndexes(accountPinInput.value);
-    setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
+    setUserAccountsDataInLocalStorage(userAccountsInLocalStorageArr);
   }
   window.location.href = "account-profile.html";
 });
 
-deleteAccountButton.addEventListener("click", (event) => {
+closeAccountButton.addEventListener("click", (event) => {
   event.preventDefault();
 
-  const onDeleteAccountConfirm = () => {
-    const filteredUsers = userAccountInfoInLocalStorageArr.filter(
+  const oncloseAccountConfirm = () => {
+    const filteredUsers = userAccountsInLocalStorageArr.filter(
       (acc) => acc.accountNumber !== currentLoggedInAccountInLocalStorage
     );
-
-    setUserAccountDataInLocalStorage(filteredUsers);
+    setUserAccountsDataInLocalStorage(filteredUsers);
     localStorage.removeItem(currentAccountLoggedInKey);
-
     window.location.href = "landing.html";
   };
 
@@ -162,7 +160,7 @@ deleteAccountButton.addEventListener("click", (event) => {
     "delete-account-confirm",
     "Delete My Account",
     "Are you sure you want to delete your account? This action cannot be reversed.",
-    onDeleteAccountConfirm,
+    oncloseAccountConfirm,
     { size: "modal-sm" }
   );
 });
@@ -182,18 +180,18 @@ function displayAccountInfo() {
 }
 
 function dataIndexes(oldOrNew) {
-  const nameIndex = userAccountInfoInLocalStorageArr.findIndex(
+  const nameIndex = userAccountsInLocalStorageArr.findIndex(
     (item) => item.accountName
   );
-  userAccountInfoInLocalStorageArr[nameIndex].accountName =
+  userAccountsInLocalStorageArr[nameIndex].accountName =
     accountNameInput.value;
-  const numberIndex = userAccountInfoInLocalStorageArr.findIndex(
+  const numberIndex = userAccountsInLocalStorageArr.findIndex(
     (item) => item.accountNumber
   );
-  userAccountInfoInLocalStorageArr[numberIndex].accountNumber =
+  userAccountsInLocalStorageArr[numberIndex].accountNumber =
     accountNumberInput.value;
-  const pinIndex = userAccountInfoInLocalStorageArr.findIndex(
+  const pinIndex = userAccountsInLocalStorageArr.findIndex(
     (item) => item.accountPin
   );
-  userAccountInfoInLocalStorageArr[pinIndex].accountPin = oldOrNew;
+  userAccountsInLocalStorageArr[pinIndex].accountPin = oldOrNew;
 }

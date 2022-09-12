@@ -2,7 +2,7 @@ const accountSelectInput = document.getElementById(
   "account-select"
 );
 
-const userAccountsForSelect = userAccountInfoInLocalStorageArr.map(userAccount => {
+const userAccountsForSelect = userAccountsInLocalStorageArr.map(userAccount => {
   userAccount.accountName = `${userAccount.accountName} (${userAccount.accountPin})`;
   return userAccount;
 });
