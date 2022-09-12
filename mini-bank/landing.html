@@ -14,40 +14,25 @@
       <div>
         <h1>MY MINI BANK</h1>
       </div>
-      <div id="create-account-form-holder">
-        <h1 class="page-desc" id="page-desc">NO ACCOUNT FOUND</h1>
-        <div class="create-button-container">
-          <button
-            id="create-new-account-button"
-            class="btn-dark btn-lg create-login-button"
-          >
-            Create Account
-          </button>
-        </div>
-        
-        <div class="header-component" id="login-form-container" style="display:none">
-          <form>
+      <div id="landing-container">
+        <div class="header-component">
+          <p>Select user account to login as:</p>
+          <form id="account-login-form">
             <div class="form-group">
-              <label>Account Name</label>
-              <input type="text" class="form-control" id="login-account-name-input" />
+              <select id="account-select" class="form-control">
+                <option value="">Select</option>
+              </select>
             </div>
-            <div id="account-pin-input-container" class="form-group">
-              <label>Account Pin</label>
-              <input type="password" maxlength="4" class="form-control" id="login-account-pin-input"/>
-            </div>
+            <button class="btn btn-dark btn-block">
+              Login
+            </button>
           </form>
-          
-          <button
-            id="account-login-button"
-            class="btn-dark btn-lg create-login-button"
-          >
-            Login
-          </button>
         </div>
-       
-
-        <div id="page-desc-holder" class="page-desc-holder" style="display:none">
-          <p>Don't have an account? <a href="account-profile.html">Create an account</a></p>
+        <div id="page-desc-holder" class="page-desc-holder">
+          <p>
+            Don't have an account?
+            <a href="account-profile.html">Create an account</a>
+          </p>
         </div>
       </div>
     </div>

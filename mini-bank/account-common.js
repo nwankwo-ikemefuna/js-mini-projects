@@ -1,34 +1,49 @@
 const accountNameOnHeader = document.getElementById("header-account-name");
+const logOutButton = document.getElementById("log-out-button");
 
 const userAccountInfoKey = "MB_USER_ACCOUNT_INFO";
-const currentAccountLoggedIn = "MB_CURRENTLY_LOGGED";
+const currentAccountLoggedInKey = "MB_CURRENTLY_LOGGED";
 
 const currentLoggedInAccountInLocalStorage = localStorage.getItem(
-  currentAccountLoggedIn
+  currentAccountLoggedInKey
 );
 
-const userAccountInfoInLocalStorage = localStorage.getItem(userAccountInfoKey);
-const userAccountInfoInLocalStorageArr =
-  JSON.parse(userAccountInfoInLocalStorage) || [];
+const userAccountsInLocalStorage = localStorage.getItem(userAccountInfoKey);
+const userAccountInfoInLocalStorageArr = JSON.parse(userAccountsInLocalStorage) || [];
 
-if (accountNameOnHeader) {
+if (currentLoggedInAccountInLocalStorage) {
   accountNameOnHeader.textContent = getUserAccountDetails().accountName;
 }
 
+if (logOutButton) {
+  logOutButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const onLogoutConfirm = () => {
+      localStorage.removeItem(currentAccountLoggedInKey);
+      window.location.href = "landing.html";
+    };
+
+    displayConfirmModal(
+      "logout-confirm",
+      "Logout",
+      "Log out of your account?",
+      onLogoutConfirm,
+      { size: 'modal-sm' }
+    );
+  });
+}
+
 function getCurrentBalance() {
-  const currentAccountBalance = document.getElementById(
-    "current-account-balance"
-  );
+  let currentAccountBalance = 0;
+  const userTransactions = getUserAccountDetails().transactions || [];
+  if (userTransactions.length > 0) {  
+    const lastUserTransaction = userTransactions[userTransactions.length - 1];
+    currentAccountBalance = lastUserTransaction?.balanceAfter || 0;
+  }
 
-  const getCurrentAccountBalance =
-    getUserAccountDetails().transactions.length - 1;
-
-  const balance =
-    getUserAccountDetails().transactions[getCurrentAccountBalance];
-
-  const displayActualBalance = balance?.balanceAfter || 0;
-
-  currentAccountBalance.textContent = displayActualBalance;
+  const balDisplay = document.getElementById("current-account-balance");
+  balDisplay.textContent = currentAccountBalance;
 }
 
 function getUserAccountDetails(
@@ -47,8 +62,4 @@ function setUserAccountDataInLocalStorage() {
     userAccountInfoKey,
     JSON.stringify(userAccountInfoInLocalStorageArr)
   );
-}
-
-function getAllUsersFromLocalStorage() {
-  return userAccountInfoInLocalStorageArr;
 }

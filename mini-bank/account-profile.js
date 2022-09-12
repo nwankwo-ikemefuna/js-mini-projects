@@ -39,8 +39,6 @@ const confirmEditProfileButton = document.getElementById(
   "confirm-edit-profile-button"
 );
 
-const logOutButton = document.getElementById("log-out-button");
-
 const randomaccountNumber = Math.random().toString().slice(2, 12);
 
 if (!currentLoggedInAccountInLocalStorage) {
@@ -85,7 +83,7 @@ if (!currentLoggedInAccountInLocalStorage) {
       };
       userAccountInfoInLocalStorageArr.push(userAccountInfoObj);
       setUserAccountDataInLocalStorage();
-      localStorage.setItem(currentAccountLoggedIn, accountNumberInput.value);
+      localStorage.setItem(currentAccountLoggedInKey, accountNumberInput.value);
     }
     window.location.href = "transactions.html";
   });
@@ -105,7 +103,7 @@ editProfileButton.addEventListener("click", (event) => {
   createButtonContainer.style.display = "none";
   accountPinInputContainer.style.display = "block";
   confirmAccountPinInputContainer.style.display = "block";
-  confirmEditButtonContainer.style.display = "block";
+  confirmEditButtonContainer.style.display = "flex";
   oldAccountPinInputContainer.style.display = "block";
 
   accountNameInput.disabled = false;
@@ -140,39 +138,6 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     setUserAccountDataInLocalStorage();
   }
   window.location.href = "account-profile.html";
-});
-
-logOutButton.addEventListener("click", (event) => {
-  event.preventDefault();
-
-  const confirmBtnsContainer = createElementWithAttributes("div", {
-    class: "confirm-btns-container",
-  });
-  const confirmBtn = createElementWithAttributes("Button", {
-    class: "btn btn-primary",
-  });
-  confirmBtn.textContent = "Yes";
-  const cancelBtn = createElementWithAttributes("Button", {
-    class: "btn btn-primary",
-  });
-  cancelBtn.textContent = "No";
-  confirmBtnsContainer.append(confirmBtn, cancelBtn);
-  displayModal(
-    "log-out-alert",
-    "Account Info",
-    "Log out of your account?",
-    confirmBtnsContainer
-  );
-
-  confirmBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    localStorage.removeItem(currentAccountLoggedIn);
-    window.location.href = "landing.html";
-  });
-  cancelBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    window.location.href = "account-profile.html";
-  });
 });
 
 function displayAccountInfo() {

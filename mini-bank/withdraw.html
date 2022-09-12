@@ -17,34 +17,29 @@
     <div class="container-fixed">
       <section class="header-component">
         <div class="top-nav-wrapper">
-          <div class="log-out-button-container">
-            <a href="#" id="log-out-button" class="log-out-button">Log Out</a>
-          </div>
-
           <div class="balance-wrapper">
-            Bal: &#8358;&nbsp
-          <div class="account-balance" id="current-account-balance">0.00</div>
+            Bal: &#8358;<span id="current-account-balance">0.00</span>
           </div>
         </div>
         
-        <div class="navigations">
-          <div class="nav-buttons">
-            <ul>
-                <a href="transactions.html"
-                ><li>Transactions</li></a
-              >
-              <a href="deposit.html"><li>Deposit</li></a>
-              <a href="withdraw.html" class="active"><li>Withdraw</li></a>
-            </ul>
-            </ul>
-          </div>
+        <div class="navigation">
+          <ul class="nav-links">
+            <li><a href="transactions.html">Transactions</a></li>
+            <li><a href="deposit.html">Deposit</a></li>
+            <li class="active"><a href="withdraw.html">Withdraw</a></li>
+          </ul>
 
-          <a href="account-profile.html" class="account-profile-link">
-            <div class="account-nav">
-              <div class="account-icon"><i class="fas fa-circle-user"></i></div>
-              <div id="header-account-name" class="account-name">AccountName</div>
-            </div>
-          </a>
+          <ul class="nav-links-right">
+            <li>
+              <a href="account-profile.html" class="account-profile-link">
+                <div class="account-nav">
+                  <div class="account-icon"><i class="fas fa-circle-user"></i></div>
+                  <div id="header-account-name" class="account-name"></div>
+                </div>
+              </a>
+            </li>
+            <li><a href="#" id="log-out-button">Logout</a></li>
+          </ul>
         </div>
 
       </section>
@@ -63,7 +58,7 @@
             <label>Pin</label>
             <input type="password" maxlength="4" class="form-control" id="withdrawal-account-pin" />
           </div>
-          <button id="submit-withdraw-button" class="btn-success btn-lg">
+          <button id="submit-withdraw-button" class="btn btn-success btn-lg">
             Submit
           </button>
         </form>
