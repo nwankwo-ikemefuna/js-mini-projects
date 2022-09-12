@@ -11,15 +11,32 @@
   </head>
   <body>
     <div class="container-fixed">
-      <div class="landing-container" id="create-account-form-holder">
+      <div>
+        <h1>MY MINI BANK</h1>
+      </div>
+      <div id="create-account-form-holder">
         <h1 class="page-desc" id="page-desc">NO ACCOUNT FOUND</h1>
-        <div>
+        <div class="create-button-container">
           <button
             id="create-new-account-button"
             class="btn-dark btn-lg create-login-button"
           >
             Create Account
           </button>
+        </div>
+        
+        <div class="header-component" id="login-form-container" style="display:none">
+          <form>
+            <div class="form-group">
+              <label>Account Name</label>
+              <input type="text" class="form-control" id="login-account-name-input" />
+            </div>
+            <div id="account-pin-input-container" class="form-group">
+              <label>Account Pin</label>
+              <input type="password" maxlength="4" class="form-control" id="login-account-pin-input"/>
+            </div>
+          </form>
+          
           <button
             id="account-login-button"
             class="btn-dark btn-lg create-login-button"
@@ -27,8 +44,9 @@
             Login
           </button>
         </div>
+       
 
-        <div class="page-desc-holder">
+        <div id="page-desc-holder" class="page-desc-holder" style="display:none">
           <p>Don't have an account? <a href="account-profile.html">Create an account</a></p>
         </div>
       </div>

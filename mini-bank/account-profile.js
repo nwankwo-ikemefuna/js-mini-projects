@@ -43,8 +43,6 @@ const logOutButton = document.getElementById("log-out-button");
 
 const randomaccountNumber = Math.random().toString().slice(2, 12);
 
-getCurrentBalance();
-
 if (!currentLoggedInAccountInLocalStorage) {
   headerComponent.style.display = "none";
   profilePageDesc.textContent = "Create account";
@@ -52,6 +50,7 @@ if (!currentLoggedInAccountInLocalStorage) {
   confirmAccountPinInputContainer.style.display = "block";
   editButtonContainer.style.display = "none";
   confirmEditButtonContainer.style.display = "none";
+  logOutButton.style.display = "none";
   accountNumberInput.value = randomaccountNumber;
 
   accountNameInput.disabled = false;
@@ -92,6 +91,7 @@ if (!currentLoggedInAccountInLocalStorage) {
   });
 } else {
   displayAccountInfo();
+  getCurrentBalance();
 }
 
 editProfileButton.addEventListener("click", (event) => {

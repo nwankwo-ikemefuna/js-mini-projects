@@ -10,15 +10,23 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
     <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="../helpers/css/modal.css">
     <link rel="stylesheet" href="mini-bank.css" />
   </head>
   <body>
     <div class="container-fixed">
       <section class="header-component">
-        <div class="balance-wrapper">
-          Bal: &#8358;&nbsp
+        <div class="top-nav-wrapper">
+          <div class="log-out-button-container">
+            <a href="#" id="log-out-button" class="log-out-button">Log Out</a>
+          </div>
+
+          <div class="balance-wrapper">
+            Bal: &#8358;&nbsp
           <div class="account-balance" id="current-account-balance">0.00</div>
+          </div>
         </div>
+        
         <div class="navigations">
           <div class="nav-buttons">
             <ul>
@@ -63,6 +71,8 @@
     </div>
 
     <script src="../helpers/js/utils.js"></script>
+    <script src="../helpers/js/dom.js"></script>
+    <script src="../helpers/js/modal.js"></script>
     <script src="account-common.js"></script>
     <script src="withdrawal.js"></script>
   </body>

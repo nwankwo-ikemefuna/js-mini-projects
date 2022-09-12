@@ -8,17 +8,14 @@
 .page-desc {
   font-size: 40px;
 }
-.landing-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 15% auto 0;
-}
 .create-login-button {
   font-size: 25px;
   border-radius: 10px;
   text-decoration: none;
+}
+.create-button-container {
+  display: flex;
+  justify-content: center;
 }
 .create-login-button:hover {
   background: #aaa;
@@ -26,9 +23,6 @@
   transition: 0.8s;
 }
 .log-out-button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 10px 0;
 }
 .confirm-btns-container {
@@ -63,7 +57,6 @@
 .nav-buttons ul {
   list-style: none;
   display: flex;
-  color: white;
 }
 .active {
   color: #a1a1a1;
@@ -76,19 +69,39 @@
   padding: 5px;
   border-radius: 10px;
 }
+.nav-buttons ul a:last-child {
+  margin-right: 0;
+}
+.top-nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+.log-out-button {
+  text-decoration: none;
+  font-weight: normal;
+  color: white;
+  background: green;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 22px;
+}
 .balance-wrapper {
   display: flex;
-  justify-content: end;
-  margin: 0 0 10px;
+  align-items: flex-end;
 }
 .nav-buttons ul a:hover,
 .account-name:hover,
-.account-icon:hover {
+.account-icon:hover,
+.log-out-button:hover {
   color: orange;
   cursor: pointer;
   transition: 0.5s;
 }
 .page-desc-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 20px;
 }
 /*Deposit page*/

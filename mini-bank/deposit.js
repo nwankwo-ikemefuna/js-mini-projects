@@ -6,10 +6,6 @@ const amountToDepositInput = document.getElementById("amount-to-deposit");
 const userPinInput = document.getElementById("deposit-account-pin");
 const submitDepositButton = document.getElementById("submit-deposit-button");
 
-if (!userAccountInfoInLocalStorage) {
-  window.location.href = "account-profile.html";
-}
-
 if (!currentLoggedInAccountInLocalStorage) {
   window.location.href = "landing.html";
 }
@@ -28,7 +24,9 @@ submitDepositButton.addEventListener("click", (e) => {
     userPinInput.value = "";
     return;
   } else if (amountToDepositInput.value > 1000000) {
-    alert("Sorry, you are not allowed to deposit more than 1,000,000");
+    alert("Sorry, you are cannot deposit more than 1,000,000");
+    amountToDepositInput.value = "";
+    userPinInput.value = "";
     return;
   } else if (
     +amountToDepositInput.value + +currentAccountBalance.textContent >
@@ -68,3 +66,38 @@ submitDepositButton.addEventListener("click", (e) => {
 });
 
 getCurrentBalance();
+
+const logOutButton = document.getElementById("log-out-button");
+
+logOutButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const confirmBtnsContainer = createElementWithAttributes("div", {
+    class: "confirm-btns-container",
+  });
+  const confirmBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  confirmBtn.textContent = "Yes";
+  const cancelBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  cancelBtn.textContent = "No";
+  confirmBtnsContainer.append(confirmBtn, cancelBtn);
+  displayModal(
+    "log-out-alert",
+    "Account Info",
+    "Log out of your account?",
+    confirmBtnsContainer
+  );
+
+  confirmBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.removeItem(currentAccountLoggedIn);
+    window.location.href = "landing.html";
+  });
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.location.href = "deposit.html";
+  });
+});

@@ -1,19 +1,7 @@
 getCurrentBalance();
 
-const transactionInfoDefault = document.getElementById('transaction-default');
-
-if (!userAccountInfoInLocalStorage) {
-  window.location.href = "account-profile.html";
-}
-
 if (!currentLoggedInAccountInLocalStorage) {
   window.location.href = "landing.html";
-}
-
-if(userTransactionsInLocalStorageArr) {
-    transactionInfoDefault.style.display = 'none';
-} else {
-    transactionInfoDefault.style.display = 'block'
 }
 
 const trnxnArr = getUserAccountDetails();
@@ -50,3 +38,38 @@ trnxnArr.transactions.forEach((trnxn) => {
   paginatedTrnxnRowArr.push(trnxnRow);
 });
 paginate('transaction-table-body', paginatedTrnxnRowArr, 5);
+
+const logOutButton = document.getElementById("log-out-button");
+
+logOutButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const confirmBtnsContainer = createElementWithAttributes("div", {
+    class: "confirm-btns-container",
+  });
+  const confirmBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  confirmBtn.textContent = "Yes";
+  const cancelBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  cancelBtn.textContent = "No";
+  confirmBtnsContainer.append(confirmBtn, cancelBtn);
+  displayModal(
+    "log-out-alert",
+    "Account Info",
+    "Log out of your account?",
+    confirmBtnsContainer
+  );
+
+  confirmBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.removeItem(currentAccountLoggedIn);
+    window.location.href = "landing.html";
+  });
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.location.href = "transactions.html";
+  });
+});

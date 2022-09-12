@@ -7,10 +7,6 @@ const userPinInput = document.getElementById("withdrawal-account-pin");
 
 const submitWithdrawButton = document.getElementById("submit-withdraw-button");
 
-if (!userAccountInfoInLocalStorage) {
-  window.location.href = "account-profile.html";
-}
-
 if (!currentLoggedInAccountInLocalStorage) {
   window.location.href = "landing.html";
 }
@@ -32,6 +28,8 @@ submitWithdrawButton.addEventListener("click", (e) => {
     return;
   } else if (amountToWithdrawInput.value > +currentAccountBalance.textContent) {
     alert("Sorry, you cannot withdraw more than your balance.");
+    amountToWithdrawInput.value = "";
+    userPinInput.value = "";
     return;
   } else if (+currentAccountBalance.textContent <= 100) {
     alert("Sorry, your balance cannot go below #100");
@@ -67,3 +65,38 @@ submitWithdrawButton.addEventListener("click", (e) => {
 });
 
 getCurrentBalance();
+
+const logOutButton = document.getElementById("log-out-button");
+
+logOutButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const confirmBtnsContainer = createElementWithAttributes("div", {
+    class: "confirm-btns-container",
+  });
+  const confirmBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  confirmBtn.textContent = "Yes";
+  const cancelBtn = createElementWithAttributes("Button", {
+    class: "btn btn-primary",
+  });
+  cancelBtn.textContent = "No";
+  confirmBtnsContainer.append(confirmBtn, cancelBtn);
+  displayModal(
+    "log-out-alert",
+    "Account Info",
+    "Log out of your account?",
+    confirmBtnsContainer
+  );
+
+  confirmBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.removeItem(currentAccountLoggedIn);
+    window.location.href = "landing.html";
+  });
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.location.href = "withdraw.html";
+  });
+});
