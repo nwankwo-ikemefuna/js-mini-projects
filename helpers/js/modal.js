@@ -1,8 +1,16 @@
 
-function createModal(modalId, headerTitle, bodyContent, footerContent = null) {
+function createModal(modalId, headerTitle, bodyContent, footerContent = null, extra = {}) {
+
+  const { size: modalSizeClass = '', maxWidth: modalMaxWidth = '' } = extra;
 
   // modal content
   const modalContentContainer = createElementWithAttributes('div', { class: 'modal-content' });
+  if (modalSizeClass) {
+    modalContentContainer.classList.add(modalSizeClass);
+  }
+  if (modalMaxWidth) {
+    modalContentContainer.style.maxWidth = modalMaxWidth;
+  }
   
   // modal header
   const modalHeaderContainer = createElementWithAttributes('div', { class: 'modal-header' });
@@ -38,12 +46,14 @@ function createModal(modalId, headerTitle, bodyContent, footerContent = null) {
   return modalContainer;
 }
 
-function displayModal(modalId, headerTitle, bodyContent, footerContent = null, closeOnClickOutside = true) {
+function displayModal(modalId, headerTitle, bodyContent, footerContent = null, extra = {}) {
+  const { closeOnClickOutside = true } = extra;
+
   // Get the modal
   let modal = document.getElementById(modalId);
   if (!modal) {
     //create the modal since it hasn't been created on the dom yet
-    modal = createModal(modalId, headerTitle, bodyContent, footerContent);
+    modal = createModal(modalId, headerTitle, bodyContent, footerContent, extra);
   }
 
   // render the content in the modal body
@@ -75,6 +85,50 @@ function displayModal(modalId, headerTitle, bodyContent, footerContent = null, c
       }
     }
   }
+
+  return modal;
+}
+
+function displayConfirmModal(modalId, headerTitle, bodyContent, onConfirmButtonClick, extra = {}) {
+  
+  const confirmBtn = createElementWithAttributes("Button", {
+    textContent: 'Yes',
+    class: "btn btn-success",
+  });
+
+  const cancelBtn = createElementWithAttributes("Button", {
+    textContent: 'Cancel',
+    class: "btn btn-secondary",
+  });
+
+  const footerButtonsContainer = createElementWithAttributes("div", {
+    class: "modal-confirm-buttons",
+  });
+  footerButtonsContainer.append(confirmBtn, cancelBtn);
+  
+  const confirmModal = displayModal(
+    modalId,
+    headerTitle,
+    bodyContent,
+    footerButtonsContainer,
+    extra
+  );
+
+  // confirm button click
+  if (typeof onConfirmButtonClick === 'function') {
+    confirmBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      onConfirmButtonClick();
+    });
+  }
+
+  // cancel button click
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeModal(confirmModal);
+  });
+
+  return confirmModal;
 }
 
 function closeModal(modal) {

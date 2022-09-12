@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.active {
+  color: #a1a1a1;
+}
+/*Create account page*/
+.page-desc {
+  font-size: 40px;
+}
+#landing-container {
+  max-width: 500px;
+  margin: auto;
+}
+.create-login-button {
+  font-size: 25px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.create-button-container {
+  display: flex;
+  justify-content: center;
+}
+.create-login-button:hover {
+  background: #aaa;
+  color: #000;
+  transition: 0.8s;
+}
+.confirm-btns-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+}
+/*Transaction, deposit, withdraw and account-profile page*/
+.header-component {
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-size: 20px;
+  width: auto;
+}
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.account-icon {
+  margin-right: 5px;
+  font-size: 25px;
+}
+.account-nav {
+  display: flex;
+  justify-content: end;
+}
+.nav-links, .nav-links-right {
+  list-style: none;
+  display: flex;
+  column-gap: 10px;
+}
+.nav-links a {
+  margin-right: 50px;
+  text-decoration: none;
+  font-size: 22px;
+  padding: 5px;
+  border-radius: 10px;
+}
+.nav-links li.active a {
+  background: #ddd;
+}
+.nav-links a:last-child {
+  margin-right: 0;
+}
+.nav-links-right #log-out-button {
+  text-decoration: none;
+  color: grey;
+}
+.top-nav-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+}
+.nav-links a:hover,
+.account-name:hover,
+.account-icon:hover {
+  color: orange;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.page-desc-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+.sensitive-action-buttons-container {
+  display: flex;
+  justify-content: end;
+  margin: 10px 0;
+}
+.btn-clear-trnxns:hover {
+  background: black;
+}
+/*Deposit page*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*account profile page*/
+.create-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+.account-profile-link {
+  text-decoration: none;
+}
+.transaction-table-body {
+  text-align: center;
+  font-weight: normal;
+  text-transform: capitalize;
+}
+#confirm-edit-button-container {
+  display: flex;
+  justify-content: space-between;
+}

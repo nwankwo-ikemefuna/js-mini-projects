@@ -46,3 +46,24 @@ function getProjectById(projectId, key = null) {
   }
   return projectObj;
 }
+
+function addEventListenersToActionIcons(actionType, actionClassName) {
+  const actionButtons = document.getElementsByClassName(actionClassName);
+  Array.from(actionButtons).forEach((actionButton) => {
+    actionButton.addEventListener("click", (event) => {
+      const projectId = +event.target.dataset.projectid;
+      const projectsArr = getProjects();
+      if (actionType === "delete") {
+        if (confirm('Sure to delete?')) {
+          const updatedProjects = projectsArr.filter(project => project.id !== projectId);
+          localStorage.setItem(projectsStorageKey, JSON.stringify(updatedProjects));
+          displayProjectsInTable();
+        }
+      } else if (actionType === "view") {
+        window.location.href = `display-projects.html?id=${projectId}`;
+      } else if (actionType === "edit") {
+        window.location.href = `add-edit-project.html?id=${projectId}&isEdit=1`;
+      }
+    });
+  });
+}

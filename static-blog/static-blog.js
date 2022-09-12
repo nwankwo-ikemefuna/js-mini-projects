@@ -66,15 +66,8 @@ postForm.onsubmit = (event) => {
 const fetchPosts = async () => {
   // fetch all users
   const allUsers = await makeHttpRequest("users");
-  //console.log("allUsers", allUsers);
 
-  allUsers.forEach((user) => {
-    const authorOption = createElementWithAttributes("option", {
-      value: user.id,
-    });
-    authorOption.textContent = user.name;
-    postAuthorSelect.appendChild(authorOption);
-  });
+  createSelectOptions(allUsers, postAuthorSelect, 'id', 'name');
 
   // fetch all comments
   const allComments = await makeHttpRequest("comments");
@@ -231,7 +224,7 @@ const onclickShowPostComments = (post, postComments, commentsCardsArr) => {
     `Comments - ${post.title}`,
     commentsContainer,
     null,
-    false
+    { closeOnClickOutside: false }
   );
 
   const inputCommentEmail = document.getElementById("input-comment-email");

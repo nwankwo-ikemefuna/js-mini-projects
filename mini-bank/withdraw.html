@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Withdraw</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../helpers/css/components.css" />
+    <link rel="stylesheet" href="../helpers/css/modal.css">
+    <link rel="stylesheet" href="mini-bank.css" />
+  </head>
+  <body>
+    <div class="container-fixed">
+      <section class="header-component">
+        <div class="top-nav-wrapper">
+          <div class="balance-wrapper">
+            Bal: &#8358;<span id="current-account-balance">0.00</span>
+          </div>
+        </div>
+        
+        <div class="navigation">
+          <ul class="nav-links">
+            <li><a href="transactions.html">Transactions</a></li>
+            <li><a href="deposit.html">Deposit</a></li>
+            <li class="active"><a href="withdraw.html">Withdraw</a></li>
+          </ul>
+
+          <ul class="nav-links-right">
+            <li>
+              <a href="account-profile.html" class="account-profile-link">
+                <div class="account-nav">
+                  <div class="account-icon"><i class="fas fa-circle-user"></i></div>
+                  <div id="header-account-name" class="account-name"></div>
+                </div>
+              </a>
+            </li>
+            <li><a href="#" id="log-out-button">Logout</a></li>
+          </ul>
+        </div>
+
+      </section>
+
+      <div class="page-desc-holder">
+        <h1 class="page-desc">Withdraw</h1>
+      </div>
+
+      <div class="header-component">
+        <form id="deposit-form">
+          <div class="form-group">
+            <label>Amount to withdraw</label>
+            <input type="number" class="form-control" id="amount-to-withdraw" />
+          </div>
+          <div class="form-group">
+            <label>Pin</label>
+            <input type="password" maxlength="4" class="form-control" id="withdrawal-account-pin" />
+          </div>
+          <button id="submit-withdraw-button" class="btn btn-success btn-lg">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="../helpers/js/utils.js"></script>
+    <script src="../helpers/js/dom.js"></script>
+    <script src="../helpers/js/modal.js"></script>
+    <script src="account-common.js"></script>
+    <script src="withdrawal.js"></script>
+  </body>
+</html>

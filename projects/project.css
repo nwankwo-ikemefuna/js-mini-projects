@@ -47,3 +47,23 @@
   min-width: 300px;
   padding: 30px;
 }
+.project-display {
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  height: auto;
+  margin: 10% 0;
+  padding-bottom: 20px;
+  overflow-y: auto;
+}
+.project-info-display-box {
+  border: 1px solid #ddd;
+  margin: 20px 20px 0;
+  font-size: 20px;
+  padding: 5px;
+}
+.project-display-content {
+  min-height: 180px;
+  overflow-wrap: break-word;
+}
