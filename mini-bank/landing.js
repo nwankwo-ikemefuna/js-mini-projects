@@ -3,10 +3,10 @@ const accountSelectInput = document.getElementById(
 );
 
 const userAccountsForSelect = userAccountInfoInLocalStorageArr.map(userAccount => {
-  userAccount.accountName = `${userAccount.accountName} (${userAccount.accountPin})`
+  userAccount.accountName = `${userAccount.accountName} (${userAccount.accountPin})`;
   return userAccount;
 });
-createSelectOptions(userAccountInfoInLocalStorageArr, accountSelectInput, 'accountNumber', 'accountName');
+createSelectOptions(userAccountsForSelect, accountSelectInput, 'accountNumber', 'accountName');
 
 const loginForm = document.getElementById("account-login-form");
 loginForm.addEventListener("submit", (event) => {
