@@ -38,6 +38,11 @@ const confirmEditButtonContainer = document.getElementById(
 const confirmEditProfileButton = document.getElementById(
   "confirm-edit-profile-button"
 );
+const createPageDescHolder = document.getElementById("create-page-desc-holder");
+const deleteAccountButtonContainer = document.getElementById(
+  "delete-account-button-container"
+);
+const deleteAccountButton = document.getElementById("delete-account-button");
 
 const randomaccountNumber = Math.random().toString().slice(2, 12);
 
@@ -48,7 +53,7 @@ if (!currentLoggedInAccountInLocalStorage) {
   confirmAccountPinInputContainer.style.display = "block";
   editButtonContainer.style.display = "none";
   confirmEditButtonContainer.style.display = "none";
-  logOutButton.style.display = "none";
+  deleteAccountButtonContainer.style.display = "none";
   accountNumberInput.value = randomaccountNumber;
 
   accountNameInput.disabled = false;
@@ -82,7 +87,7 @@ if (!currentLoggedInAccountInLocalStorage) {
         transactions: [],
       };
       userAccountInfoInLocalStorageArr.push(userAccountInfoObj);
-      setUserAccountDataInLocalStorage();
+      setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
       localStorage.setItem(currentAccountLoggedInKey, accountNumberInput.value);
     }
     window.location.href = "transactions.html";
@@ -95,7 +100,6 @@ if (!currentLoggedInAccountInLocalStorage) {
 editProfileButton.addEventListener("click", (event) => {
   event.preventDefault();
 
-  headerComponent.style.display = "none";
   profilePageDesc.textContent = "Edit Profile";
   newPinDesc.textContent = "New Pin";
   confirmNewPinDesc.textContent = "Confirm New Pin";
@@ -127,7 +131,7 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else if (!accountPinInput.value) {
     dataIndexes(oldAccountPinInput.value);
-    setUserAccountDataInLocalStorage();
+    setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
   } else if (accountPinConfirmInput.value !== accountPinInput.value) {
     alert("PIN and confirm PIN do not match.");
     accountPinInput.value = "";
@@ -135,9 +139,32 @@ confirmEditProfileButton.addEventListener("click", (event) => {
     return;
   } else {
     dataIndexes(accountPinInput.value);
-    setUserAccountDataInLocalStorage();
+    setUserAccountDataInLocalStorage(userAccountInfoInLocalStorageArr);
   }
   window.location.href = "account-profile.html";
+});
+
+deleteAccountButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const onDeleteAccountConfirm = () => {
+    const filteredUsers = userAccountInfoInLocalStorageArr.filter(
+      (acc) => acc.accountNumber !== currentLoggedInAccountInLocalStorage
+    );
+
+    setUserAccountDataInLocalStorage(filteredUsers);
+    localStorage.removeItem(currentAccountLoggedInKey);
+
+    window.location.href = "landing.html";
+  };
+
+  displayConfirmModal(
+    "delete-account-confirm",
+    "Delete My Account",
+    "Are you sure you want to delete your account? This action cannot be reversed.",
+    onDeleteAccountConfirm,
+    { size: "modal-sm" }
+  );
 });
 
 function displayAccountInfo() {
@@ -151,6 +178,7 @@ function displayAccountInfo() {
   editButtonContainer.style.display = "block";
   createButtonContainer.style.display = "none";
   confirmEditButtonContainer.style.display = "none";
+  createPageDescHolder.style.display = "none";
 }
 
 function dataIndexes(oldOrNew) {

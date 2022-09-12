@@ -32,7 +32,9 @@
             <li>
               <a href="account-profile.html" class="account-profile-link">
                 <div class="account-nav">
-                  <div class="account-icon"><i class="fas fa-circle-user"></i></div>
+                  <div class="account-icon">
+                    <i class="fas fa-circle-user"></i>
+                  </div>
                   <div id="header-account-name" class="account-name"></div>
                 </div>
               </a>
@@ -108,7 +110,10 @@
             />
           </div>
           <div id="create-button-container">
-            <button id="create-profile-button" class="btn btn-warning btn-lg">
+            <button
+              id="create-profile-button"
+              class="btn btn-warning btn-lg btn-block"
+            >
               Create Account
             </button>
           </div>
@@ -130,7 +135,19 @@
             </button>
           </div>
         </form>
+
+        <div id="create-page-desc-holder" class="page-desc-holder">
+          <p>
+            Already have an account?
+            <a href="landing.html">Login</a>
+          </p>
+        </div>
       </div>
+
+      <div id="delete-account-button-container" class="sensitive-action-buttons-container">
+        <button id="delete-account-button" class="btn btn-danger btn-lg btn-clear-trnxns">Delete Account</button>
+      </div>
+
     </div>
 
     <script src="../helpers/js/http.js"></script>

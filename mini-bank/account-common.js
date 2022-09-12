@@ -9,7 +9,8 @@ const currentLoggedInAccountInLocalStorage = localStorage.getItem(
 );
 
 const userAccountsInLocalStorage = localStorage.getItem(userAccountInfoKey);
-const userAccountInfoInLocalStorageArr = JSON.parse(userAccountsInLocalStorage) || [];
+const userAccountInfoInLocalStorageArr =
+  JSON.parse(userAccountsInLocalStorage) || [];
 
 if (currentLoggedInAccountInLocalStorage) {
   accountNameOnHeader.textContent = getUserAccountDetails().accountName;
@@ -29,7 +30,7 @@ if (logOutButton) {
       "Logout",
       "Log out of your account?",
       onLogoutConfirm,
-      { size: 'modal-sm' }
+      { size: "modal-sm" }
     );
   });
 }
@@ -37,7 +38,7 @@ if (logOutButton) {
 function getCurrentBalance() {
   let currentAccountBalance = 0;
   const userTransactions = getUserAccountDetails().transactions || [];
-  if (userTransactions.length > 0) {  
+  if (userTransactions.length > 0) {
     const lastUserTransaction = userTransactions[userTransactions.length - 1];
     currentAccountBalance = lastUserTransaction?.balanceAfter || 0;
   }
@@ -57,7 +58,15 @@ function getUserAccountDetails(
   }
 }
 
-function setUserAccountDataInLocalStorage() {
+function setUserAccountDataInLocalStorage(userAccount) {
+  localStorage.setItem(userAccountInfoKey, JSON.stringify(userAccount));
+}
+
+function updateUserData(updateData) {
+  const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
+    (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
+  );
+  userAccountInfoInLocalStorageArr[loggedInUserIndex] = updateData;
   localStorage.setItem(
     userAccountInfoKey,
     JSON.stringify(userAccountInfoInLocalStorageArr)

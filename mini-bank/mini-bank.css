@@ -79,7 +79,6 @@
   text-decoration: none;
   color: grey;
 }
-
 .top-nav-wrapper {
   display: flex;
   justify-content: flex-end;
@@ -97,6 +96,14 @@
   align-items: center;
   justify-content: center;
   margin: 20px;
+}
+.sensitive-action-buttons-container {
+  display: flex;
+  justify-content: end;
+  margin: 10px 0;
+}
+.btn-clear-trnxns:hover {
+  background: black;
 }
 /*Deposit page*/
 input[type="number"]::-webkit-inner-spin-button,
@@ -119,7 +126,6 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: normal;
   text-transform: capitalize;
 }
-
 #confirm-edit-button-container {
   display: flex;
   justify-content: space-between;

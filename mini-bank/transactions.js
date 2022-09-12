@@ -4,10 +4,19 @@ if (!currentLoggedInAccountInLocalStorage) {
   window.location.href = "landing.html";
 }
 
-const trnxnArr = getUserAccountDetails();
+const clearTrnxnsButtonContainer = document.getElementById(
+  "clear-trnxns-button-container"
+);
+
+const loggedInUserObj = getUserAccountDetails();
+const trnxnArr = loggedInUserObj.transactions;
 const paginatedTrnxnRowArr = [];
 
-trnxnArr.transactions.forEach((trnxn) => {
+if (trnxnArr.length > 0) {
+  clearTrnxnsButtonContainer.style.display = "flex";
+}
+
+trnxnArr.forEach((trnxn) => {
   const tdTimestamp = createElementWithAttributes("td");
   tdTimestamp.textContent = trnxn.timeStamp;
 
@@ -37,4 +46,25 @@ trnxnArr.transactions.forEach((trnxn) => {
   );
   paginatedTrnxnRowArr.push(trnxnRow);
 });
-paginate('transaction-table-body', paginatedTrnxnRowArr, 5);
+paginate("transaction-table-body", paginatedTrnxnRowArr, 5);
+
+const clearTrnxnsButton = document.getElementById("clear-trnxns-button");
+
+clearTrnxnsButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const onClearTrnxnsConfirm = () => {
+    loggedInUserObj.transactions = [];
+    updateUserData (loggedInUserObj)
+
+    window.location.href = "transactions.html";
+  };
+
+  displayConfirmModal(
+    "clear-trnxns-confirm",
+    "Clear Transactions",
+    "Are you sure you want to clear all transactions from your account? This action cannot be reversed.",
+    onClearTrnxnsConfirm,
+    { size: "modal-sm" }
+  );
+});

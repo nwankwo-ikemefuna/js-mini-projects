@@ -14,7 +14,6 @@ submitDepositButton.addEventListener("click", (e) => {
   e.preventDefault();
 
   const accountDetails = getUserAccountDetails();
-  console.log("PIN", accountDetails.accountPin);
 
   if (!amountToDepositInput.value) {
     alert("Please input amount to deposit");
@@ -49,15 +48,8 @@ submitDepositButton.addEventListener("click", (e) => {
 
     const loggedInUserObj = getUserAccountDetails();
     loggedInUserObj.transactions.push(tranxObj);
-    const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
-      (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
-    );
-    userAccountInfoInLocalStorageArr[loggedInUserIndex] = loggedInUserObj;
-    localStorage.setItem(
-      userAccountInfoKey,
-      JSON.stringify(userAccountInfoInLocalStorageArr)
-    );
-
+    
+    updateUserData (loggedInUserObj)
     currentAccountBalance.textContent = tranxObj.balanceAfter;
     amountToDepositInput.value = "";
     userPinInput.value = "";

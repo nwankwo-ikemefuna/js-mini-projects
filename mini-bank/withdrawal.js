@@ -33,6 +33,7 @@ submitWithdrawButton.addEventListener("click", (e) => {
     return;
   } else if (+currentAccountBalance.textContent <= 100) {
     alert("Sorry, your balance cannot go below #100");
+    return;
   } else {
     const timeStamp = new Date();
     const trnxnRef = `TR${getDateString()}`;
@@ -48,14 +49,7 @@ submitWithdrawButton.addEventListener("click", (e) => {
 
     const loggedInUserObj = getUserAccountDetails();
     loggedInUserObj.transactions.push(tranxObj);
-    const loggedInUserIndex = userAccountInfoInLocalStorageArr.findIndex(
-      (acc) => acc.accountNumber === currentLoggedInAccountInLocalStorage
-    );
-    userAccountInfoInLocalStorageArr[loggedInUserIndex] = loggedInUserObj;
-    localStorage.setItem(
-      userAccountInfoKey,
-      JSON.stringify(userAccountInfoInLocalStorageArr)
-    );
+    updateUserData (loggedInUserObj);
 
     currentAccountBalance.textContent = tranxObj.balanceAfter;
     amountToWithdrawInput.value = "";
