@@ -44,7 +44,7 @@ trnxnArr.forEach((trnxn) => {
     tdBalBefore,
     tdBalAfter
   );
-  paginatedTrnxnRowArr.push(trnxnRow);
+  paginatedTrnxnRowArr.unshift(trnxnRow);
 });
 paginate("transaction-table-body", paginatedTrnxnRowArr, 5);
 
