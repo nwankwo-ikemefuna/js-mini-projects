@@ -91,12 +91,12 @@ function displayModal(modalId, headerTitle, bodyContent, footerContent = null, e
 
 function displayConfirmModal(modalId, headerTitle, bodyContent, onConfirmButtonClick, extra = {}) {
   
-  const confirmBtn = createElementWithAttributes("Button", {
+  const confirmBtn = createElementWithAttributes("button", {
     textContent: 'Yes',
     class: "btn btn-success",
   });
 
-  const cancelBtn = createElementWithAttributes("Button", {
+  const cancelBtn = createElementWithAttributes("button", {
     textContent: 'Cancel',
     class: "btn btn-secondary",
   });
